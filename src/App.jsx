@@ -12,6 +12,8 @@ import RecuperarContrasena from './hu1-cuenta/RecuperarContrasena';
 import Historia2 from './hu2-edicion/Historia2';
 import Historia2p2 from './hu2-edicion/Historia2p2';
 import Historia2p3 from './hu2-edicion/Historia2p3';
+import Historia2p4 from './hu2-edicion/Historia2p4';
+import Historia2p5 from './hu2-edicion/Historia2p5';
 // HU-4 · Asignación de revisiones
 import Historia4 from './hu4-asignacion/Historia4';
 // HU-5 · Revisión y dictamen
@@ -29,6 +31,9 @@ export default function App() {
       <Route path="/comite/edicion/ejes" element={<Historia2p2 />} />
       <Route path="/comite/edicion/tipos" element={<Historia2p3 />} />
       <Route path="/comite/asignaciones" element={<Historia4 />} />
+      <Route path="/comite/edicion/fechas" element={<Historia2p4 />} />
+      <Route path="/comite/edicion/criterios" element={<Historia2p5 />} />
+      
 
       <Route element={<Layout />}>
         <Route path="/" element={<Inicio />} />
