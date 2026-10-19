@@ -55,6 +55,7 @@
     margin-bottom: 4px;
 }
 
+/* ===== BOTONES ===== */
 .btn {
     font-family: 'Inter', sans-serif;
     font-size: 13px;
@@ -63,7 +64,6 @@
     border-radius: 2px;
     border: 1px solid var(--color-primary);
     cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
 }
 
 .btn-primario {
@@ -84,6 +84,12 @@
     background-color: var(--color-primary-soft);
 }
 
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* ===== CABECERA ===== */
 .cabecera {
     background-color: var(--color-primary);
     color: var(--color-surface);
@@ -101,6 +107,7 @@
     display: flex;
     align-items: center;
     gap: 12px;
+    cursor: pointer;
 }
 
 .logo-c {
@@ -146,11 +153,11 @@
     border-radius: 2px;
 }
 
-.etiqueta-estado::before {
-    content: "● ";
+.punto-estado {
     color: var(--color-accent);
 }
 
+/* ===== BARRA DE NAVEGACIÓN ===== */
 .barra-nav {
     background-color: var(--color-surface);
     border-bottom: 1px solid var(--color-border);
@@ -228,6 +235,7 @@
     font-weight: 600;
 }
 
+/* ===== CONTENIDO ===== */
 .contenido {
     padding: 24px 0 64px;
     min-height: 500px;
@@ -278,11 +286,25 @@
     border-bottom-color: var(--color-primary);
 }
 
-.grid-config {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
+/* ===== 2.1 DATOS DE LA EDICIÓN (Flexbox) ===== */
+/* Dos columnas: el formulario ocupa el doble que el lateral.
+   Con flex-wrap, si no caben, el lateral baja solo. */
+.fila-config {
+    display: flex;
+    flex-wrap: wrap;
     gap: 16px;
-    align-items: start;
+    align-items: flex-start;
+}
+
+.fila-config > section {
+    flex: 2 1 500px;
+}
+
+.lateral {
+    flex: 1 1 250px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
 .tarjeta {
@@ -321,10 +343,19 @@
     gap: 12px;
 }
 
+/* Fila de dos campos: el primero (nombre) es el doble de ancho */
 .fila-campos {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
+    display: flex;
+    flex-wrap: wrap;
     gap: 8px;
+}
+
+.fila-campos > .campo {
+    flex: 1 1 100px;
+}
+
+.fila-campos > .campo-grande {
+    flex: 2 1 200px;
 }
 
 .entrada {
@@ -345,7 +376,6 @@
 
 .entrada-area {
     min-height: 80px;
-    resize: vertical;
     line-height: 20px;
     font-size: 13px;
 }
@@ -353,12 +383,6 @@
 .formulario .texto-auxiliar {
     margin-top: 4px;
     font-size: 11px;
-}
-
-.lateral {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
 }
 
 .resumen-fila {
@@ -395,6 +419,15 @@
     margin-bottom: 4px;
 }
 
+.aviso-separado {
+    margin-bottom: 16px;
+}
+
+.aviso-arriba {
+    margin-top: 16px;
+}
+
+/* ===== PIE DE PÁGINA ===== */
 .pie {
     background-color: var(--color-text);
     color: var(--color-border);
@@ -403,11 +436,19 @@
     line-height: 16px;
 }
 
-.pie-grid {
-    display: grid;
-    grid-template-columns: 2fr 1fr 1fr 1fr;
+.pie-columnas {
+    display: flex;
+    flex-wrap: wrap;
     gap: 24px;
     padding-bottom: 24px;
+}
+
+.pie-columnas > div {
+    flex: 1 1 150px;
+}
+
+.pie-columnas > div:first-child {
+    flex: 2 1 300px;
 }
 
 .pie p {
@@ -450,6 +491,250 @@
     justify-content: space-between;
 }
 
+/* ===== TABLA (Ejes y Tipos de trabajo) ===== */
+.tabla-contenedor {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+}
+
+.tabla {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.tabla th {
+    padding: 10px 16px;
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    line-height: 16px;
+    text-align: left;
+    color: var(--color-text-muted);
+    background-color: var(--color-bg);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.tabla td {
+    padding: 14px 16px;
+    font-size: 12px;
+    line-height: 18px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.tabla tr:last-child td {
+    border-bottom: none;
+}
+
+.tabla tr:hover {
+    background-color: var(--color-bg);
+}
+
+.celda-nombre {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.celda-gris {
+    color: var(--color-text-muted);
+}
+
+.tabla .columna-numero {
+    text-align: right;
+}
+
+.tabla .columna-acciones {
+    text-align: right;
+}
+
+.enlace-accion {
+    background: none;
+    border: none;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 11px;
+    color: var(--color-primary);
+    cursor: pointer;
+}
+
+.enlace-accion:hover {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+}
+
+.nota-tabla {
+    margin-top: 12px;
+    font-size: 11px;
+}
+
+/* ===== ESTADO VACÍO ===== */
+.estado-vacio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 64px 24px;
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+}
+
+.estado-vacio-icono {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+    border: 1px solid var(--color-border);
+    border-radius: 2px;
+    color: var(--color-primary);
+}
+
+.estado-vacio-titulo {
+    font-family: 'Source Serif 4', serif;
+    font-size: 20px;
+    line-height: 28px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.estado-vacio-texto {
+    max-width: 440px;
+    margin-bottom: 16px;
+}
+
+/* ===== FORMULARIOS: errores y extras ===== */
+.fila-campos-iguales {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.fila-campos-iguales > .campo {
+    flex: 1 1 150px;
+}
+
+.entrada-error {
+    border-color: var(--color-danger);
+}
+
+.mensaje-error {
+    margin-top: 4px;
+    font-size: 11px;
+    line-height: 16px;
+    color: var(--color-danger);
+}
+
+.casilla {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+}
+
+.texto-ok {
+    color: var(--color-success);
+    font-weight: 600;
+}
+
+/* ===== AVISOS (para 2.4) ===== */
+.aviso-error {
+    background-color: #FBEBEA;
+    border: 1px solid var(--color-danger);
+    color: var(--color-danger);
+    padding: 12px;
+    margin-bottom: 16px;
+    font-size: 12px;
+    line-height: 16px;
+    border-radius: 2px;
+}
+
+.aviso-exito {
+    background-color: #E8F4EC;
+    border: 1px solid var(--color-success);
+    color: var(--color-success);
+    padding: 12px;
+    margin-top: 12px;
+    font-size: 12px;
+    line-height: 16px;
+    border-radius: 2px;
+}
+
+/* ===== FECHAS LÍMITE (para 2.4) ===== */
+.fecha-fila {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.fecha-fila > div {
+    flex: 1 1 100px;
+}
+
+.fecha-fila > div:first-child {
+    flex: 2 1 200px;
+}
+
+/* ===== MODAL ===== */
+.modal-fondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(31, 26, 27, 0.55);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+}
+
+.modal {
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--color-surface);
+    border-top: 2px solid var(--color-primary);
+    border-radius: 2px;
+}
+
+.modal-cabecera {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.modal-titulo {
+    font-family: 'Source Serif 4', serif;
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+}
+
+.modal-cerrar {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: var(--color-text-muted);
+    cursor: pointer;
+}
+
+.modal-cuerpo {
+    padding: 16px 20px;
+}
+
+.modal-pie {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 16px 20px;
+    border-top: 1px solid var(--color-border);
+}
+
+/* ===== RESPONSIVE ===== */
 @media (max-width: 900px) {
     .cabecera {
         height: auto;
@@ -465,11 +750,5 @@
     .menu,
     .pestanas {
         flex-wrap: wrap;
-    }
-
-    .grid-config,
-    .fila-campos,
-    .pie-grid {
-        grid-template-columns: 1fr;
     }
 }

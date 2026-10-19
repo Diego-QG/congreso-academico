@@ -175,7 +175,7 @@ body {
 
 .gold-title {
   font-size: 12px;
-  color: #A67C2E;
+  color: #B7791F;
   letter-spacing: 1px;
   margin-bottom: 16px;
   font-weight: 600;
@@ -183,12 +183,12 @@ body {
 
 .footer-column p {
   font-size: 13px;
-  color: #6F6663;
+  color: #E4DFDA;
   line-height: 1.5;
 }
 
 .footer-col p{
-    color:#6F6663;
+    color:#E4DFDA;
 }
 
 .footer-col ul {
@@ -201,21 +201,21 @@ body {
 
 .footer-col ul a {
   text-decoration: none;
-  color: #6F6663;
+  color: #E4DFDA;
   font-size: 13px;
 }
 
 .footer-bottom {
-  border-top: 1px solid #E4DFDA;
+  border-top: 1px solid #3B3435;
   padding-top: 20px;
   display: flex;
   justify-content: space-between;
   font-size: 12px;
-  color: #6F6663;
+  color: #FBFAF8;
 }
 
 .footer-legal a {
-  color: #6F6663;
+  color: #E4DFDA;
   margin-left: 16px;
   text-decoration: none;
 }

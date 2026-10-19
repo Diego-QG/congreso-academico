@@ -2,14 +2,77 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Register.css';
 
+function getPasswordRequirements(password, confirmPassword) {
+  return [
+    { label: 'Mínimo 8 caracteres', isMet: password.length >= 8 },
+    { label: 'Al menos una mayúscula', isMet: /[A-Z]/.test(password) },
+    { label: 'Al menos un número', isMet: /\d/.test(password) },
+    {
+      label: 'La confirmación debe coincidir',
+      isMet: confirmPassword.length > 0 && confirmPassword === password
+    }
+  ];
+}
+
+function validateRegistration(formData) {
+  const errors = {};
+  const institutionalEmailPattern = /^[^\s@]+@aloe\.ulima\.edu\.pe$/i;
+  const passwordRequirements = getPasswordRequirements(
+    formData.password,
+    formData.confirmPassword
+  );
+
+  if (!formData.nombres.trim()) {
+    errors.nombres = 'Este campo es obligatorio.';
+  }
+
+  if (!formData.apellidos.trim()) {
+    errors.apellidos = 'Este campo es obligatorio.';
+  }
+
+  if (!institutionalEmailPattern.test(formData.email.trim())) {
+    errors.email = 'Use un correo institucional válido (@aloe.ulima.edu.pe).';
+  }
+
+  if (!formData.institucion) {
+    errors.institucion = 'Seleccione una institución.';
+  }
+
+  if (passwordRequirements.slice(0, 3).some((requirement) => !requirement.isMet)) {
+    errors.password = formData.password
+      ? 'La contraseña no cumple todos los requisitos.'
+      : 'Este campo es obligatorio.';
+  }
+
+  if (!passwordRequirements[3].isMet) {
+    errors.confirmPassword = formData.confirmPassword
+      ? 'Las contraseñas no coinciden.'
+      : 'Este campo es obligatorio.';
+  }
+
+  if (!formData.carrera) {
+    errors.carrera = 'Seleccione una carrera.';
+  }
+
+  if (!formData.rolParticipacion) {
+    errors.rolParticipacion = 'Seleccione cómo desea participar.';
+  }
+
+  if (!formData.aceptaBases) {
+    errors.aceptaBases = 'Debe aceptar las bases para continuar.';
+  }
+
+  return errors;
+}
+
 function Register() {
   const [formData, setFormData] = useState({
     nombres: 'Rosa María',
     apellidos: 'Quispe Ttito',
     email: 'rosa.quispe@aloe.ulima.edu.pe',
     institucion: 'Universidad de Lima',
-    password: '•••••••••',
-    confirmPassword: '•••••••••',
+    password: '',
+    confirmPassword: '',
     carrera: 'Ingeniería de Sistemas',
     codigoAlumno: '20211547',
     rolParticipacion: 'autor', // 'autor', 'revisor' o 'ambos'
@@ -18,20 +81,35 @@ function Register() {
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [errors, setErrors] = useState({});
+  const passwordRequirements = getPasswordRequirements(
+    formData.password,
+    formData.confirmPassword
+  );
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData((prev) => ({
-      ...prev,
+    const updatedFormData = {
+      ...formData,
       [name]: type === 'checkbox' ? checked : value
-    }));
+    };
+    setFormData(updatedFormData);
+    if (Object.keys(errors).length > 0) {
+      setErrors(validateRegistration(updatedFormData));
+    }
   };
 
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
+    const validationErrors = validateRegistration(formData);
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) {
+      return;
+    }
+
     // Al enviar con éxito, navega a la pantalla de confirmación/bienvenida (1.3 éxito)
-    navigate('/login');
+    navigate('/bienvenida', { state: { registration: formData } });
   };
 
   return (
@@ -48,7 +126,13 @@ function Register() {
               Los campos marcados con asterisco (*) son obligatorios.
             </p>
 
-            <form className="register-form" onSubmit={handleSubmit}>
+            <form className="register-form" onSubmit={handleSubmit} noValidate>
+              {Object.keys(errors).length > 0 && (
+                <div className="register-error-banner" role="alert">
+                  Revise {Object.keys(errors).length} campo
+                  {Object.keys(errors).length === 1 ? '' : 's'} con errores antes de continuar.
+                </div>
+              )}
               
               {/* Nombres y Apellidos */}
               <div className="form-row-two-cols">
@@ -61,7 +145,10 @@ function Register() {
                     value={formData.nombres}
                     onChange={handleChange}
                     required
+                    className={errors.nombres ? 'input-field-error' : ''}
+                    aria-invalid={Boolean(errors.nombres)}
                   />
+                  {errors.nombres && <span className="field-error-message">{errors.nombres}</span>}
                 </div>
                 <div className="form-group">
                   <label htmlFor="apellidos">APELLIDOS *</label>
@@ -72,7 +159,10 @@ function Register() {
                     value={formData.apellidos}
                     onChange={handleChange}
                     required
+                    className={errors.apellidos ? 'input-field-error' : ''}
+                    aria-invalid={Boolean(errors.apellidos)}
                   />
+                  {errors.apellidos && <span className="field-error-message">{errors.apellidos}</span>}
                 </div>
               </div>
 
@@ -86,8 +176,12 @@ function Register() {
                   value={formData.email}
                   onChange={handleChange}
                   required
+                  className={errors.email ? 'input-field-error' : ''}
+                  aria-invalid={Boolean(errors.email)}
                 />
-                <span className="field-help-text">Se usará para todas las notificaciones.</span>
+                <span className={errors.email ? 'field-error-message' : 'field-help-text'}>
+                  {errors.email || 'Se usará para todas las notificaciones.'}
+                </span>
               </div>
 
               {/* Institución */}
@@ -99,10 +193,13 @@ function Register() {
                   value={formData.institucion}
                   onChange={handleChange}
                   required
+                  aria-invalid={Boolean(errors.institucion)}
+                  className={errors.institucion ? 'input-field-error' : ''}
                 >
                   <option value="Universidad de Lima">Universidad de Lima</option>
                   <option value="Otra Institución">Otra Institución</option>
                 </select>
+                {errors.institucion && <span className="field-error-message">{errors.institucion}</span>}
               </div>
 
               {/* Contraseñas en dos columnas */}
@@ -117,6 +214,8 @@ function Register() {
                       value={formData.password}
                       onChange={handleChange}
                       required
+                      className={errors.password ? 'input-field-error' : ''}
+                      aria-invalid={Boolean(errors.password)}
                     />
                     <button
                       type="button"
@@ -126,8 +225,8 @@ function Register() {
                       {showPassword ? 'Ocultar' : 'Mostrar'}
                     </button>
                   </div>
-                  <span className="field-help-text">
-                    Mínimo 8 caracteres, con una mayúscula y un número.
+                  <span className={errors.password ? 'field-error-message' : 'field-help-text'}>
+                    {errors.password || 'Mínimo 8 caracteres, con una mayúscula y un número.'}
                   </span>
                 </div>
 
@@ -141,6 +240,8 @@ function Register() {
                       value={formData.confirmPassword}
                       onChange={handleChange}
                       required
+                      className={errors.confirmPassword ? 'input-field-error' : ''}
+                      aria-invalid={Boolean(errors.confirmPassword)}
                     />
                     <button
                       type="button"
@@ -150,6 +251,9 @@ function Register() {
                       {showConfirmPassword ? 'Ocultar' : 'Mostrar'}
                     </button>
                   </div>
+                  {errors.confirmPassword && (
+                    <span className="field-error-message">{errors.confirmPassword}</span>
+                  )}
                 </div>
               </div>
 
@@ -163,12 +267,15 @@ function Register() {
                     value={formData.carrera}
                     onChange={handleChange}
                     required
+                    aria-invalid={Boolean(errors.carrera)}
+                    className={errors.carrera ? 'input-field-error' : ''}
                   >
                     <option value="Ingeniería de Sistemas">Ingeniería de Sistemas</option>
                     <option value="Ingeniería Industrial">Ingeniería Industrial</option>
                     <option value="Administración">Administración</option>
                     <option value="Economía">Economía</option>
                   </select>
+                  {errors.carrera && <span className="field-error-message">{errors.carrera}</span>}
                 </div>
 
                 <div className="form-group">
@@ -194,6 +301,7 @@ function Register() {
                       value="autor"
                       checked={formData.rolParticipacion === 'autor'}
                       onChange={handleChange}
+                      aria-invalid={Boolean(errors.rolParticipacion)}
                     />
                     <div>
                       <strong>Autor</strong>
@@ -208,6 +316,7 @@ function Register() {
                       value="revisor"
                       checked={formData.rolParticipacion === 'revisor'}
                       onChange={handleChange}
+                      aria-invalid={Boolean(errors.rolParticipacion)}
                     />
                     <div>
                       <strong>Revisor</strong>
@@ -222,6 +331,7 @@ function Register() {
                       value="ambos"
                       checked={formData.rolParticipacion === 'ambos'}
                       onChange={handleChange}
+                      aria-invalid={Boolean(errors.rolParticipacion)}
                     />
                     <div>
                       <strong>Ambos</strong>
@@ -231,32 +341,38 @@ function Register() {
                 </div>
               </div>
 
-              {/* Checkbox Acepto bases */}
-              <div className="form-group checkbox-bases">
-                <label className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="aceptaBases"
-                    checked={formData.aceptaBases}
-                    onChange={handleChange}
-                    required
-                  />
-                  <span>Acepto las bases del congreso y el tratamiento de mis datos.</span>
-                </label>
-              </div>
+              <div className="register-footer-actions">
+                {/* Checkbox Acepto bases */}
+                <div className="form-group checkbox-bases">
+                  <label className="checkbox-label">
+                    <input
+                      type="checkbox"
+                      name="aceptaBases"
+                      checked={formData.aceptaBases}
+                      onChange={handleChange}
+                      required
+                      aria-invalid={Boolean(errors.aceptaBases)}
+                    />
+                    <span>Acepto las bases del congreso y el tratamiento de mis datos.</span>
+                  </label>
+                  {errors.aceptaBases && (
+                    <span className="field-error-message">{errors.aceptaBases}</span>
+                  )}
+                </div>
 
-              {/* Acciones del formulario */}
-              <div className="register-actions">
-                <button
-                  type="button"
-                  className="btn-cancel-register"
-                  onClick={() => navigate('/')}
-                >
-                  Cancelar
-                </button>
-                <button type="submit" className="btn-submit-register">
-                  Crear mi cuenta
-                </button>
+                {/* Acciones del formulario */}
+                <div className="register-actions">
+                  <button
+                    type="button"
+                    className="btn-cancel-register"
+                    onClick={() => navigate('/')}
+                  >
+                    Cancelar
+                  </button>
+                  <button type="submit" className="btn-submit-register">
+                    Crear mi cuenta
+                  </button>
+                </div>
               </div>
 
             </form>
@@ -272,6 +388,22 @@ function Register() {
               <p>
                 Si participa como revisor, deberá declarar sus líneas de interés para recibir asignaciones sin conflicto.
               </p>
+            </div>
+            <div className="password-requirements-box" aria-live="polite">
+              <h3>Requisitos de la contraseña</h3>
+              <ul>
+                {passwordRequirements.map(({ label, isMet }) => (
+                  <li
+                    className={isMet ? 'password-requirement met' : 'password-requirement'}
+                    key={label}
+                  >
+                    <span className="password-requirement-icon" aria-hidden="true">
+                      {isMet ? '✓' : '×'}
+                    </span>
+                    <span>{label}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </aside>
 

@@ -1,53 +1,32 @@
-import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import CabeceraComite from './CabeceraComite';
+import PestanasConfig from './PestanasConfig';
+import PieComite from './PieComite';
 import './Historia2.css';
 
+const EDICION_INICIAL = {
+  nombre: 'VIII Congreso Académico Estudiantil',
+  anio: '2026',
+  sede: 'Auditorio Central, Universidad de Lima — Santiago de Surco',
+  descripcion:
+    'Encuentro anual de investigación estudiantil. Se reciben artículos completos, resúmenes extendidos, pósteres y casos de estudio en seis ejes temáticos.',
+};
+
 function Historia2() {
-  const navigate = useNavigate();
-  const sinAccion = (e) => e.preventDefault();
+  const [edicion, setEdicion] = useState(EDICION_INICIAL);
+
+  const evitarEnvio = (e) => {
+    e.preventDefault();
+  };
+
+  // Copiamos el objeto con spread y cambiamos solo un campo
+  const cambiarCampo = (campo, valor) => {
+    setEdicion({ ...edicion, [campo]: valor });
+  };
 
   return (
     <div className="historia2-pagina">
-      <header className="cabecera">
-        <div className="contenedor cabecera-interna">
-          <div
-            className="marca"
-            style={{ cursor: 'pointer' }}
-            onClick={() => navigate('/portada')}
-          >
-            <div className="logo-c">C</div>
-            <div>
-              <p className="marca-nombre">Congreso Académico Estudiantil</p>
-              <p className="marca-sub">UNIVERSIDAD DE LIMA · EDICIÓN 2026</p>
-            </div>
-          </div>
-          <div className="estado-edicion">
-            ESTADO DE LA EDICIÓN
-            <span className="etiqueta-estado">Recepción abierta</span>
-          </div>
-        </div>
-      </header>
-
-      <nav className="barra-nav">
-        <div className="contenedor barra-nav-interna">
-          <ul className="menu">
-            <li><a href="#" className="activo" onClick={sinAccion}>Configuración</a></li>
-            <li><a href="#" onClick={sinAccion}>Trabajos recibidos</a></li>
-            <li><a href="#" onClick={sinAccion}>Revisores</a></li>
-            <li><a href="#" onClick={sinAccion}>Seguimiento</a></li>
-            <li><a href="#" onClick={sinAccion}>Programa</a></li>
-            <li><a href="#" onClick={sinAccion}>Tablero</a></li>
-            <li><a href="#" onClick={sinAccion}>Usuarios</a></li>
-          </ul>
-          <div className="usuario">
-            <span className="usuario-icono"></span>
-            <div className="usuario-datos">
-              <p className="usuario-nombre">Dra. Ana Salazar Bermúdez</p>
-              <p className="usuario-rol">Rol: Comité organizador</p>
-            </div>
-            <div className="avatar">AS</div>
-          </div>
-        </div>
-      </nav>
+      <CabeceraComite estado="Recepción abierta" />
 
       <main className="contenido">
         <div className="contenedor">
@@ -62,22 +41,16 @@ function Historia2() {
             </div>
           </div>
 
-          <div className="pestanas">
-            <a href="#" className="pestana activa" onClick={sinAccion}>Edición</a>
-            <a href="#" className="pestana" onClick={sinAccion}>Ejes temáticos</a>
-            <a href="#" className="pestana" onClick={sinAccion}>Tipos de trabajo</a>
-            <a href="#" className="pestana" onClick={sinAccion}>Fechas límite</a>
-            <a href="#" className="pestana" onClick={sinAccion}>Criterios de evaluación</a>
-          </div>
+          <PestanasConfig activa="Edición" />
 
-          <div className="grid-config">
+          <div className="fila-config">
             <section className="tarjeta">
               <div className="tarjeta-cabecera">
                 <h2 className="tarjeta-titulo">Datos generales</h2>
                 <span className="insignia-estado">Estado: recepción abierta</span>
               </div>
 
-              <form className="formulario" onSubmit={sinAccion}>
+              <form className="formulario" onSubmit={evitarEnvio}>
                 <div className="fila-campos">
                   <div className="campo campo-grande">
                     <label className="etiqueta" htmlFor="nombre">NOMBRE DE LA EDICIÓN</label>
@@ -85,12 +58,19 @@ function Historia2() {
                       type="text"
                       id="nombre"
                       className="entrada"
-                      defaultValue="VIII Congreso Académico Estudiantil"
+                      value={edicion.nombre}
+                      onChange={(e) => cambiarCampo('nombre', e.target.value)}
                     />
                   </div>
                   <div className="campo">
                     <label className="etiqueta" htmlFor="anio">AÑO</label>
-                    <input type="text" id="anio" className="entrada" defaultValue="2026" />
+                    <input
+                      type="text"
+                      id="anio"
+                      className="entrada"
+                      value={edicion.anio}
+                      onChange={(e) => cambiarCampo('anio', e.target.value)}
+                    />
                   </div>
                 </div>
 
@@ -100,7 +80,8 @@ function Historia2() {
                     type="text"
                     id="sede"
                     className="entrada"
-                    defaultValue="Auditorio Central, Universidad de Lima — Santiago de Surco"
+                    value={edicion.sede}
+                    onChange={(e) => cambiarCampo('sede', e.target.value)}
                   />
                 </div>
 
@@ -110,7 +91,8 @@ function Historia2() {
                     id="descripcion"
                     className="entrada entrada-area"
                     maxLength={400}
-                    defaultValue="Encuentro anual de investigación estudiantil. Se reciben artículos completos, resúmenes extendidos, pósteres y casos de estudio en seis ejes temáticos."
+                    value={edicion.descripcion}
+                    onChange={(e) => cambiarCampo('descripcion', e.target.value)}
                   />
                   <p className="texto-auxiliar">Se muestra en la página pública del congreso. Máximo 400 caracteres.</p>
                 </div>
@@ -141,39 +123,7 @@ function Historia2() {
         </div>
       </main>
 
-      <footer className="pie">
-        <div className="contenedor pie-grid">
-          <div>
-            <p className="pie-marca">Congreso Académico Estudiantil</p>
-            <p>Facultad de Ingeniería · Universidad de Lima. Av. Javier Prado Este 4600, Santiago de Surco, Lima.</p>
-          </div>
-          <div>
-            <h4 className="pie-titulo">EL CONGRESO</h4>
-            <p><a href="#" onClick={sinAccion}>Bases y requisitos</a></p>
-            <p><a href="#" onClick={sinAccion}>Ejes temáticos</a></p>
-            <p><a href="#" onClick={sinAccion}>Programa</a></p>
-          </div>
-          <div>
-            <h4 className="pie-titulo">PARTICIPANTES</h4>
-            <p><a href="#" onClick={sinAccion}>Guía para autores</a></p>
-            <p><a href="#" onClick={sinAccion}>Guía para revisores</a></p>
-            <p><a href="#" onClick={sinAccion}>Preguntas frecuentes</a></p>
-          </div>
-          <div>
-            <h4 className="pie-titulo">CONTACTO</h4>
-            <p>congreso@ulima.edu.pe</p>
-            <p>(01) 437 6767 anexo 30450</p>
-          </div>
-        </div>
-        <div className="pie-legal">
-          <div className="contenedor pie-legal-interno">
-            <span>© 2026 Universidad de Lima. Todos los derechos reservados.</span>
-            <span>
-              <a href="#" onClick={sinAccion}>Términos de uso</a> &nbsp; <a href="#" onClick={sinAccion}>Política de privacidad</a>
-            </span>
-          </div>
-        </div>
-      </footer>
+      <PieComite />
     </div>
   );
 }

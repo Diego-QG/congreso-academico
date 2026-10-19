@@ -1,13 +1,19 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import "./Login.css";
 
 function Login() {
-  const [email, setEmail] = useState("rosa.quispe@aloe.ulima.edu.pe");
-  const [password, setPassword] = useState("•••••••••");
+  const location = useLocation();
+  const [email, setEmail] = useState(
+    location.state?.email || "rosa.quispe@aloe.ulima.edu.pe"
+  );
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [passwordUpdated, setPasswordUpdated] = useState(
+    Boolean(location.state?.passwordUpdated)
+  );
   const handleSubmit = (e) => {
     e.preventDefault(); // Evita que la página se recargue
     // Aquí simulamos que las credenciales ingresadas son incorrectas
@@ -22,6 +28,12 @@ function Login() {
       <main className="login-main-section">
         <div className="login-card">
           <h1 className="login-title">Inicio de sesión</h1>
+
+          {passwordUpdated && (
+            <div className="login-success-banner" role="status">
+              La contraseña se actualizó correctamente. Inicie sesión con su nueva contraseña.
+            </div>
+          )}
 
           {/* Subtítulo normal: solo se muestra si NO hay error */}
           {!hasError && (
@@ -54,6 +66,7 @@ function Login() {
                 onChange={(e) => {
                   setEmail(e.target.value);
                   if (hasError) setHasError(false); // Limpia el error al escribir
+                  if (passwordUpdated) setPasswordUpdated(false);
                 }}
                 placeholder="usuario@aloe.ulima.edu.pe"
                 required
@@ -71,6 +84,7 @@ function Login() {
                   onChange={(e) => {
                     setPassword(e.target.value);
                     if (hasError) setHasError(false); // Limpia el error al escribir
+                    if (passwordUpdated) setPasswordUpdated(false);
                   }}
                   className={hasError ? "input-field-error" : ""}
                   required
@@ -102,9 +116,13 @@ function Login() {
                 />
                 <span>Recordarme en este equipo</span>
               </label>
-              <a href="#forgot" className="forgot-password-link">
+              <Link
+                to="/recuperar-contrasena"
+                state={{ email }}
+                className="forgot-password-link"
+              >
                 ¿Olvidó su contraseña?
-              </a>
+              </Link>
             </div>
 
             {/* Botón Submit: Al presionar activa el handleSubmit */}
