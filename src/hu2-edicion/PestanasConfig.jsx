@@ -5,7 +5,7 @@ const PESTANAS = [
   { texto: 'Ejes temáticos', ruta: '/comite/edicion/ejes' },
   { texto: 'Tipos de trabajo', ruta: '/comite/edicion/tipos' },
   { texto: 'Fechas límite', ruta: '/comite/edicion/fechas' },
-  { texto: 'Criterios de evaluación', ruta: null }, // todavía sin página
+  { texto: 'Criterios de evaluación', ruta: '/comite/edicion/criterios' },
 ];
 
 // Uso: <PestanasConfig activa="Ejes temáticos" />

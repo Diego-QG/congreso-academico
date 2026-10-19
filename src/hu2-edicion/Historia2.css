@@ -734,7 +734,7 @@
     border-top: 1px solid var(--color-border);
 }
 
-/* ===== RESPONSIVE ===== */
+
 @media (max-width: 900px) {
     .cabecera {
         height: auto;
@@ -751,4 +751,93 @@
     .pestanas {
         flex-wrap: wrap;
     }
+}
+
+.cronograma-fila {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.cronograma-campos {
+    flex: 1;
+}
+
+.cronograma-campos .fecha-fila {
+    margin-bottom: 0;
+}
+
+.fecha-punto {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-top: 28px;
+    flex-shrink: 0;
+}
+
+.punto-primario {
+    background-color: var(--color-primary);
+}
+
+.punto-acento {
+    background-color: var(--color-accent);
+}
+
+.punto-exito {
+    background-color: var(--color-success);
+}
+
+.punto-error {
+    background-color: var(--color-danger);
+}
+
+.lista-orden {
+    padding-left: 20px;
+    margin-bottom: 8px;
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.nota-vista-previa {
+    margin-top: 8px;
+}
+
+.banner-pesos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 12px;
+    line-height: 16px;
+    border: 1px solid;
+    border-radius: 2px;
+}
+
+.banner-pesos-alerta {
+    background-color: #FBF3E4;
+    border-color: var(--color-warning);
+    color: var(--color-warning);
+}
+
+.banner-pesos-ok {
+    background-color: #E8F4EC;
+    border-color: var(--color-success);
+    color: var(--color-success);
+}
+
+.fila-total td {
+    font-weight: 600;
+    background-color: var(--color-bg);
+    border-top: 1px solid var(--color-border);
+}
+
+.total-alerta {
+    color: var(--color-warning);
+}
+
+.total-ok {
+    color: var(--color-success);
 }
