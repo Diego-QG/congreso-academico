@@ -2,5 +2,659 @@
   "usuarios": [],
   "edicion": {},
   "trabajos": [],
-  "revisiones": []
+  "revisiones": [
+    {
+      "id": "REV-A1",
+      "asignacionId": "A1",
+      "trabajoId": "T042",
+      "revisorId": "R5",
+      "estado": "borrador",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 75,
+          "comentario": "Tema conocido, pero con datos propios de la universidad."
+        },
+        {
+          "criterioId": 2,
+          "puntaje": null,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": null,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": null,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "",
+      "observacionComite": "",
+      "recomendacion": "",
+      "fechaEnvio": null
+    },
+    {
+      "id": "REV-A2",
+      "asignacionId": "A2",
+      "trabajoId": "T042",
+      "revisorId": "R6",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 80,
+          "comentario": "Enfoque novedoso con datos propios."
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 70,
+          "comentario": "Falta justificar el tamaño de la muestra."
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 85,
+          "comentario": "Redacción clara."
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 80,
+          "comentario": "Útil para tutoría académica."
+        }
+      ],
+      "comentarioAutor": "Buen trabajo. Justificar mejor el tamaño de la muestra.",
+      "observacionComite": "",
+      "recomendacion": "aceptar_con_observaciones",
+      "fechaEnvio": "2026-10-14"
+    },
+    {
+      "id": "REV-A3",
+      "asignacionId": "A3",
+      "trabajoId": "T042",
+      "revisorId": "R8",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 85,
+          "comentario": "Aporte relevante."
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 80,
+          "comentario": "Metodología adecuada."
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 80,
+          "comentario": "Figuras claras."
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 90,
+          "comentario": "Alta pertinencia para el eje."
+        }
+      ],
+      "comentarioAutor": "Trabajo sólido y bien presentado.",
+      "observacionComite": "",
+      "recomendacion": "aceptar",
+      "fechaEnvio": "2026-10-15"
+    },
+    {
+      "id": "REV-A5",
+      "asignacionId": "A5",
+      "trabajoId": "T045",
+      "revisorId": "R4",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 70,
+          "comentario": ""
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 65,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 75,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 70,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "Ampliar la comparación con otros modelos.",
+      "observacionComite": "",
+      "recomendacion": "aceptar_con_observaciones",
+      "fechaEnvio": "2026-10-07"
+    },
+    {
+      "id": "REV-A6",
+      "asignacionId": "A6",
+      "trabajoId": "T051",
+      "revisorId": "R2",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 90,
+          "comentario": ""
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 85,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 90,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 95,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "Excelente aplicación práctica.",
+      "observacionComite": "",
+      "recomendacion": "aceptar",
+      "fechaEnvio": "2026-10-05"
+    },
+    {
+      "id": "REV-A7",
+      "asignacionId": "A7",
+      "trabajoId": "T051",
+      "revisorId": "R4",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 85,
+          "comentario": ""
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 90,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 85,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 90,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "Muy buen diseño experimental.",
+      "observacionComite": "",
+      "recomendacion": "aceptar",
+      "fechaEnvio": "2026-10-06"
+    },
+    {
+      "id": "REV-A8",
+      "asignacionId": "A8",
+      "trabajoId": "T051",
+      "revisorId": "R1",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 80,
+          "comentario": ""
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 85,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 90,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 85,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "Recomendable para el programa.",
+      "observacionComite": "",
+      "recomendacion": "aceptar",
+      "fechaEnvio": "2026-10-07"
+    },
+    {
+      "id": "REV-A11",
+      "asignacionId": "A11",
+      "trabajoId": "T057",
+      "revisorId": "R3",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 40,
+          "comentario": ""
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 30,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 50,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 45,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "El tablero no se valida con datos reales.",
+      "observacionComite": "",
+      "recomendacion": "rechazar",
+      "fechaEnvio": "2026-10-06"
+    },
+    {
+      "id": "REV-A12",
+      "asignacionId": "A12",
+      "trabajoId": "T057",
+      "revisorId": "R8",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 35,
+          "comentario": ""
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 25,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 45,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 40,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "Faltan fuentes y metodología.",
+      "observacionComite": "Parte del texto coincide con un informe municipal publicado; revisar originalidad.",
+      "recomendacion": "rechazar",
+      "fechaEnvio": "2026-10-07"
+    },
+    {
+      "id": "REV-A13",
+      "asignacionId": "A13",
+      "trabajoId": "T057",
+      "revisorId": "R2",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 50,
+          "comentario": ""
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 40,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 55,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 50,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "Buena idea, ejecución incompleta.",
+      "observacionComite": "",
+      "recomendacion": "rechazar",
+      "fechaEnvio": "2026-10-08"
+    },
+    {
+      "id": "REV-A14",
+      "asignacionId": "A14",
+      "trabajoId": "T058",
+      "revisorId": "R2",
+      "estado": "borrador",
+      "puntajes": [],
+      "comentarioAutor": "",
+      "observacionComite": "",
+      "recomendacion": "",
+      "fechaEnvio": null
+    },
+    {
+      "id": "REV-A15",
+      "asignacionId": "A15",
+      "trabajoId": "T058",
+      "revisorId": "R6",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 70,
+          "comentario": ""
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 60,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 65,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 70,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "Comparar contra una línea base simple.",
+      "observacionComite": "",
+      "recomendacion": "aceptar_con_observaciones",
+      "fechaEnvio": "2026-10-16"
+    },
+    {
+      "id": "REV-A16",
+      "asignacionId": "A16",
+      "trabajoId": "T058",
+      "revisorId": "R4",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 60,
+          "comentario": ""
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 55,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 70,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 65,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "Mejorar la descripción del conjunto de datos.",
+      "observacionComite": "",
+      "recomendacion": "aceptar_con_observaciones",
+      "fechaEnvio": "2026-10-17"
+    },
+    {
+      "id": "REV-A18",
+      "asignacionId": "A18",
+      "trabajoId": "T059",
+      "revisorId": "R1",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 45,
+          "comentario": ""
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 35,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 50,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 55,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "El modelo financiero necesita sustento.",
+      "observacionComite": "",
+      "recomendacion": "rechazar",
+      "fechaEnvio": "2026-10-17"
+    },
+    {
+      "id": "REV-A19",
+      "asignacionId": "A19",
+      "trabajoId": "T059",
+      "revisorId": "R5",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 55,
+          "comentario": ""
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 40,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 45,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 50,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "Idea interesante, falta validar el mercado.",
+      "observacionComite": "Podría aceptarse como póster si se reduce el alcance.",
+      "recomendacion": "aceptar_con_observaciones",
+      "fechaEnvio": "2026-10-18"
+    },
+    {
+      "id": "REV-A21",
+      "asignacionId": "A21",
+      "trabajoId": "T060",
+      "revisorId": "R3",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 65,
+          "comentario": ""
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 60,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 70,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 60,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "Incluir datos de más de un semestre.",
+      "observacionComite": "",
+      "recomendacion": "aceptar_con_observaciones",
+      "fechaEnvio": "2026-10-17"
+    },
+    {
+      "id": "REV-A22",
+      "asignacionId": "A22",
+      "trabajoId": "T060",
+      "revisorId": "R7",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 60,
+          "comentario": ""
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 55,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 65,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 70,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "Buena pregunta de investigación.",
+      "observacionComite": "",
+      "recomendacion": "aceptar_con_observaciones",
+      "fechaEnvio": "2026-10-18"
+    },
+    {
+      "id": "REV-A23",
+      "asignacionId": "A23",
+      "trabajoId": "T061",
+      "revisorId": "R1",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 85,
+          "comentario": ""
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 90,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 80,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 85,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "Análisis riguroso y actual.",
+      "observacionComite": "",
+      "recomendacion": "aceptar",
+      "fechaEnvio": "2026-10-15"
+    },
+    {
+      "id": "REV-A24",
+      "asignacionId": "A24",
+      "trabajoId": "T061",
+      "revisorId": "R4",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 80,
+          "comentario": ""
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 85,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 85,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 80,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "Muy bien documentado.",
+      "observacionComite": "",
+      "recomendacion": "aceptar",
+      "fechaEnvio": "2026-10-16"
+    },
+    {
+      "id": "REV-A25",
+      "asignacionId": "A25",
+      "trabajoId": "T061",
+      "revisorId": "R5",
+      "estado": "enviada",
+      "puntajes": [
+        {
+          "criterioId": 1,
+          "puntaje": 90,
+          "comentario": ""
+        },
+        {
+          "criterioId": 2,
+          "puntaje": 85,
+          "comentario": ""
+        },
+        {
+          "criterioId": 3,
+          "puntaje": 80,
+          "comentario": ""
+        },
+        {
+          "criterioId": 4,
+          "puntaje": 90,
+          "comentario": ""
+        }
+      ],
+      "comentarioAutor": "Aporte claro al eje.",
+      "observacionComite": "",
+      "recomendacion": "aceptar",
+      "fechaEnvio": "2026-10-17"
+    }
+  ],
+  "dictamenes": [
+    {
+      "trabajoId": "T051",
+      "decision": "aceptado",
+      "retroalimentacion": "Trabajo aceptado. Felicitaciones; considere los comentarios de los revisores para su presentación.",
+      "fecha": "2026-10-10"
+    },
+    {
+      "trabajoId": "T057",
+      "decision": "rechazado",
+      "retroalimentacion": "El trabajo no fue aceptado en esta edición. Le recomendamos fortalecer la metodología y citar todas sus fuentes.",
+      "fecha": "2026-10-10"
+    }
+  ]
 }
