@@ -11,8 +11,10 @@
    | HU-1 · Cuenta y acceso | Hugo | src/hu1-cuenta |
    | HU-2 · Configuración de la edición | Josué | src/hu2-edicion |
    | HU-3 · Envío de trabajos | Carlos | src/hu3-trabajos |
-   | HU-4 · Asignación de revisiones | ? | src/hu4-asignacion |
+   | HU-4 · Asignación de revisiones | Alonso | src/hu4-asignacion |
    | HU-5 · Revisión y dictamen | Diego-QG | src/hu5-revision |
+   | HU-6 · Programa del congreso | Sacha | src/hu6-programa |
+   | HU-7 · Métricas y usuarios | Diego-QG | src/hu7-metricas |
 
    ## Reglas del equipo
    1. Nadie sube directo a main.

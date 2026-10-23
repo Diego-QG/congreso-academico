@@ -8,6 +8,8 @@ import Login from './hu1-cuenta/Login';
 import Register from './hu1-cuenta/Register';
 import Bienvenida from './hu1-cuenta/Bienvenida';
 import RecuperarContrasena from './hu1-cuenta/RecuperarContrasena';
+// HU-3 · Envío de trabajos
+import { MisTrabajos, NuevoTrabajo } from './hu3-trabajos/Historia3';
 // HU-2 · Configuración de la edición
 import Historia2 from './hu2-edicion/Historia2';
 import Historia2p2 from './hu2-edicion/Historia2p2';
@@ -44,7 +46,10 @@ export default function App() {
         <Route path="/bienvenida" element={<Bienvenida />} />
         <Route path="/recuperar-contrasena" element={<RecuperarContrasena />} />
 
-        {/* HU-3: /autor/trabajos */}
+        {/* HU-3 */}
+        <Route path="/autor/trabajos" element={<MisTrabajos />} />
+        <Route path="/nuevo-trabajo" element={<NuevoTrabajo />} />
+
         {/* HU-5 */}
         <Route path="/revisor/bandeja" element={<BandejaRevisor />} />
       </Route>
