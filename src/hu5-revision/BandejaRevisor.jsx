@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import seed from "../data/seed.json";
+import { useRevisiones } from "./revisionesContexto";
 import "./BandejaRevisor.css";
 
 // Temporallllll
 const REVISOR_ACTUAL = "R5";
 
-function estadoDeRevision(asignacionId) {
-  const revision = seed.revisiones.find((r) => r.asignacionId === asignacionId);
+function estadoDeRevision(revisiones, asignacionId) {
+  const revision = revisiones.find((r) => r.asignacionId === asignacionId);
   if (!revision) return "Pendiente";
   return revision.estado === "enviada" ? "Enviada" : "En progreso";
 }
@@ -17,25 +18,26 @@ const TEXTO_BOTON = {
   Enviada: "Ver",
 };
 
-const ASIGNACIONES = seed.asignaciones
-  .filter((a) => a.revisorId === REVISOR_ACTUAL)
-  .map((a) => {
-    const trabajo = seed.trabajos.find((t) => t.id === a.trabajoId);
-    return {
-      id: a.id,
-      codigo: trabajo.codigo,
-      titulo: trabajo.titulo,
-      eje: trabajo.eje,
-      fechaLimite: a.fecha,
-      estado: estadoDeRevision(a.id),
-    };
-  });
-
 function claseEstado(estado) {
   return "estado-" + estado.toLowerCase().replace(" ", "-");
 }
 
 export default function BandejaRevisor() {
+  const { revisiones } = useRevisiones();
+  const asignaciones = seed.asignaciones
+    .filter((a) => a.revisorId === REVISOR_ACTUAL)
+    .map((a) => {
+      const trabajo = seed.trabajos.find((t) => t.id === a.trabajoId);
+      return {
+        id: a.id,
+        codigo: trabajo.codigo,
+        titulo: trabajo.titulo,
+        eje: trabajo.eje,
+        fechaLimite: a.fecha,
+        estado: estadoDeRevision(revisiones, a.id),
+      };
+    });
+
   return (
     <section className="bandeja">
       <h1>Mis revisiones asignadas</h1>
@@ -43,7 +45,7 @@ export default function BandejaRevisor() {
         Trabajos que el comité le asignó para evaluar.
       </p>
 
-      {ASIGNACIONES.length === 0 ? (
+      {asignaciones.length === 0 ? (
         <p className="bandeja-vacia">Aún no tiene trabajos asignados.</p>
       ) : (
         <table className="bandeja-tabla">
@@ -57,7 +59,7 @@ export default function BandejaRevisor() {
             </tr>
           </thead>
           <tbody>
-            {ASIGNACIONES.map((a) => (
+            {asignaciones.map((a) => (
               <tr key={a.id}>
                 <td>{a.codigo}</td>
                 <td>

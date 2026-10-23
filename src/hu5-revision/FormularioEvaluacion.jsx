@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import seed from '../data/seed.json';
 import FormularioCriterios from '../shared/FormularioCriterios';
+import { aNumero } from '../shared/puntajes';
+import { useRevisiones } from './revisionesContexto';
 import './FormularioEvaluacion.css';
 
 const RECOMENDACIONES = [
@@ -15,8 +17,8 @@ const MENSAJE_PUNTAJE = 'Ingrese un puntaje entre 0 y 20.';
 
 // Si el revisor ya tiene un borrador o una revisión enviada, se usa esa;
 // si no, se arma una revisión vacía con un puntaje por cada criterio.
-function revisionInicial(asignacion) {
-  const existente = seed.revisiones.find((r) => r.asignacionId === asignacion.id);
+function revisionInicial(asignacion, revisiones) {
+  const existente = revisiones.find((r) => r.asignacionId === asignacion.id);
   if (existente) return existente;
   return {
     id: 'REV-' + asignacion.id,
@@ -51,7 +53,8 @@ export default function FormularioEvaluacion() {
 
 function Evaluacion({ asignacion }) {
   const trabajo = seed.trabajos.find((t) => t.id === asignacion.trabajoId);
-  const [revision, setRevision] = useState(() => revisionInicial(asignacion));
+  const { revisiones, guardarRevision } = useRevisiones();
+  const [revision, setRevision] = useState(() => revisionInicial(asignacion, revisiones));
   const [errores, setErrores] = useState({ criterios: {} });
   const [aviso, setAviso] = useState('');
   const soloLectura = revision.estado === 'enviada';
@@ -89,13 +92,39 @@ function Evaluacion({ asignacion }) {
     return Object.keys(nuevos.criterios).length === 0 && !nuevos.comentarioAutor && !nuevos.recomendacion;
   }
 
-  // Paso 2a: solo valida. El guardado real se conecta en el paso 2b.
+  // Arma la revisión tal como se guarda: puntajes como número (o null) y fecha de envío.
+  function revisionParaGuardar(estado) {
+    return {
+      ...revision,
+      estado,
+      puntajes: revision.puntajes.map((p) => ({ ...p, puntaje: aNumero(p.puntaje) })),
+      fechaEnvio: estado === 'enviada' ? new Date().toLocaleDateString('en-CA') : null,
+    };
+  }
+
   function guardarBorrador() {
-    setAviso(validar(false) ? 'Borrador válido. (El guardado se conecta en el siguiente paso.)' : '');
+    if (!validar(false)) {
+      setAviso('');
+      return;
+    }
+    const nueva = revisionParaGuardar('borrador');
+    guardarRevision(nueva);
+    setRevision(nueva);
+    const hora = new Date().toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
+    setAviso('Borrador guardado a las ' + hora + '.');
   }
 
   function enviar() {
-    setAviso(validar(true) ? 'Revisión lista para enviar. (El envío se conecta en el siguiente paso.)' : '');
+    if (!validar(true)) {
+      setAviso('');
+      return;
+    }
+    const confirmado = window.confirm('Una vez enviada, la evaluación ya no admite cambios. ¿Desea enviarla?');
+    if (!confirmado) return;
+    const nueva = revisionParaGuardar('enviada');
+    guardarRevision(nueva);
+    setRevision(nueva); // pasa a modo lectura y aparece el banner de "enviada"
+    window.scrollTo(0, 0);
   }
 
   const recomendacionTexto = RECOMENDACIONES.find((r) => r.valor === revision.recomendacion)?.texto;
