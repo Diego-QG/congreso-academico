@@ -1,7 +1,509 @@
 {
   "usuarios": [],
-  "edicion": {},
-  "trabajos": [],
+  "revisores": [
+    {
+      "id": "R1",
+      "nombre": "Mg. Luis Ramírez Cárdenas",
+      "inst": "Universidad de Lima",
+      "lineas": [
+        "Ingeniería de software",
+        "Inteligencia artificial y datos"
+      ]
+    },
+    {
+      "id": "R2",
+      "nombre": "Mg. Carmen Effio Vargas",
+      "inst": "Universidad de Lima",
+      "lineas": [
+        "Ingeniería de software",
+        "Sostenibilidad y ciudad"
+      ]
+    },
+    {
+      "id": "R3",
+      "nombre": "Ing. Jorge Palomino Ávila",
+      "inst": "Universidad de Lima",
+      "lineas": [
+        "Innovación y emprendimiento",
+        "Ingeniería de software"
+      ]
+    },
+    {
+      "id": "R4",
+      "nombre": "Dra. Milagros Yupanqui Ríos",
+      "inst": "Universidad de Lima",
+      "lineas": [
+        "Salud y sociedad"
+      ]
+    },
+    {
+      "id": "R5",
+      "nombre": "Dr. Óscar Nakamura Trigoso",
+      "inst": "Pontificia Universidad Católica del Perú",
+      "lineas": [
+        "Inteligencia artificial y datos",
+        "Economía y mercados"
+      ]
+    },
+    {
+      "id": "R6",
+      "nombre": "Mg. Renzo Bustamante Loayza",
+      "inst": "Universidad del Pacífico",
+      "lineas": [
+        "Economía y mercados"
+      ]
+    },
+    {
+      "id": "R7",
+      "nombre": "Mg. Patricia Zegarra Coronado",
+      "inst": "Universidad de Lima",
+      "lineas": [
+        "Innovación y emprendimiento"
+      ]
+    },
+    {
+      "id": "R8",
+      "nombre": "Dr. Álvaro Ccahuana Pinto",
+      "inst": "Universidad Nacional de Ingeniería",
+      "lineas": [
+        "Sostenibilidad y ciudad"
+      ]
+    },
+    {
+      "id": "R9",
+      "nombre": "Dra. Rocío Mendoza Salas",
+      "inst": "Universidad Nacional Mayor de San Marcos",
+      "lineas": [
+        "Salud y sociedad",
+        "Economía y mercados"
+      ]
+    }
+  ],
+  "edicion": {
+    "criterios": [
+      {
+        "id": 1,
+        "nombre": "Originalidad",
+        "descripcion": "Aporte novedoso frente a la literatura consultada.",
+        "peso": 25
+      },
+      {
+        "id": 2,
+        "nombre": "Rigor metodológico",
+        "descripcion": "Coherencia del diseño, los datos y el análisis.",
+        "peso": 30
+      },
+      {
+        "id": 3,
+        "nombre": "Claridad de la exposición",
+        "descripcion": "Redacción, estructura y calidad de las figuras.",
+        "peso": 20
+      },
+      {
+        "id": 4,
+        "nombre": "Relevancia y aporte",
+        "descripcion": "Pertinencia para el eje temático y utilidad práctica.",
+        "peso": 20
+      }
+    ]
+  },
+  "trabajos": [
+    {
+      "id": "T031",
+      "codigo": "TRB-2026-031",
+      "titulo": "Refactorización guiada por métricas de deuda técnica",
+      "eje": "Ingeniería de software",
+      "tipo": "Artículo completo",
+      "estado": "Enviado",
+      "autor": {
+        "nombre": "Camila Rojas Huamán",
+        "inst": "Universidad del Pacífico"
+      },
+      "coautores": []
+    },
+    {
+      "id": "T035",
+      "codigo": "TRB-2026-035",
+      "titulo": "Pruebas automatizadas en proyectos universitarios de software",
+      "eje": "Ingeniería de software",
+      "tipo": "Resumen extendido",
+      "estado": "Enviado",
+      "autor": {
+        "nombre": "Diego Chávez Manrique",
+        "inst": "Universidad de Lima"
+      },
+      "coautores": [
+        {
+          "nombre": "Milagros Yupanqui Ríos",
+          "inst": "Universidad de Lima",
+          "revisorId": "R4"
+        }
+      ]
+    },
+    {
+      "id": "T040",
+      "codigo": "TRB-2026-040",
+      "titulo": "Arquitectura de microservicios para un sistema de matrícula",
+      "eje": "Ingeniería de software",
+      "tipo": "Caso de estudio",
+      "estado": "Enviado",
+      "autor": {
+        "nombre": "Valeria Soto Paredes",
+        "inst": "Universidad Nacional de Ingeniería"
+      },
+      "coautores": [
+        {
+          "nombre": "Marco Núñez Salas",
+          "inst": "Universidad Nacional de Ingeniería"
+        }
+      ]
+    },
+    {
+      "id": "T042",
+      "codigo": "TRB-2026-042",
+      "titulo": "Predicción de deserción universitaria mediante aprendizaje supervisado",
+      "eje": "Inteligencia artificial y datos",
+      "tipo": "Artículo completo",
+      "estado": "En revisión",
+      "autor": {
+        "nombre": "Rosa Quispe Ttito",
+        "inst": "Universidad de Lima"
+      },
+      "coautores": [
+        {
+          "nombre": "Diego Chávez Manrique",
+          "inst": "Universidad de Lima"
+        }
+      ]
+    },
+    {
+      "id": "T045",
+      "codigo": "TRB-2026-045",
+      "titulo": "Detección de fraude en pagos móviles con modelos de árboles",
+      "eje": "Economía y mercados",
+      "tipo": "Artículo completo",
+      "estado": "En revisión",
+      "autor": {
+        "nombre": "Gabriela Ñahui Torres",
+        "inst": "Pontificia Universidad Católica del Perú"
+      },
+      "coautores": [
+        {
+          "nombre": "Marco Ibáñez Cruz",
+          "inst": "Pontificia Universidad Católica del Perú"
+        }
+      ]
+    },
+    {
+      "id": "T051",
+      "codigo": "TRB-2026-051",
+      "titulo": "Evaluación del uso de agua reciclada en riego de áreas verdes del campus",
+      "eje": "Sostenibilidad y ciudad",
+      "tipo": "Resumen extendido",
+      "estado": "Aceptado",
+      "autor": {
+        "nombre": "Elena Cáceres Rivas",
+        "inst": "Universidad Peruana de Ciencias Aplicadas"
+      },
+      "coautores": []
+    },
+    {
+      "id": "T053",
+      "codigo": "TRB-2026-053",
+      "titulo": "Bienestar emocional y rendimiento académico en primeros ciclos",
+      "eje": "Salud y sociedad",
+      "tipo": "Póster",
+      "estado": "En revisión",
+      "autor": {
+        "nombre": "Andrea Salinas Ortiz",
+        "inst": "Universidad Peruana Cayetano Heredia"
+      },
+      "coautores": [
+        {
+          "nombre": "Luis Gamarra Peña",
+          "inst": "Universidad Peruana Cayetano Heredia"
+        }
+      ]
+    },
+    {
+      "id": "T057",
+      "codigo": "TRB-2026-057",
+      "titulo": "Tablero de indicadores para la gestión de residuos sólidos en Surco",
+      "eje": "Sostenibilidad y ciudad",
+      "tipo": "Caso de estudio",
+      "estado": "Rechazado",
+      "autor": {
+        "nombre": "Jhon Quiroz Medina",
+        "inst": "Universidad Peruana de Ciencias Aplicadas"
+      },
+      "coautores": []
+    },
+    {
+      "id": "T058",
+      "codigo": "TRB-2026-058",
+      "titulo": "Modelos de lenguaje para clasificar consultas de atención al estudiante",
+      "eje": "Inteligencia artificial y datos",
+      "tipo": "Artículo completo",
+      "estado": "En revisión",
+      "autor": {
+        "nombre": "Sofía Medina Arce",
+        "inst": "Universidad Peruana de Ciencias Aplicadas"
+      },
+      "coautores": [
+        {
+          "nombre": "Renato Villanueva Díaz",
+          "inst": "Universidad Peruana de Ciencias Aplicadas"
+        }
+      ]
+    },
+    {
+      "id": "T059",
+      "codigo": "TRB-2026-059",
+      "titulo": "Modelo de negocio para una plataforma de microseguros agrícolas",
+      "eje": "Innovación y emprendimiento",
+      "tipo": "Resumen extendido",
+      "estado": "En revisión",
+      "autor": {
+        "nombre": "Daniel Paucar Rojas",
+        "inst": "Universidad San Ignacio de Loyola"
+      },
+      "coautores": []
+    },
+    {
+      "id": "T060",
+      "codigo": "TRB-2026-060",
+      "titulo": "Impacto de la ciclovía de Javier Prado en la movilidad estudiantil",
+      "eje": "Sostenibilidad y ciudad",
+      "tipo": "Artículo completo",
+      "estado": "En revisión",
+      "autor": {
+        "nombre": "Fiorella Tapia Zúñiga",
+        "inst": "Universidad Peruana Cayetano Heredia"
+      },
+      "coautores": [
+        {
+          "nombre": "Piero Alva Montes",
+          "inst": "Universidad Peruana Cayetano Heredia"
+        }
+      ]
+    },
+    {
+      "id": "T061",
+      "codigo": "TRB-2026-061",
+      "titulo": "Análisis de la inflación de alimentos en Lima Metropolitana (2019–2025)",
+      "eje": "Economía y mercados",
+      "tipo": "Artículo completo",
+      "estado": "En revisión",
+      "autor": {
+        "nombre": "Bruno Carrasco Lira",
+        "inst": "Universidad San Ignacio de Loyola"
+      },
+      "coautores": []
+    },
+    {
+      "id": "T062",
+      "codigo": "TRB-2026-062",
+      "titulo": "Hábitos de sueño y desempeño en exámenes finales",
+      "eje": "Salud y sociedad",
+      "tipo": "Póster",
+      "estado": "Borrador",
+      "autor": {
+        "nombre": "Ximena Prado León",
+        "inst": "Universidad de Lima"
+      },
+      "coautores": []
+    },
+    {
+      "id": "T063",
+      "codigo": "TRB-2026-063",
+      "titulo": "Chatbot de orientación vocacional para escolares",
+      "eje": "Inteligencia artificial y datos",
+      "tipo": "Caso de estudio",
+      "estado": "Borrador",
+      "autor": {
+        "nombre": "Hugo Benavides Ríos",
+        "inst": "Universidad Nacional Mayor de San Marcos"
+      },
+      "coautores": []
+    }
+  ],
+  "asignaciones": [
+    {
+      "id": "A1",
+      "trabajoId": "T042",
+      "revisorId": "R5",
+      "fecha": "2026-10-15",
+      "estado": "pendiente"
+    },
+    {
+      "id": "A2",
+      "trabajoId": "T042",
+      "revisorId": "R6",
+      "fecha": "2026-10-20",
+      "estado": "entregada"
+    },
+    {
+      "id": "A3",
+      "trabajoId": "T042",
+      "revisorId": "R8",
+      "fecha": "2026-10-20",
+      "estado": "entregada"
+    },
+    {
+      "id": "A4",
+      "trabajoId": "T045",
+      "revisorId": "R3",
+      "fecha": "2026-10-08",
+      "estado": "pendiente"
+    },
+    {
+      "id": "A5",
+      "trabajoId": "T045",
+      "revisorId": "R4",
+      "fecha": "2026-10-08",
+      "estado": "entregada"
+    },
+    {
+      "id": "A6",
+      "trabajoId": "T051",
+      "revisorId": "R2",
+      "fecha": "2026-10-08",
+      "estado": "entregada"
+    },
+    {
+      "id": "A7",
+      "trabajoId": "T051",
+      "revisorId": "R4",
+      "fecha": "2026-10-08",
+      "estado": "entregada"
+    },
+    {
+      "id": "A8",
+      "trabajoId": "T051",
+      "revisorId": "R1",
+      "fecha": "2026-10-08",
+      "estado": "entregada"
+    },
+    {
+      "id": "A9",
+      "trabajoId": "T053",
+      "revisorId": "R7",
+      "fecha": "2026-10-09",
+      "estado": "pendiente"
+    },
+    {
+      "id": "A10",
+      "trabajoId": "T053",
+      "revisorId": "R1",
+      "fecha": "2026-10-09",
+      "estado": "pendiente"
+    },
+    {
+      "id": "A11",
+      "trabajoId": "T057",
+      "revisorId": "R3",
+      "fecha": "2026-10-08",
+      "estado": "entregada"
+    },
+    {
+      "id": "A12",
+      "trabajoId": "T057",
+      "revisorId": "R8",
+      "fecha": "2026-10-08",
+      "estado": "entregada"
+    },
+    {
+      "id": "A13",
+      "trabajoId": "T057",
+      "revisorId": "R2",
+      "fecha": "2026-10-08",
+      "estado": "entregada"
+    },
+    {
+      "id": "A14",
+      "trabajoId": "T058",
+      "revisorId": "R2",
+      "fecha": "2026-10-18",
+      "estado": "pendiente"
+    },
+    {
+      "id": "A15",
+      "trabajoId": "T058",
+      "revisorId": "R6",
+      "fecha": "2026-10-18",
+      "estado": "entregada"
+    },
+    {
+      "id": "A16",
+      "trabajoId": "T058",
+      "revisorId": "R4",
+      "fecha": "2026-10-18",
+      "estado": "entregada"
+    },
+    {
+      "id": "A17",
+      "trabajoId": "T059",
+      "revisorId": "R6",
+      "fecha": "2026-10-20",
+      "estado": "pendiente"
+    },
+    {
+      "id": "A18",
+      "trabajoId": "T059",
+      "revisorId": "R1",
+      "fecha": "2026-10-20",
+      "estado": "entregada"
+    },
+    {
+      "id": "A19",
+      "trabajoId": "T059",
+      "revisorId": "R5",
+      "fecha": "2026-10-20",
+      "estado": "entregada"
+    },
+    {
+      "id": "A20",
+      "trabajoId": "T060",
+      "revisorId": "R8",
+      "fecha": "2026-10-20",
+      "estado": "pendiente"
+    },
+    {
+      "id": "A21",
+      "trabajoId": "T060",
+      "revisorId": "R3",
+      "fecha": "2026-10-20",
+      "estado": "entregada"
+    },
+    {
+      "id": "A22",
+      "trabajoId": "T060",
+      "revisorId": "R7",
+      "fecha": "2026-10-20",
+      "estado": "entregada"
+    },
+    {
+      "id": "A23",
+      "trabajoId": "T061",
+      "revisorId": "R1",
+      "fecha": "2026-10-20",
+      "estado": "entregada"
+    },
+    {
+      "id": "A24",
+      "trabajoId": "T061",
+      "revisorId": "R4",
+      "fecha": "2026-10-20",
+      "estado": "entregada"
+    },
+    {
+      "id": "A25",
+      "trabajoId": "T061",
+      "revisorId": "R5",
+      "fecha": "2026-10-20",
+      "estado": "entregada"
+    }
+  ],
   "revisiones": [
     {
       "id": "REV-A1",
