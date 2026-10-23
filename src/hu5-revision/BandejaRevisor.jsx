@@ -1,20 +1,47 @@
-import './BandejaRevisor.css';
+import { Link } from "react-router-dom";
+import seed from "../data/seed.json";
+import "./BandejaRevisor.css";
 
-const ASIGNACIONES = [
-  { id: 'A1', codigo: 'TRB-2026-042', titulo: 'Predicción de deserción universitaria mediante aprendizaje supervisado', eje: 'Inteligencia artificial y datos', fechaLimite: '2026-10-20', estado: 'Pendiente' },
-  { id: 'A2', codigo: 'TRB-2026-035', titulo: 'Pruebas automatizadas en proyectos universitarios de software', eje: 'Ingeniería de software', fechaLimite: '2026-10-18', estado: 'En progreso' },
-  { id: 'A3', codigo: 'TRB-2026-051', titulo: 'Uso de agua reciclada en el riego de áreas verdes del campus', eje: 'Sostenibilidad y ciudad', fechaLimite: '2026-10-10', estado: 'Enviada' },
-];
+// Temporallllll
+const REVISOR_ACTUAL = "R5";
+
+function estadoDeRevision(asignacionId) {
+  const revision = seed.revisiones.find((r) => r.asignacionId === asignacionId);
+  if (!revision) return "Pendiente";
+  return revision.estado === "enviada" ? "Enviada" : "En progreso";
+}
+
+const TEXTO_BOTON = {
+  Pendiente: "Evaluar",
+  "En progreso": "Continuar",
+  Enviada: "Ver",
+};
+
+const ASIGNACIONES = seed.asignaciones
+  .filter((a) => a.revisorId === REVISOR_ACTUAL)
+  .map((a) => {
+    const trabajo = seed.trabajos.find((t) => t.id === a.trabajoId);
+    return {
+      id: a.id,
+      codigo: trabajo.codigo,
+      titulo: trabajo.titulo,
+      eje: trabajo.eje,
+      fechaLimite: a.fecha,
+      estado: estadoDeRevision(a.id),
+    };
+  });
 
 function claseEstado(estado) {
-  return 'estado-' + estado.toLowerCase().replace(' ', '-');
+  return "estado-" + estado.toLowerCase().replace(" ", "-");
 }
 
 export default function BandejaRevisor() {
   return (
     <section className="bandeja">
       <h1>Mis revisiones asignadas</h1>
-      <p className="bandeja-sub">Trabajos que el comité le asignó para evaluar.</p>
+      <p className="bandeja-sub">
+        Trabajos que el comité le asignó para evaluar.
+      </p>
 
       {ASIGNACIONES.length === 0 ? (
         <p className="bandeja-vacia">Aún no tiene trabajos asignados.</p>
@@ -26,6 +53,7 @@ export default function BandejaRevisor() {
               <th>Trabajo</th>
               <th>Fecha límite</th>
               <th>Estado</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -38,7 +66,17 @@ export default function BandejaRevisor() {
                 </td>
                 <td>{a.fechaLimite}</td>
                 <td>
-                  <span className={'etiqueta ' + claseEstado(a.estado)}>{a.estado}</span>
+                  <span className={"etiqueta " + claseEstado(a.estado)}>
+                    {a.estado}
+                  </span>
+                </td>
+                <td>
+                  <Link
+                    className="bandeja-boton"
+                    to={"/revisor/revision/" + a.id}
+                  >
+                    {TEXTO_BOTON[a.estado]}
+                  </Link>
                 </td>
               </tr>
             ))}
