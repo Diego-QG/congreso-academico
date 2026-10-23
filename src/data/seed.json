@@ -103,7 +103,7 @@
         "id": 4,
         "nombre": "Relevancia y aporte",
         "descripcion": "Pertinencia para el eje temático y utilidad práctica.",
-        "peso": 20
+        "peso": 25
       }
     ]
   },
@@ -514,7 +514,7 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 75,
+          "puntaje": 15,
           "comentario": "Tema conocido, pero con datos propios de la universidad."
         },
         {
@@ -547,22 +547,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 80,
+          "puntaje": 16,
           "comentario": "Enfoque novedoso con datos propios."
         },
         {
           "criterioId": 2,
-          "puntaje": 70,
+          "puntaje": 14,
           "comentario": "Falta justificar el tamaño de la muestra."
         },
         {
           "criterioId": 3,
-          "puntaje": 85,
+          "puntaje": 17,
           "comentario": "Redacción clara."
         },
         {
           "criterioId": 4,
-          "puntaje": 80,
+          "puntaje": 16,
           "comentario": "Útil para tutoría académica."
         }
       ],
@@ -580,22 +580,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 85,
+          "puntaje": 17,
           "comentario": "Aporte relevante."
         },
         {
           "criterioId": 2,
-          "puntaje": 80,
+          "puntaje": 16,
           "comentario": "Metodología adecuada."
         },
         {
           "criterioId": 3,
-          "puntaje": 80,
+          "puntaje": 16,
           "comentario": "Figuras claras."
         },
         {
           "criterioId": 4,
-          "puntaje": 90,
+          "puntaje": 18,
           "comentario": "Alta pertinencia para el eje."
         }
       ],
@@ -613,22 +613,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 70,
+          "puntaje": 14,
           "comentario": ""
         },
         {
           "criterioId": 2,
-          "puntaje": 65,
+          "puntaje": 13,
           "comentario": ""
         },
         {
           "criterioId": 3,
-          "puntaje": 75,
+          "puntaje": 15,
           "comentario": ""
         },
         {
           "criterioId": 4,
-          "puntaje": 70,
+          "puntaje": 14,
           "comentario": ""
         }
       ],
@@ -646,22 +646,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 90,
+          "puntaje": 18,
           "comentario": ""
         },
         {
           "criterioId": 2,
-          "puntaje": 85,
+          "puntaje": 17,
           "comentario": ""
         },
         {
           "criterioId": 3,
-          "puntaje": 90,
+          "puntaje": 18,
           "comentario": ""
         },
         {
           "criterioId": 4,
-          "puntaje": 95,
+          "puntaje": 19,
           "comentario": ""
         }
       ],
@@ -679,22 +679,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 85,
+          "puntaje": 17,
           "comentario": ""
         },
         {
           "criterioId": 2,
-          "puntaje": 90,
+          "puntaje": 18,
           "comentario": ""
         },
         {
           "criterioId": 3,
-          "puntaje": 85,
+          "puntaje": 17,
           "comentario": ""
         },
         {
           "criterioId": 4,
-          "puntaje": 90,
+          "puntaje": 18,
           "comentario": ""
         }
       ],
@@ -712,22 +712,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 80,
+          "puntaje": 16,
           "comentario": ""
         },
         {
           "criterioId": 2,
-          "puntaje": 85,
+          "puntaje": 17,
           "comentario": ""
         },
         {
           "criterioId": 3,
-          "puntaje": 90,
+          "puntaje": 18,
           "comentario": ""
         },
         {
           "criterioId": 4,
-          "puntaje": 85,
+          "puntaje": 17,
           "comentario": ""
         }
       ],
@@ -745,22 +745,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 40,
+          "puntaje": 8,
           "comentario": ""
         },
         {
           "criterioId": 2,
-          "puntaje": 30,
+          "puntaje": 6,
           "comentario": ""
         },
         {
           "criterioId": 3,
-          "puntaje": 50,
+          "puntaje": 10,
           "comentario": ""
         },
         {
           "criterioId": 4,
-          "puntaje": 45,
+          "puntaje": 9,
           "comentario": ""
         }
       ],
@@ -778,22 +778,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 35,
+          "puntaje": 7,
           "comentario": ""
         },
         {
           "criterioId": 2,
-          "puntaje": 25,
+          "puntaje": 5,
           "comentario": ""
         },
         {
           "criterioId": 3,
-          "puntaje": 45,
+          "puntaje": 9,
           "comentario": ""
         },
         {
           "criterioId": 4,
-          "puntaje": 40,
+          "puntaje": 8,
           "comentario": ""
         }
       ],
@@ -811,22 +811,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 50,
+          "puntaje": 10,
           "comentario": ""
         },
         {
           "criterioId": 2,
-          "puntaje": 40,
+          "puntaje": 8,
           "comentario": ""
         },
         {
           "criterioId": 3,
-          "puntaje": 55,
+          "puntaje": 11,
           "comentario": ""
         },
         {
           "criterioId": 4,
-          "puntaje": 50,
+          "puntaje": 10,
           "comentario": ""
         }
       ],
@@ -856,22 +856,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 70,
+          "puntaje": 14,
           "comentario": ""
         },
         {
           "criterioId": 2,
-          "puntaje": 60,
+          "puntaje": 12,
           "comentario": ""
         },
         {
           "criterioId": 3,
-          "puntaje": 65,
+          "puntaje": 13,
           "comentario": ""
         },
         {
           "criterioId": 4,
-          "puntaje": 70,
+          "puntaje": 14,
           "comentario": ""
         }
       ],
@@ -889,22 +889,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 60,
+          "puntaje": 12,
           "comentario": ""
         },
         {
           "criterioId": 2,
-          "puntaje": 55,
+          "puntaje": 11,
           "comentario": ""
         },
         {
           "criterioId": 3,
-          "puntaje": 70,
+          "puntaje": 14,
           "comentario": ""
         },
         {
           "criterioId": 4,
-          "puntaje": 65,
+          "puntaje": 13,
           "comentario": ""
         }
       ],
@@ -922,22 +922,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 45,
+          "puntaje": 9,
           "comentario": ""
         },
         {
           "criterioId": 2,
-          "puntaje": 35,
+          "puntaje": 7,
           "comentario": ""
         },
         {
           "criterioId": 3,
-          "puntaje": 50,
+          "puntaje": 10,
           "comentario": ""
         },
         {
           "criterioId": 4,
-          "puntaje": 55,
+          "puntaje": 11,
           "comentario": ""
         }
       ],
@@ -955,22 +955,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 55,
+          "puntaje": 11,
           "comentario": ""
         },
         {
           "criterioId": 2,
-          "puntaje": 40,
+          "puntaje": 8,
           "comentario": ""
         },
         {
           "criterioId": 3,
-          "puntaje": 45,
+          "puntaje": 9,
           "comentario": ""
         },
         {
           "criterioId": 4,
-          "puntaje": 50,
+          "puntaje": 10,
           "comentario": ""
         }
       ],
@@ -988,22 +988,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 65,
+          "puntaje": 13,
           "comentario": ""
         },
         {
           "criterioId": 2,
-          "puntaje": 60,
+          "puntaje": 12,
           "comentario": ""
         },
         {
           "criterioId": 3,
-          "puntaje": 70,
+          "puntaje": 14,
           "comentario": ""
         },
         {
           "criterioId": 4,
-          "puntaje": 60,
+          "puntaje": 12,
           "comentario": ""
         }
       ],
@@ -1021,22 +1021,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 60,
+          "puntaje": 12,
           "comentario": ""
         },
         {
           "criterioId": 2,
-          "puntaje": 55,
+          "puntaje": 11,
           "comentario": ""
         },
         {
           "criterioId": 3,
-          "puntaje": 65,
+          "puntaje": 13,
           "comentario": ""
         },
         {
           "criterioId": 4,
-          "puntaje": 70,
+          "puntaje": 14,
           "comentario": ""
         }
       ],
@@ -1054,22 +1054,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 85,
+          "puntaje": 17,
           "comentario": ""
         },
         {
           "criterioId": 2,
-          "puntaje": 90,
+          "puntaje": 18,
           "comentario": ""
         },
         {
           "criterioId": 3,
-          "puntaje": 80,
+          "puntaje": 16,
           "comentario": ""
         },
         {
           "criterioId": 4,
-          "puntaje": 85,
+          "puntaje": 17,
           "comentario": ""
         }
       ],
@@ -1087,22 +1087,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 80,
+          "puntaje": 16,
           "comentario": ""
         },
         {
           "criterioId": 2,
-          "puntaje": 85,
+          "puntaje": 17,
           "comentario": ""
         },
         {
           "criterioId": 3,
-          "puntaje": 85,
+          "puntaje": 17,
           "comentario": ""
         },
         {
           "criterioId": 4,
-          "puntaje": 80,
+          "puntaje": 16,
           "comentario": ""
         }
       ],
@@ -1120,22 +1120,22 @@
       "puntajes": [
         {
           "criterioId": 1,
-          "puntaje": 90,
+          "puntaje": 18,
           "comentario": ""
         },
         {
           "criterioId": 2,
-          "puntaje": 85,
+          "puntaje": 17,
           "comentario": ""
         },
         {
           "criterioId": 3,
-          "puntaje": 80,
+          "puntaje": 16,
           "comentario": ""
         },
         {
           "criterioId": 4,
-          "puntaje": 90,
+          "puntaje": 18,
           "comentario": ""
         }
       ],
