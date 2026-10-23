@@ -1,0 +1,230 @@
+.evaluacion {
+  padding: 32px 40px;
+}
+
+.evaluacion-migas {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-bottom: 16px;
+}
+
+.evaluacion-migas a {
+  color: var(--color-primary);
+}
+
+.evaluacion-vacia {
+  padding: 32px;
+  text-align: center;
+  color: var(--color-text-muted);
+  border: 1px dashed var(--color-border);
+}
+
+.evaluacion-banner {
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  border: 1px solid var(--color-success);
+  background: #e9f5ee;
+  color: var(--color-success);
+}
+
+.evaluacion-trabajo {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-primary);
+}
+
+.evaluacion-trabajo h1 {
+  font-family: 'Source Serif 4', serif;
+  font-size: 22px;
+  margin: 6px 0 0;
+}
+
+.evaluacion-etiquetas {
+  display: flex;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.evaluacion-eje,
+.evaluacion-tipo {
+  padding: 1px 6px;
+  border: 1px solid var(--color-border);
+}
+
+.evaluacion-eje {
+  background: var(--color-primary-soft);
+  color: var(--color-primary);
+}
+
+.evaluacion-plazo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  font-size: 13px;
+  color: var(--color-text-muted);
+  text-align: right;
+}
+
+.evaluacion-plazo strong {
+  color: var(--color-warning);
+}
+
+.evaluacion-recomendada {
+  padding: 4px 10px;
+  border: 1px solid var(--color-warning);
+  background: #fdf5e6;
+  color: var(--color-warning);
+}
+
+.evaluacion-cuerpo {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.evaluacion-recomendacion {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  margin: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.evaluacion-recomendacion legend {
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.evaluacion-opcion {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+}
+
+.evaluacion-opcion-activa {
+  border-color: var(--color-warning);
+  background: #fdf5e6;
+}
+
+.evaluacion-nota {
+  margin-top: 12px;
+  padding: 10px 12px;
+  font-size: 13px;
+  background: var(--color-primary-soft);
+  border-left: 3px solid var(--color-primary);
+}
+
+.evaluacion-comentarios {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.evaluacion-comentarios label > span {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+}
+
+.evaluacion-comentarios textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid var(--color-border);
+  font: inherit;
+  resize: vertical;
+}
+
+.evaluacion-comentarios p {
+  padding: 10px 12px;
+  margin: 0;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+
+.evaluacion-campo-error {
+  border-color: var(--color-danger) !important;
+}
+
+.evaluacion-error {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--color-danger);
+}
+
+.evaluacion-acciones {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+.evaluacion-aviso {
+  margin-right: auto;
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+.boton-primario,
+.boton-secundario {
+  padding: 10px 18px;
+  font: inherit;
+  font-weight: 600;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.boton-primario {
+  background: var(--color-primary);
+  color: #fff;
+  border: 1px solid var(--color-primary);
+}
+
+.boton-primario:hover {
+  background: var(--color-primary-dark);
+}
+
+.boton-secundario {
+  background: var(--color-surface);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+@media (max-width: 800px) {
+  .evaluacion {
+    padding: 24px 16px;
+  }
+
+  .evaluacion-trabajo,
+  .evaluacion-acciones {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .evaluacion-plazo {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .evaluacion-cuerpo,
+  .evaluacion-comentarios {
+    grid-template-columns: 1fr;
+  }
+}

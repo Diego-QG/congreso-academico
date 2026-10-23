@@ -20,6 +20,7 @@ import Historia2p5 from './hu2-edicion/Historia2p5';
 import Historia4 from './hu4-asignacion/Historia4';
 // HU-5 · Revisión y dictamen
 import BandejaRevisor from './hu5-revision/BandejaRevisor';
+import FormularioEvaluacion from './hu5-revision/FormularioEvaluacion';
 
 export default function App() {
   return (
@@ -52,6 +53,7 @@ export default function App() {
 
         {/* HU-5 */}
         <Route path="/revisor/bandeja" element={<BandejaRevisor />} />
+        <Route path="/revisor/revision/:asignacionId" element={<FormularioEvaluacion />} />
       </Route>
     </Routes>
   );

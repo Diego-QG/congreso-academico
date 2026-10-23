@@ -27,14 +27,14 @@ _Por definir._ La HU-5 usa `id`, `trabajoId`, `revisorId`, `fecha` y `estado`.
 | revisorId | texto | id del revisor (HU-1) |
 | estado | texto | `borrador` · `enviada` |
 | puntajes | lista | un elemento por criterio: `{ criterioId, puntaje, comentario }` |
-| puntajes[].puntaje | número o null | 0 a 100; `null` si aún no se califica (solo en borrador) |
+| puntajes[].puntaje | número o null | 0 a 20; `null` si aún no se califica (solo en borrador) |
 | comentarioAutor | texto | lo ve el autor |
 | observacionComite | texto | reservado: solo lo ve el comité |
 | recomendacion | texto | `aceptar` · `aceptar_con_observaciones` · `rechazar` (vacío en borrador) |
 | fechaEnvio | fecha o null | `AAAA-MM-DD`; `null` en borrador |
 
 **Puntaje total de una revisión:** promedio ponderado de sus puntajes con los
-pesos de los criterios: `suma(puntaje × peso) / suma(pesos)`. Resultado de 0 a 100.
+pesos de los criterios: `suma(puntaje × peso) / suma(pesos)`. Resultado de 0 a 20.
 
 ## Dictamen (HU-5 · Diego)
 
