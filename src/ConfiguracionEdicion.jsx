@@ -3,16 +3,22 @@ import CabeceraComite from './CabeceraComite';
 import PestanasConfig from './PestanasConfig';
 import PieComite from './PieComite';
 import './ConfiguracionEdicion.css';
-import { EDICION_INICIAL } from './data/datosConfiguracion.js';
-
-const ESTADOS = ['En preparación', 'Recepción abierta', 'En revisión', 'Cerrada'];
+import { EDICION_INICIAL, TRANSICIONES_ESTADO, AVISOS_ESTADO } from './data/datosConfiguracion.js';
 
 function ConfiguracionEdicion() {
   const [edicion, setEdicion] = useState(EDICION_INICIAL);
   const [estado, setEstado] = useState('Recepción abierta');
-  const [modalEstado, setModalEstado] = useState(null); // null = cerrado, texto = estado elegido
-  const [guardado, setGuardado] = useState(false);
+  const [exito, setExito] = useState('');
   const [error, setError] = useState('');
+
+  // Modal de cambio de estado (2.6)
+  const [modalAbierto, setModalAbierto] = useState(false);
+  const [entiende, setEntiende] = useState(false);
+  const [palabra, setPalabra] = useState('');
+
+  const transicion = TRANSICIONES_ESTADO[estado]; // undefined si ya no hay más estados
+  const puedeConfirmar =
+    transicion !== undefined && entiende && palabra.trim().toUpperCase() === transicion.palabra;
 
   const evitarEnvio = (e) => {
     e.preventDefault();
@@ -21,24 +27,38 @@ function ConfiguracionEdicion() {
   // Copiamos el objeto con spread y cambiamos solo un campo
   const cambiarCampo = (campo, valor) => {
     setEdicion({ ...edicion, [campo]: valor });
-    setGuardado(false);
+    setExito('');
     setError('');
   };
 
   const guardarCambios = () => {
     if (edicion.nombre.trim() === '' || edicion.anio.trim() === '' || edicion.sede.trim() === '') {
-      setGuardado(false);
+      setExito('');
       setError('Complete el nombre, el año y la sede de la edición antes de guardar.');
       return;
     }
     setError('');
-    setGuardado(true);
+    setExito('✓ Cambios guardados correctamente.');
   };
 
-  const confirmarEstado = () => {
-    setEstado(modalEstado);
-    setModalEstado(null);
-    setGuardado(false);
+  const abrirModal = () => {
+    setEntiende(false);
+    setPalabra('');
+    setModalAbierto(true);
+  };
+
+  const cerrarModal = () => {
+    setModalAbierto(false);
+  };
+
+  const confirmarCambioEstado = () => {
+    if (!puedeConfirmar) {
+      return;
+    }
+    setEstado(transicion.siguiente);
+    setExito(`✓ Estado de la edición actualizado: ${transicion.siguiente}.`);
+    setError('');
+    setModalAbierto(false);
   };
 
   return (
@@ -53,7 +73,12 @@ function ConfiguracionEdicion() {
               <p className="texto-auxiliar">Defina la edición vigente antes de abrir la recepción de trabajos.</p>
             </div>
             <div className="pagina-acciones">
-              <button type="button" className="btn btn-secundario" onClick={() => setModalEstado(estado)}>
+              <button
+                type="button"
+                className={transicion ? 'btn btn-secundario' : 'btn btn-secundario btn-deshabilitado'}
+                disabled={!transicion}
+                onClick={abrirModal}
+              >
                 Cambiar estado de la edición
               </button>
               <button type="button" className="btn btn-primario" onClick={guardarCambios}>
@@ -65,10 +90,7 @@ function ConfiguracionEdicion() {
           <PestanasConfig activa="Edición" />
 
           {error !== '' ? <div className="aviso-error">{error}</div> : null}
-
-          {guardado ? (
-            <div className="aviso-exito aviso-separado">✓ Cambios guardados correctamente.</div>
-          ) : null}
+          {exito !== '' ? <div className="aviso-exito aviso-separado">{exito}</div> : null}
 
           <div className="fila-config">
             <section className="tarjeta">
@@ -137,11 +159,7 @@ function ConfiguracionEdicion() {
 
               <div className="aviso">
                 <p className="aviso-titulo">{estado}</p>
-                {estado === 'Recepción abierta' ? (
-                  <p>Cierra el 30/09/2026 a las 23:59. Mientras esté abierta, los autores pueden editar sus trabajos.</p>
-                ) : (
-                  <p>Estado actual de la edición. Use «Cambiar estado de la edición» para modificarlo.</p>
-                )}
+                <p>{AVISOS_ESTADO[estado]}</p>
               </div>
 
               <div className="tarjeta">
@@ -154,35 +172,61 @@ function ConfiguracionEdicion() {
         </div>
       </main>
 
-      {modalEstado !== null ? (
+      {modalAbierto && transicion ? (
         <div className="modal-fondo">
           <div className="modal">
             <div className="modal-cabecera">
-              <h2 className="modal-titulo">Cambiar estado de la edición</h2>
-              <button type="button" className="modal-cerrar" onClick={() => setModalEstado(null)}>✕</button>
+              <h2 className="modal-titulo">{transicion.titulo}</h2>
+              <button type="button" className="modal-cerrar" onClick={cerrarModal}>✕</button>
             </div>
 
             <div className="modal-cuerpo">
               <form className="formulario" onSubmit={evitarEnvio}>
+                <div className="transicion-estado">
+                  <span className="chip-estado chip-estado-actual">{estado}</span>
+                  <span>→</span>
+                  <span className="chip-estado chip-estado-siguiente">{transicion.siguiente}</span>
+                </div>
+
+                <div className="aviso-error">
+                  <p className="aviso-titulo">Esta acción tiene efectos inmediatos</p>
+                  <p>{transicion.aviso}</p>
+                </div>
+
+                <label className="casilla">
+                  <input
+                    type="checkbox"
+                    checked={entiende}
+                    onChange={(e) => setEntiende(e.target.checked)}
+                  />
+                  {transicion.casilla}
+                </label>
+
                 <div className="campo">
-                  <label className="etiqueta" htmlFor="nuevo-estado">NUEVO ESTADO</label>
-                  <select
-                    id="nuevo-estado"
+                  <label className="etiqueta" htmlFor="palabra-confirmacion">
+                    ESCRIBA {transicion.palabra} PARA CONFIRMAR
+                  </label>
+                  <input
+                    type="text"
+                    id="palabra-confirmacion"
                     className="entrada"
-                    value={modalEstado}
-                    onChange={(e) => setModalEstado(e.target.value)}
-                  >
-                    {ESTADOS.map((e) => (
-                      <option key={e} value={e}>{e}</option>
-                    ))}
-                  </select>
+                    value={palabra}
+                    onChange={(e) => setPalabra(e.target.value)}
+                  />
                 </div>
               </form>
             </div>
 
             <div className="modal-pie">
-              <button type="button" className="btn btn-secundario" onClick={() => setModalEstado(null)}>Cancelar</button>
-              <button type="button" className="btn btn-primario" onClick={confirmarEstado}>Confirmar cambio</button>
+              <button type="button" className="btn btn-secundario" onClick={cerrarModal}>Cancelar</button>
+              <button
+                type="button"
+                className={puedeConfirmar ? 'btn btn-peligro' : 'btn btn-deshabilitado'}
+                disabled={!puedeConfirmar}
+                onClick={confirmarCambioEstado}
+              >
+                {transicion.boton}
+              </button>
             </div>
           </div>
         </div>

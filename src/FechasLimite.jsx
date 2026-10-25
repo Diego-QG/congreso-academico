@@ -51,6 +51,17 @@ function FechasLimite() {
 
   const errores = validar(cronograma);
   const hayErrores = Object.keys(errores).length > 0;
+  const hayVacios = ETAPAS.some(
+    ({ clave }) => cronograma[clave].fecha === '' || cronograma[clave].hora === ''
+  );
+
+  // Explica cual fecha rompe el orden (como en el mockup 2.4)
+  let detalle = '';
+  if (errores.revision) {
+    detalle = `el cierre de la revisión (${formatear(cronograma.revision.fecha)}) debe ser posterior al cierre de la recepción (${formatear(cronograma.recepcion.fecha)})`;
+  } else if (errores.resultados) {
+    detalle = 'la publicación de resultados debe ser posterior al cierre de la revisión';
+  }
 
   const evitarEnvio = (e) => {
     e.preventDefault();
@@ -99,9 +110,19 @@ function FechasLimite() {
           <PestanasConfig activa="Fechas límite" />
 
           {hayErrores ? (
-            <div className="aviso-error">
-              <strong>El cronograma no es consecutivo.</strong> Corrija las fechas marcadas
-              para poder guardar.
+            <div className="aviso-error aviso-con-icono">
+              <span className="icono-alerta">!</span>
+              {hayVacios ? (
+                <span>
+                  <strong>El cronograma está incompleto.</strong> Complete las fechas y horas
+                  marcadas para poder guardar.
+                </span>
+              ) : (
+                <span>
+                  <strong>El cronograma no es consecutivo:</strong> {detalle}. Corrija las fechas
+                  marcadas para poder guardar.
+                </span>
+              )}
             </div>
           ) : null}
 

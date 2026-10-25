@@ -432,7 +432,7 @@
     display: flex;
     flex-wrap: wrap;
     gap: 24px;
-    padding: 0 24px 24px 24px;
+    padding: 0 0 24px 0;
 }
 
 .pagina-configuracion .pie-columnas > div {
@@ -821,4 +821,79 @@
 
 .pagina-configuracion .total-ok {
     color: var(--color-success);
+}
+
+/* pie: enlaces legales */
+.pagina-configuracion .pie-legal a {
+    color: var(--color-text-muted);
+}
+
+.pagina-configuracion .pie-legal a:hover {
+    color: var(--color-surface);
+}
+
+.pagina-configuracion .pie-legal-enlaces {
+    display: flex;
+    gap: 16px;
+}
+
+/* aviso de error con ícono */
+.pagina-configuracion .aviso-con-icono {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.pagina-configuracion .icono-alerta {
+    flex: 0 0 16px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: var(--color-danger);
+    color: var(--color-surface);
+    font-size: 10px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* modal de cambio de estado */
+.pagina-configuracion .btn-peligro {
+    background-color: var(--color-danger);
+    border: 1px solid var(--color-danger);
+    color: var(--color-surface);
+}
+
+.pagina-configuracion .btn-peligro:hover {
+    background-color: #8F2822;
+    border: 1px solid #8F2822;
+}
+
+.pagina-configuracion .transicion-estado {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px;
+    background-color: var(--color-bg);
+    border: 1px solid var(--color-border);
+    margin: 0 0 16px 0;
+}
+
+.pagina-configuracion .chip-estado {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 10px;
+    background-color: var(--color-surface);
+    border: 1px solid;
+}
+
+.pagina-configuracion .chip-estado-actual {
+    border-color: var(--estado-enviado);
+    color: var(--estado-enviado);
+}
+
+.pagina-configuracion .chip-estado-siguiente {
+    border-color: var(--color-warning, #B7791F);
+    color: var(--color-warning, #B7791F);
 }
