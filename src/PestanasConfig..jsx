@@ -1,12 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-
-const PESTANAS = [
-  { texto: 'Edición', ruta: '/comite/edicion' },
-  { texto: 'Ejes temáticos', ruta: '/comite/edicion/ejes' },
-  { texto: 'Tipos de trabajo', ruta: '/comite/edicion/tipos' },
-  { texto: 'Fechas límite', ruta: '/comite/edicion/fechas' },
-  { texto: 'Criterios de evaluación', ruta: '/comite/edicion/criterios' },
-];
+import { PESTANAS } from './data/datosConfiguracion.js';
 
 // Uso: <PestanasConfig activa="Ejes temáticos" />
 function PestanasConfig({ activa }) {

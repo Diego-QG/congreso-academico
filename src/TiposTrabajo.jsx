@@ -3,16 +3,7 @@ import CabeceraComite from './CabeceraComite';
 import PestanasConfig from './PestanasConfig';
 import PieComite from './PieComite';
 import './ConfiguracionEdicion.css';
-
-// Datos de ejemplo (del mockup 2.3)
-const TIPOS_INICIALES = [
-  { id: 1, nombre: 'Artículo completo', extension: '8 000 palabras', formato: 'PDF · plantilla IEEE', admite: true, maximo: 4 },
-  { id: 2, nombre: 'Resumen extendido', extension: '2 500 palabras', formato: 'PDF', admite: true, maximo: 3 },
-  { id: 3, nombre: 'Póster', extension: '1 lámina A1', formato: 'PDF · orientación vertical', admite: true, maximo: 5 },
-  { id: 4, nombre: 'Caso de estudio', extension: '5 000 palabras', formato: 'PDF', admite: false, maximo: 0 },
-];
-
-const FORMATOS = ['PDF', 'PDF · plantilla IEEE', 'PDF · orientación vertical'];
+import { TIPOS_INICIALES, FORMATOS } from './data/datosConfiguracion.js';
 
 const FORMULARIO_VACIO = { id: null, nombre: '', extension: '', formato: 'PDF', admite: false, maximo: '1' };
 

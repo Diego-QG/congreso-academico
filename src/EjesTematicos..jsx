@@ -3,16 +3,7 @@ import CabeceraComite from './CabeceraComite';
 import PestanasConfig from './PestanasConfig';
 import PieComite from './PieComite';
 import './ConfiguracionEdicion.css';
-
-// Datos de ejemplo (del mockup 2.2)
-const EJES_INICIALES = [
-  { id: 1, nombre: 'Inteligencia artificial y datos', descripcion: 'Aprendizaje automático y ciencia de datos aplicada.', responsable: 'Dra. Ana Salazar', trabajos: 4 },
-  { id: 2, nombre: 'Ingeniería de software', descripcion: 'Arquitectura, calidad y procesos de desarrollo.', responsable: 'Mg. Luis Ramírez', trabajos: 3 },
-  { id: 3, nombre: 'Sostenibilidad y ciudad', descripcion: 'Movilidad, gestión del agua y ciudades resilientes.', responsable: 'Mg. Carmen Effio', trabajos: 3 },
-  { id: 4, nombre: 'Innovación y emprendimiento', descripcion: 'Modelos de negocio y transferencia tecnológica.', responsable: 'Ing. Jorge Palomino', trabajos: 2 },
-  { id: 5, nombre: 'Salud y sociedad', descripcion: 'Salud pública y bienestar estudiantil.', responsable: 'Dra. Milagros Yupanqui', trabajos: 1 },
-  { id: 6, nombre: 'Economía y mercados', descripcion: 'Mercados financieros, comercio y desarrollo.', responsable: 'Mg. Renzo Bustamante', trabajos: 1 },
-];
+import { EJES_INICIALES } from './data/datosConfiguracion.js';
 
 function EjesTematicos() {
   const [ejes, setEjes] = useState(EJES_INICIALES);

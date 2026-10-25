@@ -3,13 +3,7 @@ import CabeceraComite from './CabeceraComite';
 import PestanasConfig from './PestanasConfig';
 import PieComite from './PieComite';
 import './ConfiguracionEdicion.css';
-
-const CRITERIOS_INICIALES = [
-  { id: 1, nombre: 'Originalidad', descripcion: 'Aporte novedoso frente a la literatura consultada.', peso: 25 },
-  { id: 2, nombre: 'Rigor metodológico', descripcion: 'Coherencia del diseño, los datos y el análisis.', peso: 30 },
-  { id: 3, nombre: 'Claridad de la exposición', descripcion: 'Redacción, estructura y calidad de las figuras.', peso: 20 },
-  { id: 4, nombre: 'Relevancia y aporte', descripcion: 'Pertinencia para el eje temático y utilidad práctica.', peso: 20 },
-];
+import { CRITERIOS_INICIALES } from './data/datosConfiguracion.js';
 
 const FORMULARIO_VACIO = { id: null, nombre: '', descripcion: '', peso: '' };
 

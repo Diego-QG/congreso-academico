@@ -1,14 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-
-const OPCIONES_MENU = [
-  'Configuración',
-  'Trabajos recibidos',
-  'Revisores',
-  'Seguimiento',
-  'Programa',
-  'Tablero',
-  'Usuarios',
-];
+import { OPCIONES_MENU } from './data/datosConfiguracion.js';
 
 // Uso: <CabeceraComite estado="Recepción abierta" />
 function CabeceraComite({ estado = 'Recepción abierta' }) {

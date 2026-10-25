@@ -3,18 +3,7 @@ import CabeceraComite from './CabeceraComite';
 import PestanasConfig from './PestanasConfig';
 import PieComite from './PieComite';
 import './ConfiguracionEdicion.css';
-
-const CRONOGRAMA_INICIAL = {
-  recepcion: { fecha: '2026-09-30', hora: '23:59' },
-  revision: { fecha: '2026-10-20', hora: '18:00' },
-  resultados: { fecha: '2026-10-28', hora: '12:00' },
-};
-
-const ETAPAS = [
-  { clave: 'recepcion', etiqueta: 'CIERRE DE RECEPCIÓN DE TRABAJOS', punto: 'punto-primario' },
-  { clave: 'revision', etiqueta: 'CIERRE DE LA ETAPA DE REVISIÓN', punto: 'punto-acento' },
-  { clave: 'resultados', etiqueta: 'PUBLICACIÓN DE RESULTADOS', punto: 'punto-exito' },
-];
+import { CRONOGRAMA_INICIAL, ETAPAS } from './data/datosConfiguracion.js';
 
 function formatear(fecha) {
   if (fecha === '') {

@@ -3,14 +3,7 @@ import CabeceraComite from './CabeceraComite';
 import PestanasConfig from './PestanasConfig';
 import PieComite from './PieComite';
 import './ConfiguracionEdicion.css';
-
-const EDICION_INICIAL = {
-  nombre: 'VIII Congreso Académico Estudiantil',
-  anio: '2026',
-  sede: 'Auditorio Central, Universidad de Lima — Santiago de Surco',
-  descripcion:
-    'Encuentro anual de investigación estudiantil. Se reciben artículos completos, resúmenes extendidos, pósteres y casos de estudio en seis ejes temáticos.',
-};
+import { EDICION_INICIAL } from './data/datosConfiguracion.js';
 
 function ConfiguracionEdicion() {
   const [edicion, setEdicion] = useState(EDICION_INICIAL);
