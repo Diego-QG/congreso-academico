@@ -10,7 +10,7 @@ const FORMULARIO_VACIO = { id: null, nombre: '', descripcion: '', responsable: '
 function EjesTematicos() {
   const [ejes, setEjes] = useState(EJES_INICIALES);
   const [mensaje, setMensaje] = useState('');
-  const [modal, setModal] = useState(null); // null = cerrado, objeto = datos del formulario
+  const [modal, setModal] = useState(null);
   const [errores, setErrores] = useState({});
 
   const totalTrabajos = ejes.reduce((suma, eje) => suma + eje.trabajos, 0);
@@ -64,7 +64,6 @@ function EjesTematicos() {
     };
 
     if (modal.id === null) {
-      // id nuevo: el mayor que existe + 1
       ejeGuardado.id = Math.max(0, ...ejes.map((e) => e.id)) + 1;
       setEjes([...ejes, ejeGuardado]);
     } else {
@@ -73,7 +72,6 @@ function EjesTematicos() {
     cerrarModal();
   };
 
-  // Regla del mockup: un eje con trabajos recibidos no se puede eliminar
   const eliminarEje = (id) => {
     const eje = ejes.find((e) => e.id === id);
     if (eje.trabajos > 0) {

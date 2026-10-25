@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { PESTANAS } from './data/datosConfiguracion.js';
 
-// Uso: <PestanasConfig activa="Ejes temáticos" />
 function PestanasConfig({ activa }) {
   const navigate = useNavigate();
 

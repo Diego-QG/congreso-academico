@@ -1,4 +1,3 @@
-// Pie de página compartido (igual al de los mockups)
 function PieComite() {
   const evitarSalto = (e) => {
     e.preventDefault();

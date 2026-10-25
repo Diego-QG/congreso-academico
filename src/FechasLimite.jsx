@@ -55,7 +55,6 @@ function FechasLimite() {
     ({ clave }) => cronograma[clave].fecha === '' || cronograma[clave].hora === ''
   );
 
-  // Explica cual fecha rompe el orden (como en el mockup 2.4)
   let detalle = '';
   if (errores.revision) {
     detalle = `el cierre de la revisión (${formatear(cronograma.revision.fecha)}) debe ser posterior al cierre de la recepción (${formatear(cronograma.recepcion.fecha)})`;

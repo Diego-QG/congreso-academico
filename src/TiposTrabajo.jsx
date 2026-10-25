@@ -9,7 +9,7 @@ const FORMULARIO_VACIO = { id: null, nombre: '', extension: '', formato: 'PDF', 
 
 function TiposTrabajo() {
   const [tipos, setTipos] = useState(TIPOS_INICIALES);
-  const [modal, setModal] = useState(null); // null = cerrado, objeto = datos del formulario
+  const [modal, setModal] = useState(null);
   const [errores, setErrores] = useState({});
 
   const evitarEnvio = (e) => {
@@ -65,7 +65,6 @@ function TiposTrabajo() {
     };
 
     if (modal.id === null) {
-      // id nuevo: el mayor que existe + 1
       tipoGuardado.id = Math.max(0, ...tipos.map((t) => t.id)) + 1;
       setTipos([...tipos, tipoGuardado]);
     } else {

@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { OPCIONES_MENU } from './data/datosConfiguracion.js';
 
-// Uso: <CabeceraComite estado="Recepción abierta" />
 function CabeceraComite({ estado = 'Recepción abierta' }) {
   const navigate = useNavigate();
 

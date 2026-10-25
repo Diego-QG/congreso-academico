@@ -24,7 +24,6 @@ function ConfiguracionEdicion() {
     e.preventDefault();
   };
 
-  // Copiamos el objeto con spread y cambiamos solo un campo
   const cambiarCampo = (campo, valor) => {
     setEdicion({ ...edicion, [campo]: valor });
     setExito('');

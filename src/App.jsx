@@ -33,8 +33,7 @@ export default function App() {
         {/* Portada del proyecto: índice de historias (diseño propio, sin header ni footer) */}
         <Route path="/portada" element={<Portada />} />
 
-        {/* TODO: la configuración de la edición y HU-4 todavía tienen su propio header.
-          Cuando lo quiten, se mueven dentro del Layout. */}
+        {/* TODO: la configuración de la edición*/}
         <Route path="/comite/edicion" element={<ConfiguracionEdicion />} />
         <Route path="/comite/edicion/ejes" element={<EjesTematicos />} />
         <Route path="/comite/edicion/tipos" element={<TiposTrabajo />} />
