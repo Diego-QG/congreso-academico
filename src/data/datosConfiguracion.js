@@ -67,3 +67,43 @@ export const OPCIONES_MENU = [
   'Tablero',
   'Usuarios',
 ];
+
+// cambio de estado de la edicion (modal 2.6 del mockup)
+// Cada estado indica a cual pasa y que debe confirmar el comite
+export const TRANSICIONES_ESTADO = {
+  'En preparación': {
+    siguiente: 'Recepción abierta',
+    titulo: 'Abrir la recepción de trabajos',
+    aviso: 'Los autores podrán registrar y enviar trabajos hasta la fecha de cierre de la recepción.',
+    casilla: 'Entiendo que la edición quedará abierta para los autores.',
+    palabra: 'ABRIR',
+    boton: 'Abrir la recepción',
+  },
+  'Recepción abierta': {
+    siguiente: 'En revisión',
+    titulo: 'Cerrar la recepción de trabajos',
+    aviso:
+      'Los autores ya no podrán editar ni enviar trabajos. Los 2 borradores sin enviar quedarán fuera del proceso y los 12 trabajos enviados pasarán a la etapa de asignación de revisores.',
+    casilla: 'Entiendo que los autores ya no podrán editar sus trabajos.',
+    palabra: 'CERRAR',
+    boton: 'Cerrar la recepción',
+  },
+  'En revisión': {
+    siguiente: 'Resultados publicados',
+    titulo: 'Publicar los resultados',
+    aviso:
+      'Los autores podrán ver el dictamen de sus trabajos y recibirán un correo con la decisión. La publicación no se puede deshacer.',
+    casilla: 'Entiendo que los resultados serán visibles para los autores.',
+    palabra: 'PUBLICAR',
+    boton: 'Publicar resultados',
+  },
+};
+
+// texto del aviso lateral segun el estado
+export const AVISOS_ESTADO = {
+  'En preparación': 'Defina ejes, tipos, fechas y criterios antes de abrir la recepción de trabajos.',
+  'Recepción abierta':
+    'Cierra el 30/09/2026 a las 23:59. Mientras esté abierta, los autores pueden editar sus trabajos.',
+  'En revisión': 'La recepción cerró. Los revisores evalúan los trabajos hasta el 20/10/2026 a las 18:00.',
+  'Resultados publicados': 'Los resultados ya fueron publicados. Los autores pueden consultar su dictamen.',
+};
