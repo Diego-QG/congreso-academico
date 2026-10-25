@@ -1,9 +1,10 @@
-import { Navigate, useLocation } from 'react-router-dom';
+import { Link, Navigate, useLocation } from 'react-router-dom';
 import './Bienvenida.css';
 
 export default function Bienvenida() {
   const location = useLocation();
-  const registration = location.state?.registration;
+  const registration = location.state?.registration
+    || JSON.parse(window.sessionStorage.getItem('congreso.participante') || 'null');
 
   if (!registration) {
     return <Navigate to="/registro" replace />;
@@ -38,9 +39,9 @@ export default function Bienvenida() {
           <a className="welcome-primary-button" href="#nuevo-trabajo">
             Registrar mi primer trabajo
           </a>
-          <a className="welcome-secondary-button" href="#mi-cuenta">
+          <Link className="welcome-secondary-button" to="/mi-cuenta">
             Completar mi perfil
-          </a>
+          </Link>
         </div>
       </section>
 

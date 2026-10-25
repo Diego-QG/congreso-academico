@@ -7,7 +7,9 @@ import Portada from "./pages/Portada";
 import Login from "./hu1-cuenta/Login";
 import Register from "./hu1-cuenta/Register";
 import Bienvenida from "./hu1-cuenta/Bienvenida";
+import MiCuenta from "./hu1-cuenta/MiCuenta";
 import RecuperarContrasena from "./hu1-cuenta/RecuperarContrasena";
+import PaginaNoEncontrada from "./hu1-cuenta/PaginaNoEncontrada";
 // HU-3 · Envío de trabajos
 import { MisTrabajos, NuevoTrabajo } from "./hu3-trabajos/Historia3";
 // HU-2 · Configuración de la edición
@@ -22,6 +24,7 @@ import Historia4 from "./hu4-asignacion/Historia4";
 import BandejaRevisor from "./hu5-revision/BandejaRevisor";
 import FormularioEvaluacion from "./hu5-revision/FormularioEvaluacion";
 import RevisionesProvider from "./hu5-revision/RevisionesProvider";
+import RutaRevisor from "./hu1-cuenta/RutaRevisor";
 
 export default function App() {
   return (
@@ -46,21 +49,25 @@ export default function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/registro" element={<Register />} />
           <Route path="/bienvenida" element={<Bienvenida />} />
+          <Route path="/mi-cuenta" element={<MiCuenta />} />
           <Route
             path="/recuperar-contrasena"
             element={<RecuperarContrasena />}
           />
+          <Route path="*" element={<PaginaNoEncontrada />} />
 
           {/* HU-3 */}
           <Route path="/autor/trabajos" element={<MisTrabajos />} />
           <Route path="/nuevo-trabajo" element={<NuevoTrabajo />} />
 
           {/* HU-5 */}
-          <Route path="/revisor/bandeja" element={<BandejaRevisor />} />
-          <Route
-            path="/revisor/revision/:asignacionId"
-            element={<FormularioEvaluacion />}
-          />
+          <Route element={<RutaRevisor />}>
+            <Route path="/revisor/bandeja" element={<BandejaRevisor />} />
+            <Route
+              path="/revisor/revision/:asignacionId"
+              element={<FormularioEvaluacion />}
+            />
+          </Route>
         </Route>
       </Routes>
     </RevisionesProvider>

@@ -3,8 +3,11 @@ import { Link, NavLink, useLocation } from 'react-router-dom';
 // Encabezado común. Se modifica SOLO aquí.
 export default function Header() {
   const location = useLocation();
-  const registration = location.state?.registration;
+  const registration = location.state?.registration
+    || JSON.parse(window.sessionStorage.getItem('congreso.participante') || 'null');
   const isWelcomePage = location.pathname === '/bienvenida' && registration;
+  const hasReviewerRole = ['revisor', 'ambos'].includes(registration?.rolParticipacion);
+  const hasAuthorRole = ['autor', 'ambos'].includes(registration?.rolParticipacion);
   const firstName = registration?.nombres?.trim().split(/\s+/)[0] || '';
   const firstSurname = registration?.apellidos?.trim().split(/\s+/)[0] || '';
   const initials = `${firstName[0] || ''}${firstSurname[0] || ''}`.toUpperCase();
@@ -36,13 +39,27 @@ export default function Header() {
 
         <nav className="main-nav">
           <ul className="nav-links">
-            {isWelcomePage ? (
+            {registration ? (
               <>
-                <li><a href="#inicio" className="active">Inicio</a></li>
-                <li><a href="#nuevo-trabajo">Nuevo trabajo</a></li>
-                <li><a href="#mis-trabajos">Mis trabajos</a></li>
-                <li><a href="#inicio">Mi presentación</a></li>
-                <li><a href="#mi-cuenta">Mi cuenta</a></li>
+                <li>
+                  {isWelcomePage
+                    ? <a href="#inicio" className="active">Inicio</a>
+                    : <NavLink to="/">Inicio</NavLink>}
+                </li>
+                {hasAuthorRole && !isWelcomePage && (
+                  <li><NavLink to="/autor/trabajos">Mis trabajos</NavLink></li>
+                )}
+                {hasReviewerRole && (
+                  <li><NavLink to="/revisor/bandeja">Mi bandeja</NavLink></li>
+                )}
+                {isWelcomePage && hasAuthorRole && (
+                  <>
+                    <li><a href="#nuevo-trabajo">Nuevo trabajo</a></li>
+                    <li><a href="#mis-trabajos">Mis trabajos</a></li>
+                    <li><a href="#inicio">Mi presentación</a></li>
+                  </>
+                )}
+                <li><NavLink to="/mi-cuenta">Mi cuenta</NavLink></li>
               </>
             ) : (
               <>
@@ -55,8 +72,8 @@ export default function Header() {
             )}
           </ul>
 
-          {isWelcomePage ? (
-            <div className="registered-user" id="mi-cuenta">
+          {registration ? (
+            <div className="registered-user">
               <span className="registered-user-name">
                 {registration.nombres} {registration.apellidos}
                 <small>Rol: {roleLabels[registration.rolParticipacion] || 'Participante'}</small>

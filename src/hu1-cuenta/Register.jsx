@@ -108,8 +108,20 @@ function Register() {
       return;
     }
 
-    // Al enviar con éxito, navega a la pantalla de confirmación/bienvenida (1.3 éxito)
-    navigate('/bienvenida', { state: { registration: formData } });
+    const registration = {
+      nombres: formData.nombres,
+      apellidos: formData.apellidos,
+      email: formData.email,
+      institucion: formData.institucion,
+      carrera: formData.carrera,
+      codigoAlumno: formData.codigoAlumno,
+      rolParticipacion: formData.rolParticipacion
+    };
+    window.sessionStorage.setItem(
+      'congreso.participante',
+      JSON.stringify(registration)
+    );
+    navigate('/bienvenida', { state: { registration } });
   };
 
   return (
