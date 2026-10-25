@@ -12,12 +12,12 @@ import RecuperarContrasena from "./hu1-cuenta/RecuperarContrasena";
 import PaginaNoEncontrada from "./hu1-cuenta/PaginaNoEncontrada";
 // HU-3 · Envío de trabajos
 import { MisTrabajos, NuevoTrabajo } from "./hu3-trabajos/Historia3";
-// HU-2 · Configuración de la edición
-import Historia2 from "./hu2-edicion/Historia2";
-import Historia2p2 from "./hu2-edicion/Historia2p2";
-import Historia2p3 from "./hu2-edicion/Historia2p3";
-import Historia2p4 from "./hu2-edicion/Historia2p4";
-import Historia2p5 from "./hu2-edicion/Historia2p5";
+// Configuración de la edición
+import ConfiguracionEdicion from "./ConfiguracionEdicion";
+import EjesTematicos from "./EjesTematicos";
+import TiposTrabajo from "./TiposTrabajo";
+import FechasLimite from "./FechasLimite";
+import CriteriosEvaluacion from "./CriteriosEvaluacion";
 // HU-4 · Asignación de revisiones
 import Historia4 from "./hu4-asignacion/Historia4";
 // HU-5 · Revisión y dictamen
@@ -33,14 +33,14 @@ export default function App() {
         {/* Portada del proyecto: índice de historias (diseño propio, sin header ni footer) */}
         <Route path="/portada" element={<Portada />} />
 
-        {/* TODO: HU-2 y HU-4 todavía tienen su propio header.
+        {/* TODO: la configuración de la edición y HU-4 todavía tienen su propio header.
           Cuando lo quiten, se mueven dentro del Layout. */}
-        <Route path="/comite/edicion" element={<Historia2 />} />
-        <Route path="/comite/edicion/ejes" element={<Historia2p2 />} />
-        <Route path="/comite/edicion/tipos" element={<Historia2p3 />} />
+        <Route path="/comite/edicion" element={<ConfiguracionEdicion />} />
+        <Route path="/comite/edicion/ejes" element={<EjesTematicos />} />
+        <Route path="/comite/edicion/tipos" element={<TiposTrabajo />} />
         <Route path="/comite/asignaciones" element={<Historia4 />} />
-        <Route path="/comite/edicion/fechas" element={<Historia2p4 />} />
-        <Route path="/comite/edicion/criterios" element={<Historia2p5 />} />
+        <Route path="/comite/edicion/fechas" element={<FechasLimite />} />
+        <Route path="/comite/edicion/criterios" element={<CriteriosEvaluacion />} />
 
         <Route element={<Layout />}>
           <Route path="/" element={<Inicio />} />
