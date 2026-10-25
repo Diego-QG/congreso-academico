@@ -5,8 +5,14 @@ import PieComite from './PieComite';
 import './ConfiguracionEdicion.css';
 import { EDICION_INICIAL } from './data/datosConfiguracion.js';
 
+const ESTADOS = ['En preparación', 'Recepción abierta', 'En revisión', 'Cerrada'];
+
 function ConfiguracionEdicion() {
   const [edicion, setEdicion] = useState(EDICION_INICIAL);
+  const [estado, setEstado] = useState('Recepción abierta');
+  const [modalEstado, setModalEstado] = useState(null); // null = cerrado, texto = estado elegido
+  const [guardado, setGuardado] = useState(false);
+  const [error, setError] = useState('');
 
   const evitarEnvio = (e) => {
     e.preventDefault();
@@ -15,11 +21,29 @@ function ConfiguracionEdicion() {
   // Copiamos el objeto con spread y cambiamos solo un campo
   const cambiarCampo = (campo, valor) => {
     setEdicion({ ...edicion, [campo]: valor });
+    setGuardado(false);
+    setError('');
+  };
+
+  const guardarCambios = () => {
+    if (edicion.nombre.trim() === '' || edicion.anio.trim() === '' || edicion.sede.trim() === '') {
+      setGuardado(false);
+      setError('Complete el nombre, el año y la sede de la edición antes de guardar.');
+      return;
+    }
+    setError('');
+    setGuardado(true);
+  };
+
+  const confirmarEstado = () => {
+    setEstado(modalEstado);
+    setModalEstado(null);
+    setGuardado(false);
   };
 
   return (
     <div className="pagina-configuracion">
-      <CabeceraComite estado="Recepción abierta" />
+      <CabeceraComite estado={estado} />
 
       <main className="contenido">
         <div className="contenedor">
@@ -29,18 +53,28 @@ function ConfiguracionEdicion() {
               <p className="texto-auxiliar">Defina la edición vigente antes de abrir la recepción de trabajos.</p>
             </div>
             <div className="pagina-acciones">
-              <button type="button" className="btn btn-secundario">Cambiar estado de la edición</button>
-              <button type="button" className="btn btn-primario">Guardar cambios</button>
+              <button type="button" className="btn btn-secundario" onClick={() => setModalEstado(estado)}>
+                Cambiar estado de la edición
+              </button>
+              <button type="button" className="btn btn-primario" onClick={guardarCambios}>
+                Guardar cambios
+              </button>
             </div>
           </div>
 
           <PestanasConfig activa="Edición" />
 
+          {error !== '' ? <div className="aviso-error">{error}</div> : null}
+
+          {guardado ? (
+            <div className="aviso-exito aviso-separado">✓ Cambios guardados correctamente.</div>
+          ) : null}
+
           <div className="fila-config">
             <section className="tarjeta">
               <div className="tarjeta-cabecera">
                 <h2 className="tarjeta-titulo">Datos generales</h2>
-                <span className="insignia-estado">Estado: recepción abierta</span>
+                <span className="insignia-estado">Estado: {estado.toLowerCase()}</span>
               </div>
 
               <form className="formulario" onSubmit={evitarEnvio}>
@@ -102,8 +136,12 @@ function ConfiguracionEdicion() {
               </div>
 
               <div className="aviso">
-                <p className="aviso-titulo">Recepción abierta</p>
-                <p>Cierra el 30/09/2026 a las 23:59. Mientras esté abierta, los autores pueden editar sus trabajos.</p>
+                <p className="aviso-titulo">{estado}</p>
+                {estado === 'Recepción abierta' ? (
+                  <p>Cierra el 30/09/2026 a las 23:59. Mientras esté abierta, los autores pueden editar sus trabajos.</p>
+                ) : (
+                  <p>Estado actual de la edición. Use «Cambiar estado de la edición» para modificarlo.</p>
+                )}
               </div>
 
               <div className="tarjeta">
@@ -115,6 +153,40 @@ function ConfiguracionEdicion() {
           </div>
         </div>
       </main>
+
+      {modalEstado !== null ? (
+        <div className="modal-fondo">
+          <div className="modal">
+            <div className="modal-cabecera">
+              <h2 className="modal-titulo">Cambiar estado de la edición</h2>
+              <button type="button" className="modal-cerrar" onClick={() => setModalEstado(null)}>✕</button>
+            </div>
+
+            <div className="modal-cuerpo">
+              <form className="formulario" onSubmit={evitarEnvio}>
+                <div className="campo">
+                  <label className="etiqueta" htmlFor="nuevo-estado">NUEVO ESTADO</label>
+                  <select
+                    id="nuevo-estado"
+                    className="entrada"
+                    value={modalEstado}
+                    onChange={(e) => setModalEstado(e.target.value)}
+                  >
+                    {ESTADOS.map((e) => (
+                      <option key={e} value={e}>{e}</option>
+                    ))}
+                  </select>
+                </div>
+              </form>
+            </div>
+
+            <div className="modal-pie">
+              <button type="button" className="btn btn-secundario" onClick={() => setModalEstado(null)}>Cancelar</button>
+              <button type="button" className="btn btn-primario" onClick={confirmarEstado}>Confirmar cambio</button>
+            </div>
+          </div>
+        </div>
+      ) : null}
 
       <PieComite />
     </div>
