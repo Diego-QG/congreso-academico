@@ -68,8 +68,6 @@ export const OPCIONES_MENU = [
   'Usuarios',
 ];
 
-// cambio de estado de la edicion (modal 2.6 del mockup)
-// Cada estado indica a cual pasa y que debe confirmar el comite
 export const TRANSICIONES_ESTADO = {
   'En preparación': {
     siguiente: 'Recepción abierta',
