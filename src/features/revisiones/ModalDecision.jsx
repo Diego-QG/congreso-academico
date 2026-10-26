@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import DialogoConfirmacion from '../../shared/DialogoConfirmacion';
 import { sugerenciaPorPuntaje, unDecimal } from './consolidado';
 import './ModalDecision.css';
@@ -7,6 +7,7 @@ const OPCIONES = [
   { valor: 'aceptado', texto: 'Aceptar', detalle: 'Pasa al programa del congreso.' },
   { valor: 'rechazado', texto: 'Rechazar', detalle: 'No participa en esta edición.' },
 ];
+const ENFOCABLES = 'button, [href], input, textarea, select, [tabindex]:not([tabindex="-1"])';
 
 // Une los comentarios al autor de todos los revisores en un solo texto.
 function textoDeRevisores(filas) {
@@ -24,10 +25,37 @@ export default function ModalDecision({ trabajo, consolidado, dictamen, onGuarda
   const [errores, setErrores] = useState({});
   const [confirmando, setConfirmando] = useState(false);
 
-  // Escape cierra el modal (si el diálogo de confirmación no está abierto).
+  const ventanaRef = useRef(null);
+
+  // Al abrir, el foco entra al modal; al cerrar, vuelve al botón que lo abrió.
+  useEffect(() => {
+    const anterior = document.activeElement;
+    ventanaRef.current?.querySelector('input[name="decision"]')?.focus();
+    return () => anterior?.focus?.();
+  }, []);
+
+  // Escape cierra y Tab no se sale del modal (mientras no esté abierta la confirmación).
   useEffect(() => {
     function alPresionar(e) {
-      if (e.key === 'Escape' && !confirmando) onCerrar();
+      if (confirmando) return;
+      if (e.key === 'Escape') {
+        onCerrar();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const elementos = ventanaRef.current.querySelectorAll(ENFOCABLES);
+      const primero = elementos[0];
+      const ultimo = elementos[elementos.length - 1];
+      if (!ventanaRef.current.contains(document.activeElement)) {
+        e.preventDefault();
+        primero.focus();
+      } else if (e.shiftKey && document.activeElement === primero) {
+        e.preventDefault();
+        ultimo.focus();
+      } else if (!e.shiftKey && document.activeElement === ultimo) {
+        e.preventDefault();
+        primero.focus();
+      }
     }
     window.addEventListener('keydown', alPresionar);
     return () => window.removeEventListener('keydown', alPresionar);
@@ -61,7 +89,7 @@ export default function ModalDecision({ trabajo, consolidado, dictamen, onGuarda
 
   return (
     <div className="decision-fondo">
-      <div className="decision-ventana" role="dialog" aria-modal="true" aria-labelledby="decision-titulo">
+      <div className="decision-ventana" ref={ventanaRef} role="dialog" aria-modal="true" aria-labelledby="decision-titulo">
         <header className="decision-cabecera">
           <div>
             <h2 id="decision-titulo">Decisión final del comité</h2>
