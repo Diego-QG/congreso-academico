@@ -1,58 +1,110 @@
-
-/* --- HERO SECTION --- */
+/* --- HERO --- */
+/* Ocupa todo el ancho de la ventana aunque esté dentro de .contenedor-principal (1200 px). */
 .hero-section {
-  background-color: #7A2231;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  margin-inline: calc(50% - 50vw);
+  background-color: var(--color-primary);
+  color: #FFFFFF;
+}
+
+/* La foto se tiñe de granate: queda en gris y se mezcla con el fondo. */
+.hero-foto img {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: right center;
+  filter: saturate(0.85) contrast(1.05);
+}
+
+/* Degradado: granate sólido a la izquierda para que el texto se lea, más claro a la derecha. */
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary) 0%,
+    rgba(122, 34, 49, 0.92) 40%,
+    rgba(122, 34, 49, 0.35) 72%,
+    rgba(92, 25, 37, 0.1) 100%
+  );
 }
 
 .hero-card {
-  padding: 36px 40px;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 40px;
-}
-
-.hero-left {
-  max-width: 720px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 480px;
+  padding-top: 64px;
+  padding-bottom: 64px;
 }
 
 .hero-tag {
-  font-size: 11px;
-  color: white;
-  letter-spacing: 1px;
   display: block;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
+  font-size: var(--texto-xs);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #E3CC9A;
 }
 
 .hero-title {
-  font-family: 'Source Serif 4', serif;
-  font-size: 28px;
-  margin-bottom: 12px;
-  color: white;
+  max-width: 640px;
+  margin: 0 0 16px;
+  font-family: var(--fuente-titulos);
+  font-size: clamp(30px, 4vw, 44px);
+  font-weight: 600;
+  line-height: 1.1;
+  color: #FFFFFF;
+}
+
+/* "VIII" grande como elemento gráfico. */
+.hero-edicion {
+  display: block;
+  margin-bottom: 4px;
+  font-size: clamp(72px, 9vw, 132px);
+  font-weight: 300;
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+  color: #E3CC9A;
 }
 
 .hero-description {
-  font-size: 13px;
+  max-width: 56ch;
+  margin: 0 0 32px;
+  font-size: 16px;
   line-height: 1.6;
-  color: white;
+  color: rgba(255, 255, 255, 0.88);
 }
 
-.hero-right {
+.hero-acciones {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: 12px;
-  min-width: 200px;
+}
+
+.btn-hero-primary,
+.btn-hero-secondary {
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: 2px;
+  font-size: 15px;
+  font-weight: 500;
+  text-align: center;
+  text-decoration: none;
 }
 
 .btn-hero-primary {
   background-color: var(--color-accent-strong);
   color: #FFFFFF;
-  padding: 10px 18px;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 14px;
-  border-radius: 2px;
-  text-align: center;
 }
 
 .btn-hero-primary:hover {
@@ -60,41 +112,40 @@
 }
 
 .btn-hero-secondary {
-  border: 1px solid #E4DFDA;
-  padding: 10px 18px;
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 14px;
-  border-radius: 2px;
-  text-align: center;
-  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  color: #FFFFFF;
+}
+
+.btn-hero-secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 /* --- EJES TEMÁTICOS --- */
 .section-ejes {
-  background-color: #FBFAF8;
-  padding: 40px;
+  padding: 48px 40px;
+  background-color: var(--color-bg);
 }
 
 .section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   margin-bottom: 24px;
 }
 
 .section-title {
-  font-family: 'Source Serif 4', serif;
+  font-family: var(--fuente-titulos);
   font-size: 22px;
   font-weight: 600;
 }
 
 .link-action {
-  color: #7A2231;
-  font-weight: 500;
-  text-decoration: none;
+  border-bottom: 2px solid var(--color-primary);
   font-size: 14px;
-  border-bottom: 2px solid #7A2231;
+  font-weight: 500;
+  color: var(--color-primary);
+  text-decoration: none;
 }
 
 .grid-cards {
@@ -104,32 +155,31 @@
 }
 
 .card {
-  border: 1px solid #E4DFDA;
-  border-top: 3px solid #7A2231;
   padding: 20px;
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-primary);
   border-radius: 2px;
-  background-color: #FFFFFF;
+  background-color: var(--color-surface);
 }
 
 .card h3 {
-  font-family: 'Source Serif 4', serif;
+  margin-bottom: 8px;
+  font-family: var(--fuente-titulos);
   font-size: 17px;
   font-weight: 600;
-  margin-bottom: 8px;
-  color: #1F1A1B;
+  color: var(--color-text);
 }
 
 .card p {
   font-size: 14px;
-  color: #6F6663;
   line-height: 1.5;
+  color: var(--color-text-muted);
 }
 
 /* --- FECHAS Y CRITERIOS --- */
 .section-info {
-  background-color: #FBFAF8;
-  padding: 40px;
-  padding-top: 0;
+  padding: 0 40px 48px;
+  background-color: var(--color-bg);
 }
 
 .grid-two-columns {
@@ -139,27 +189,100 @@
 }
 
 .info-list {
-  list-style: none;
   margin-top: 16px;
-  background-color: #FFFFFF;
+  list-style: none;
+  background-color: var(--color-surface);
 }
 
 .info-list li {
   display: flex;
   justify-content: space-between;
+  gap: 16px;
   padding: 12px 20px;
-  border: 1px solid #E4DFDA;
+  border: 1px solid var(--color-border);
   font-size: 14px;
 }
 
-.info-list li span {
-  color: black;
+.info-list li + li {
+  border-top: 0;
+}
+
+.info-list li span,
+.info-list li strong {
+  color: var(--color-text);
 }
 
 .info-list li strong {
-  color: black;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
-.color-description li strong{
-    color: #7A2231;
+.color-description li strong {
+  color: var(--color-primary);
+}
+
+/* --- TABLET --- */
+@media (max-width: 1023px) {
+  .grid-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grid-two-columns {
+    gap: 32px;
+  }
+}
+
+/* --- CELULAR --- */
+@media (max-width: 767px) {
+  .hero-foto img {
+    object-position: center bottom;
+  }
+
+  .hero-section::before {
+    background: linear-gradient(
+      180deg,
+      var(--color-primary) 0%,
+      rgba(122, 34, 49, 0.94) 44%,
+      rgba(122, 34, 49, 0.4) 60%,
+      rgba(122, 34, 49, 0) 78%
+    );
+  }
+
+  .hero-card {
+    justify-content: flex-start;
+    min-height: 720px;
+    padding-top: 40px;
+    padding-bottom: 280px;
+  }
+
+  .hero-acciones {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn-hero-primary,
+  .btn-hero-secondary {
+    width: 100%;
+  }
+
+  .section-ejes {
+    padding: 32px 16px;
+  }
+
+  .section-info {
+    padding: 0 16px 32px;
+  }
+
+  .section-header {
+    flex-wrap: wrap;
+  }
+
+  .grid-cards,
+  .grid-two-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .info-list li {
+    padding: 12px 16px;
+  }
 }

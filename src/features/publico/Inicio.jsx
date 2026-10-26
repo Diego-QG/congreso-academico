@@ -1,4 +1,8 @@
 import { Link } from "react-router-dom";
+import heroGrande from "../../assets/fotos/hero-congreso.webp";
+import heroNormal from "../../assets/fotos/hero-congreso-1x.webp";
+import heroMovil from "../../assets/fotos/hero-congreso-movil.webp";
+import heroJpg from "../../assets/fotos/hero-congreso.jpg";
 import "./Inicio.css";
 
 export default function Inicio() {
@@ -6,19 +10,23 @@ export default function Inicio() {
     <>
       {/* --- HERO SECTION --- */}
       <section className="hero-section" id="inicio">
-        <div className="hero-card">
-          <div className="hero-left">
-            <span className="hero-tag">
-              CONVOCATORIA ABIERTA · LIMA, 12 Y 13 DE NOVIEMBRE DE 2026
-            </span>
-            <h1 className="hero-title">VIII Congreso Académico Estudiantil</h1>
-            <p className="hero-description">
-              Presenta tu investigación ante el comité y la comunidad
-              universitaria. Recibimos artículos completos, resúmenes
-              extendidos, pósteres y casos de estudio en seis ejes temáticos.
-            </p>
-          </div>
-          <div className="hero-right">
+        <picture className="hero-foto">
+          <source media="(max-width: 767px)" srcSet={heroMovil} type="image/webp" />
+          <source srcSet={`${heroNormal} 1280w, ${heroGrande} 2560w`} sizes="100vw" type="image/webp" />
+          <img src={heroJpg} alt="" fetchPriority="high" />
+        </picture>
+
+        <div className="contenedor hero-card">
+          <span className="hero-tag">Convocatoria abierta · Lima, 12 y 13 de noviembre de 2026</span>
+          <h1 className="hero-title">
+            <span className="hero-edicion">VIII</span> Congreso Académico Estudiantil
+          </h1>
+          <p className="hero-description">
+            Presenta tu investigación ante el comité y la comunidad
+            universitaria. Recibimos artículos completos, resúmenes
+            extendidos, pósteres y casos de estudio en seis ejes temáticos.
+          </p>
+          <div className="hero-acciones">
             {/* BOTÓN "ENVIAR MI TRABAJO" LLEVA AL LOGIN (1.2) */}
             <Link to="/login" className="btn-hero-primary">
               Enviar mi trabajo
