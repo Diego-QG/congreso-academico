@@ -4,11 +4,11 @@ import Inicio from "./features/publico/Inicio";
 import Portada from "./features/publico/Portada";
 
 // HU-1 · Cuenta y acceso
-import Login from "./hu1-cuenta/Login";
-import Register from "./hu1-cuenta/Register";
-import Bienvenida from "./hu1-cuenta/Bienvenida";
-import MiCuenta from "./hu1-cuenta/MiCuenta";
-import RecuperarContrasena from "./hu1-cuenta/RecuperarContrasena";
+import InicioSesion from "./features/cuenta/InicioSesion";
+import Registro from "./features/cuenta/Registro";
+import Bienvenida from "./features/cuenta/Bienvenida";
+import MiCuenta from "./features/cuenta/MiCuenta";
+import RecuperarContrasena from "./features/cuenta/RecuperarContrasena";
 import PaginaNoEncontrada from "./features/publico/PaginaNoEncontrada";
 // HU-3 · Envío de trabajos
 import { MisTrabajos, NuevoTrabajo } from "./hu3-trabajos/Historia3";
@@ -24,7 +24,7 @@ import Historia4 from "./hu4-asignacion/Historia4";
 import BandejaRevisor from "./hu5-revision/BandejaRevisor";
 import FormularioEvaluacion from "./hu5-revision/FormularioEvaluacion";
 import RevisionesProvider from "./hu5-revision/RevisionesProvider";
-import RutaRevisor from "./hu1-cuenta/RutaRevisor";
+import RutaRevisor from "./features/cuenta/RutaRevisor";
 // HU-6 · Programa del congreso
 import ProgramaProvider from "./hu6-programa/ProgramaProvider";
 import ProgramaPublico from "./hu6-programa/ProgramaPublico";
@@ -49,8 +49,8 @@ export default function App() {
           <Route path="/" element={<Inicio />} />
 
           {/* HU-1 */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/registro" element={<Register />} />
+          <Route path="/login" element={<InicioSesion />} />
+          <Route path="/registro" element={<Registro />} />
           <Route path="/bienvenida" element={<Bienvenida />} />
           <Route path="/mi-cuenta" element={<MiCuenta />} />
           <Route

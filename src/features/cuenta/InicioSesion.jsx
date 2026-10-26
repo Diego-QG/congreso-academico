@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import "./Login.css";
+import "./InicioSesion.css";
 
-function Login() {
+function InicioSesion() {
   const location = useLocation();
   const [email, setEmail] = useState(
     location.state?.email || "rosa.quispe@aloe.ulima.edu.pe"
@@ -145,4 +145,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default InicioSesion;
