@@ -129,7 +129,7 @@ function Consolidado({ trabajo }) {
                   <th>Revisor</th>
                   {CRITERIOS.map((cr) => (
                     <th key={cr.id} className="numero">
-                      {cr.nombre} {cr.peso} %
+                      {cr.nombre} {cr.peso}&nbsp;%
                     </th>
                   ))}
                   <th className="numero">Ponderado</th>
