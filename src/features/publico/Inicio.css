@@ -41,7 +41,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  min-height: clamp(480px, calc(100svh - 146px), 860px);
+  min-height: clamp(480px, calc(100svh - 110px), 960px);
   padding-top: 64px;
   padding-bottom: 64px;
 }
