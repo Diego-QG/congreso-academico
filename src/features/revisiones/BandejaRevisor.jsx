@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useRevisiones } from "./revisionesContexto";
 import { obtenerAsignacionesDeRevisor, obtenerTrabajo } from "./revisionesServicio";
 import { TEXTO_RECOMENDACION } from "./consolidado";
+import { diasHasta, formatoFecha, textoDias } from "../../shared/fechas";
 import "./BandejaRevisor.css";
 
 // Temporallllll
@@ -22,20 +23,6 @@ const ESTADOS = {
   entregada: { texto: "Entregada", boton: "Ver evaluación" },
 };
 
-// Días entre hoy y la fecha límite: positivo si falta, negativo si ya pasó.
-function diasHasta(fecha) {
-  const hoy = new Date();
-  hoy.setHours(0, 0, 0, 0);
-  const limite = new Date(fecha + "T00:00:00");
-  return Math.round((limite - hoy) / 86400000);
-}
-
-// '2026-10-15' -> '15/10/2026'
-function formatoFecha(fecha) {
-  const [anio, mes, dia] = fecha.split("-");
-  return `${dia}/${mes}/${anio}`;
-}
-
 function estadoDe(revision, dias) {
   if (revision?.estado === "enviada") return "entregada";
   if (dias < 0) return "vencida";
@@ -47,12 +34,8 @@ function textoPlazo(a) {
     const recomendacion = TEXTO_RECOMENDACION[a.revision.recomendacion]?.toLowerCase();
     return `Enviada el ${formatoFecha(a.revision.fechaEnvio)} · ${recomendacion}`;
   }
-  if (a.dias < 0) {
-    const hace = -a.dias;
-    return `Venció el ${formatoFecha(a.fecha)} · hace ${hace} ${hace === 1 ? "día" : "días"}`;
-  }
-  if (a.dias === 0) return `Vence hoy, ${formatoFecha(a.fecha)}`;
-  return `Vence el ${formatoFecha(a.fecha)} · ${a.dias === 1 ? "falta 1 día" : `faltan ${a.dias} días`}`;
+  if (a.dias < 0) return `Venció el ${formatoFecha(a.fecha)} · ${textoDias(a.dias)}`;
+  return `Vence el ${formatoFecha(a.fecha)} · ${textoDias(a.dias)}`;
 }
 
 function pasaFiltro(a, filtro) {
@@ -139,20 +122,20 @@ export default function BandejaRevisor() {
       ) : (
         <div className="bandeja-tarjetas">
           {visibles.map((a) => (
-            <article key={a.id} className={"tarjeta tarjeta-" + a.estado}>
-              <div className="tarjeta-superior">
-                <span className="tarjeta-codigo">{a.trabajo.codigo}</span>
-                <span className={"etiqueta etiqueta-" + a.estado}>{ESTADOS[a.estado].texto}</span>
+            <article key={a.id} className={"revision-tarjeta revision-tarjeta-" + a.estado}>
+              <div className="revision-tarjeta-superior">
+                <span className="revision-tarjeta-codigo">{a.trabajo.codigo}</span>
+                <span className={"insignia insignia-" + a.estado}>{ESTADOS[a.estado].texto}</span>
               </div>
               <h2>{a.trabajo.titulo}</h2>
-              <div className="tarjeta-etiquetas">
-                <span className="tarjeta-eje">{a.trabajo.eje}</span>
-                <span className="tarjeta-tipo">{a.trabajo.tipo}</span>
+              <div className="revision-tarjeta-etiquetas">
+                <span className="revision-tarjeta-eje">{a.trabajo.eje}</span>
+                <span className="revision-tarjeta-tipo">{a.trabajo.tipo}</span>
               </div>
-              <footer className="tarjeta-pie">
-                <span className={"tarjeta-plazo plazo-" + a.estado}>{textoPlazo(a)}</span>
+              <footer className="revision-tarjeta-pie">
+                <span className={"revision-tarjeta-plazo plazo-" + a.estado}>{textoPlazo(a)}</span>
                 <Link
-                  className={a.estado === "entregada" ? "tarjeta-enlace" : "boton-primario tarjeta-boton"}
+                  className={a.estado === "entregada" ? "revision-tarjeta-enlace" : "boton-primario revision-tarjeta-boton"}
                   to={"/revisor/revision/" + a.id}
                 >
                   {ESTADOS[a.estado].boton}

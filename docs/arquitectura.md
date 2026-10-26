@@ -33,7 +33,15 @@ recién ahí se le agregan subcarpetas (`components/`, `pages/`).
    Si dos entidades necesitan lo mismo, va a `shared/`.
 3. **Componentes comunes en `shared/`:** encabezado, navegación, pie, formulario de evaluación por
    criterios, tarjetas de trabajo, etiquetas de estado y diálogos de confirmación.
-4. **Nombres**
+4. **El CSS es global: cada clase lleva un prefijo propio.** En Vite todos los `.css` se aplican a
+   todas las páginas, así que dos historias con una clase `.tarjeta` o `.modal-fondo` se pisan entre sí.
+   Cada pantalla usa su prefijo (`bandeja-`, `consolidado-`, `decision-`…). Nadie define `body`, `*`,
+   el encabezado ni el pie fuera de `shared/`.
+5. **Tema común en `shared/tema.css`:** fuentes (incluidas en el proyecto), colores, escala de tamaños y
+   espaciado como variables (`var(--color-primary)`, `var(--texto-xl)`, `var(--espacio-4)`), y las
+   clases comunes `.boton-primario`, `.boton-secundario` e `.insignia` (`-exito`, `-aviso`, `-peligro`,
+   `-neutra`). Se usan las variables en vez de escribir colores o tamaños sueltos.
+6. **Nombres**
    - Carpetas técnicas en inglés (`features`, `shared`, `data`); dominio en español (`trabajos`, `Registro`).
    - Componentes: `PascalCase.jsx`, con su `.css` al lado y el mismo nombre.
    - Servicios y contextos: `camelCase` con sufijo (`revisionesServicio.js`, `revisionesContexto.js`).

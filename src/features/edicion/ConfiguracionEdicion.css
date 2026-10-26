@@ -29,7 +29,7 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 15px;
     line-height: 22px;
     background-color: var(--color-bg);
@@ -59,7 +59,7 @@
 
 /* botones */
 .pagina-configuracion .btn {
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 13px;
     font-weight: 600;
     padding: 8px 16px;
@@ -118,13 +118,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: Georgia, serif;
+    font-family: 'Source Serif 4', serif;
     font-size: 14px;
     font-weight: 600;
 }
 
 .pagina-configuracion .marca-nombre {
-    font-family: Georgia, serif;
+    font-family: 'Source Serif 4', serif;
     font-size: 14px;
     font-weight: 600;
     line-height: 16px;
@@ -248,7 +248,7 @@
 }
 
 .pagina-configuracion .pagina-titulo {
-    font-family: Georgia, serif;
+    font-family: 'Source Serif 4', serif;
     font-size: 28px;
     line-height: 32px;
     font-weight: 600;
@@ -318,7 +318,7 @@
 }
 
 .pagina-configuracion .tarjeta-titulo {
-    font-family: Georgia, serif;
+    font-family: 'Source Serif 4', serif;
     font-size: 16px;
     line-height: 24px;
     font-weight: 600;
@@ -354,7 +354,7 @@
 
 .pagina-configuracion .entrada {
     width: 100%;
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 13px;
     color: var(--color-text);
     background-color: var(--color-surface);
@@ -457,7 +457,7 @@
 }
 
 .pagina-configuracion .pie-marca {
-    font-family: Georgia, serif;
+    font-family: 'Source Serif 4', serif;
     font-size: 13px;
     font-weight: 600;
     color: var(--color-surface);
@@ -542,7 +542,7 @@
     background: none;
     border: none;
     padding: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     font-size: 11px;
     color: var(--color-primary);
 }
@@ -580,7 +580,7 @@
 }
 
 .pagina-configuracion .estado-vacio-titulo {
-    font-family: Georgia, serif;
+    font-family: 'Source Serif 4', serif;
     font-size: 20px;
     line-height: 28px;
     font-weight: 600;
@@ -693,7 +693,7 @@
 }
 
 .pagina-configuracion .modal-titulo {
-    font-family: Georgia, serif;
+    font-family: 'Source Serif 4', serif;
     font-size: 16px;
     line-height: 24px;
     font-weight: 600;

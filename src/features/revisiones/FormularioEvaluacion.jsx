@@ -4,6 +4,7 @@ import FormularioCriterios from '../../shared/FormularioCriterios';
 import DialogoConfirmacion from '../../shared/DialogoConfirmacion';
 import { aNumero } from '../../shared/puntajes';
 import { useRevisiones } from './revisionesContexto';
+import { diasHasta, formatoFecha, textoDias } from '../../shared/fechas';
 import { obtenerAsignacion, obtenerCriterios, obtenerTrabajo } from './revisionesServicio';
 import './FormularioEvaluacion.css';
 
@@ -142,7 +143,7 @@ function Evaluacion({ asignacion }) {
 
       {soloLectura && (
         <p className="evaluacion-banner">
-          Evaluación enviada el {revision.fechaEnvio}. Ya no admite cambios; si necesita corregirla, solicítelo al
+          Evaluación enviada el {formatoFecha(revision.fechaEnvio)}. Ya no admite cambios; si necesita corregirla, solicítelo al
           comité.
         </p>
       )}
@@ -161,7 +162,10 @@ function Evaluacion({ asignacion }) {
             <span className="evaluacion-recomendada">Recomendación: {recomendacionTexto}</span>
           ) : (
             <>
-              <strong>Vence el {asignacion.fecha}</strong>
+              <strong className={diasHasta(asignacion.fecha) < 0 ? 'evaluacion-vencida' : ''}>
+                {diasHasta(asignacion.fecha) < 0 ? 'Venció' : 'Vence'} el {formatoFecha(asignacion.fecha)} ·{' '}
+                {textoDias(diasHasta(asignacion.fecha))}
+              </strong>
               <span>Revisión ciega: no verá los nombres de los autores.</span>
             </>
           )}
