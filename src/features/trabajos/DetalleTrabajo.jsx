@@ -122,6 +122,8 @@ export default function DetalleTrabajo() {
   const decisionAceptada = dictamenPublicado
     && ['aceptado', 'aceptado_con_observaciones'].includes(dictamen.decision);
   const aceptado = trabajo.estado === 'Aceptado' || decisionAceptada;
+  const rechazado = trabajo.estado === 'Rechazado'
+    || (dictamenPublicado && dictamen.decision === 'rechazado');
   const revisionesEnviadas = trabajoSistema
     ? (revisionesContexto?.revisiones || []).filter(
       (revision) => revision.trabajoId === trabajoSistema.id && revision.estado === 'enviada'
@@ -152,7 +154,7 @@ export default function DetalleTrabajo() {
         <div className="detalle-trabajo__titulo">
           <div className="detalle-trabajo__identificador">
             <span>{trabajo.id}</span>
-            <span className={`detalle-trabajo__estado${enRevision ? ' detalle-trabajo__estado--revision' : aceptado ? ' detalle-trabajo__estado--aceptado' : ''}`}>
+            <span className={`detalle-trabajo__estado${enRevision ? ' detalle-trabajo__estado--revision' : aceptado ? ' detalle-trabajo__estado--aceptado' : rechazado ? ' detalle-trabajo__estado--rechazado' : ''}`}>
               {trabajo.estado}
             </span>
           </div>
@@ -262,6 +264,71 @@ export default function DetalleTrabajo() {
               <button type="button" disabled title="La carga de versiones finales aún no está habilitada.">
                 Subir versión final
               </button>
+            </section>
+          </aside>
+        </div>
+      ) : rechazado ? (
+        <div className="detalle-trabajo__columnas detalle-trabajo__columnas--rechazado">
+          <div className="detalle-trabajo__principal">
+            <section className="detalle-trabajo__resultado detalle-trabajo__resultado--rechazado">
+              <span className="detalle-trabajo__sobrelinea">
+                Resultado publicado{dictamen?.fecha ? ` el ${formatoFecha(dictamen.fecha)}` : ''}
+              </span>
+              <h2>Trabajo no aceptado en esta edición</h2>
+              <p>
+                {dictamen?.retroalimentacion
+                  || 'El comité no ha aceptado este trabajo en esta edición. Revise las observaciones de los evaluadores para futuras convocatorias.'}
+              </p>
+            </section>
+
+            <section className="trabajos__panel detalle-trabajo__panel detalle-trabajo__retroalimentacion">
+              <h2>Retroalimentación consolidada de los revisores</h2>
+              {consolidado.filas.length > 0 ? (
+                <ul>
+                  {consolidado.filas.map((revision, index) => (
+                    <li key={revision.id}>
+                      <span>Revisor {index + 1} · {revision.recomendacion.replaceAll('_', ' ')}</span>
+                      <p>{revision.comentarioAutor?.trim() || 'Sin comentarios para el autor.'}</p>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No hay comentarios de revisión disponibles para este trabajo.</p>
+              )}
+            </section>
+          </div>
+
+          <aside className="detalle-trabajo__lateral">
+            <section className="trabajos__panel detalle-trabajo__panel detalle-trabajo__puntajes detalle-trabajo__puntajes--rechazado">
+              <span className="detalle-trabajo__sobrelinea">Puntaje por criterio</span>
+              {consolidado.filas.length > 0 ? (
+                <>
+                  <dl>
+                    {CRITERIOS.map((criterio, index) => (
+                      <div key={criterio.id}>
+                        <dt>{criterio.nombre} ({criterio.peso} %)</dt>
+                        <dd>{unDecimal(consolidado.promedioPorCriterio[index])}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                  <div className="detalle-trabajo__promedio">
+                    <span>Promedio ponderado</span>
+                    <strong>{unDecimal(consolidado.promedio)}</strong>
+                  </div>
+                </>
+              ) : (
+                <p>Los puntajes de evaluación no están disponibles.</p>
+              )}
+            </section>
+
+            <section className="trabajos__panel detalle-trabajo__panel detalle-trabajo__siguiente-paso detalle-trabajo__aclaracion">
+              <span className="detalle-trabajo__sobrelinea">¿Tiene dudas?</span>
+              <p>
+                Puede solicitar una aclaración al comité organizador dentro de los 5 días siguientes a la publicación.
+              </p>
+              <a href={`mailto:congreso@ulima.edu.pe?subject=${encodeURIComponent(`Aclaración de dictamen · ${trabajo.id}`)}`}>
+                Escribir al comité
+              </a>
             </section>
           </aside>
         </div>

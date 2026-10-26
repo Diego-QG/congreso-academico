@@ -65,6 +65,12 @@
   color: #176b42;
 }
 
+.detalle-trabajo__estado--rechazado {
+  border-color: #d93025;
+  background: #fdeceb;
+  color: #b42318;
+}
+
 .detalle-trabajo__titulo h1 {
   font: 600 23px/1.25 'Source Serif 4', serif;
   overflow-wrap: anywhere;
@@ -317,6 +323,17 @@
   font-weight: 500;
 }
 
+.detalle-trabajo__resultado--rechazado {
+  border-color: #d93025;
+  background: #fdeceb;
+  color: #b42318;
+}
+
+.detalle-trabajo__resultado--rechazado .detalle-trabajo__sobrelinea,
+.detalle-trabajo__resultado--rechazado h2 {
+  color: #b42318;
+}
+
 .detalle-trabajo__retroalimentacion {
   padding: 15px 16px;
 }
@@ -384,6 +401,10 @@
   color: #176b42;
 }
 
+.detalle-trabajo__puntajes--rechazado .detalle-trabajo__promedio strong {
+  color: #b42318;
+}
+
 .detalle-trabajo__puntajes > p,
 .detalle-trabajo__siguiente-paso p {
   font-size: 9px;
@@ -406,6 +427,26 @@
   font: 600 10px 'Inter', sans-serif;
   opacity: .65;
   cursor: not-allowed;
+}
+
+.detalle-trabajo__aclaracion a {
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  padding: 7px 10px;
+  border: 1px solid #7a2231;
+  border-radius: 2px;
+  color: #7a2231;
+  font-size: 10px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.detalle-trabajo__aclaracion a:hover {
+  background: #7a2231;
+  color: #fff;
 }
 
 .detalle-trabajo__seguimiento {
