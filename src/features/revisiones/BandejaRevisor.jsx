@@ -4,6 +4,7 @@ import { useRevisiones } from "./revisionesContexto";
 import { obtenerAsignacionesDeRevisor, obtenerTrabajo } from "./revisionesServicio";
 import { TEXTO_RECOMENDACION } from "./consolidado";
 import { diasHasta, formatoFecha, textoDias } from "../../shared/fechas";
+import ilustracionVacia from "../../assets/ilustraciones/vacio-bandeja.svg";
 import "./BandejaRevisor.css";
 
 // Temporal: se leerá de la sesión cuando HU-1 tenga el contexto compartido.
@@ -69,7 +70,7 @@ export default function BandejaRevisor() {
         <h1>Mi bandeja de revisión</h1>
         <p className="bandeja-sub">Sin trabajos asignados por ahora</p>
         <div className="bandeja-vacia">
-          <span className="bandeja-vacia-icono">✓</span>
+          <img className="bandeja-vacia-icono" src={ilustracionVacia} alt="" />
           <h2>No tiene revisiones asignadas</h2>
           <p>
             El comité asigna los trabajos cuando cierra la recepción. Mantenga sus líneas de interés actualizadas para

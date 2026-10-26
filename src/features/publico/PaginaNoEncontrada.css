@@ -12,14 +12,21 @@
   text-align: center;
 }
 
+.estado-ilustracion {
+  display: block;
+  width: 200px;
+  height: auto;
+  margin: 0 auto 16px;
+}
+
 .not-found-code {
   display: block;
-  margin-bottom: 4px;
-  color: #F6E9EC;
-  font-family: 'Source Serif 4', serif;
-  font-size: 64px;
+  margin-bottom: 8px;
+  color: var(--color-accent-strong);
+  font-size: var(--texto-xs);
   font-weight: 600;
-  line-height: 1.1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .not-found-content h1 {
@@ -74,7 +81,7 @@
     font-size: 21px;
   }
 
-  .not-found-code {
-    font-size: 56px;
+  .estado-ilustracion {
+    width: 160px;
   }
 }

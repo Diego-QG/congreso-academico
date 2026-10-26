@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom';
+import ilustracion from '../../assets/ilustraciones/error-404.svg';
 import './PaginaNoEncontrada.css';
 
 export default function PaginaNoEncontrada() {
   return (
     <section className="not-found-page" aria-labelledby="not-found-title">
       <div className="not-found-content">
-        <span className="not-found-code" aria-hidden="true">404</span>
+        <img className="estado-ilustracion" src={ilustracion} alt="" />
+        <span className="not-found-code" aria-hidden="true">Error 404</span>
         <h1 id="not-found-title">No encontramos la página que busca</h1>
         <p>
           El enlace pudo cambiar o el trabajo ya no está publicado. Puede

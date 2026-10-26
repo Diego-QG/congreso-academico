@@ -1,4 +1,5 @@
 import { Link, Navigate, Outlet, useLocation } from 'react-router-dom';
+import ilustracion from '../../assets/ilustraciones/acceso-denegado.svg';
 import './RutaRevisor.css';
 
 const STORAGE_KEY = 'congreso.participante';
@@ -34,7 +35,7 @@ function AccesoDenegado({ registration }) {
   return (
     <section className="access-denied-page" aria-labelledby="access-denied-title">
       <div className="access-denied-content">
-        <span className="access-denied-icon" aria-hidden="true">!</span>
+        <img className="access-denied-icon" src={ilustracion} alt="" />
         <h1 id="access-denied-title">No tiene permiso para ver esta página</h1>
         <p>
           La bandeja de revisión es exclusiva del rol revisor. Si cree que debería
