@@ -39,7 +39,7 @@ function Portada() {
               <a href="#" className="btn-enlace" onClick={(e) => ir(e, '/')}>Historia 1 - Cuenta y acceso</a>
               <a href="#" className="btn-enlace" onClick={(e) => ir(e, '/revisor/bandeja')}>Historia 5 - Revisión y dictamen</a>
               <a href="#" className="btn-enlace" onClick={(e) => ir(e, '/comite/edicion')}>Historia 2 - Configuración de la edición</a>
-              <a href="#" className="btn-enlace" onClick={(e) => ir(e)}>Historia 6 - Programa del congreso</a>
+              <a href="#" className="btn-enlace" onClick={(e) => ir(e, '/programa')}>Historia 6 - Programa del congreso</a>
               <a href="#" className="btn-enlace" onClick={(e) => ir(e)}>Historia 3 - Envío de trabajos</a>
               <a href="#" className="btn-enlace" onClick={(e) => ir(e)}>Historia 7 - Métricas y usuarios</a>
               <a href="#" className="btn-enlace" onClick={(e) => ir(e, '/comite/asignaciones')}>Historia 4 - Asignación de revisiones</a>

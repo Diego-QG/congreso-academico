@@ -44,7 +44,7 @@ export default function ProgramaProvider({ children }) {
     cambiarTrabajos(sesionId, (lista) => lista.filter((id) => id !== trabajoId));
   }
 
-  // direccion: -1 sube, +1 baja
+  // Cambia el orden de un trabajo: direccion -1 lo sube, +1 lo baja.
   function moverTrabajo(sesionId, posicion, direccion) {
     cambiarTrabajos(sesionId, (lista) => {
       const destino = posicion + direccion;

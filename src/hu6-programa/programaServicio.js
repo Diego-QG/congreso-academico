@@ -3,26 +3,26 @@ import seed from '../data/seed.json';
 const CLAVE_SESIONES = 'congreso.sesiones';
 const CLAVE_PROGRAMA = 'congreso.programa';
 
-// Minutos que dura cada trabajo dentro de una sesión.
 export const DURACION_TRABAJO = 20;
 
 export const SALAS = ['A-101', 'B-201', 'C-305'];
 
+// Lee de localStorage; si no hay datos guardados devuelve los del seed.
 function leer(clave, valorInicial) {
   try {
     const guardado = localStorage.getItem(clave);
-    if (guardado) return JSON.parse(guardado);
+    return guardado ? JSON.parse(guardado) : valorInicial;
   } catch {
-    // Sin acceso a localStorage: se usan los datos semilla.
+    return valorInicial;
   }
-  return valorInicial;
 }
 
 function escribir(clave, valor) {
   try {
     localStorage.setItem(clave, JSON.stringify(valor));
+    return true;
   } catch {
-    // Sin acceso a localStorage: el cambio dura solo esta sesión.
+    return false;
   }
 }
 
@@ -42,7 +42,7 @@ export function guardarPrograma(programa) {
   escribir(CLAVE_PROGRAMA, programa);
 }
 
-// Solo los trabajos con dictamen de aceptación (HU-5) entran al programa.
+// Trabajos con dictamen de aceptación (HU-5): los únicos que entran al programa.
 export function obtenerTrabajosAceptados() {
   const aceptados = seed.dictamenes
     .filter((d) => d.decision === 'aceptado' || d.decision === 'aceptado_con_observaciones')
@@ -70,7 +70,6 @@ export function capacidadDeSesion(sesion) {
   return Math.floor((aMinutos(sesion.horaFin) - aMinutos(sesion.horaInicio)) / DURACION_TRABAJO);
 }
 
-// "2026-11-12" → "12/11/2026"
 export function formatearFecha(fecha) {
   const [a, m, d] = fecha.split('-');
   return `${d}/${m}/${a}`;
@@ -83,7 +82,7 @@ export function nombreDelDia(fecha) {
   return DIAS[new Date(a, m - 1, d).getDay()];
 }
 
-// "Rosa Quispe Ttito" + 2 coautores → "R. Quispe y 2 más"
+// Abrevia los autores, por ejemplo: "R. Quispe y 2 más".
 export function autoresAbreviados(trabajo) {
   const [nombre, apellido] = trabajo.autor.nombre.split(' ');
   const principal = `${nombre[0]}. ${apellido}`;

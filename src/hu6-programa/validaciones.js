@@ -11,7 +11,7 @@ export function seSolapan(a, b) {
   );
 }
 
-// Lista de pares [a, b] de sesiones en conflicto, sin repetir.
+// Devuelve los pares [a, b] de sesiones en conflicto.
 export function conflictosDeSala(sesiones) {
   const pares = [];
   sesiones.forEach((a, i) => {
@@ -22,7 +22,7 @@ export function conflictosDeSala(sesiones) {
   return pares;
 }
 
-// Errores por campo de una sesión antes de guardarla.
+// Devuelve los errores por campo de una sesión; vacío si es válida.
 export function validarSesion(sesion, otrasSesiones) {
   const errores = {};
   if (!sesion.nombre.trim()) errores.nombre = 'Ingrese el nombre de la sesión.';

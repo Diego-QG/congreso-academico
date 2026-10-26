@@ -21,7 +21,7 @@ export default function Footer() {
               <a href="#ejes">Ejes temáticos</a>
             </li>
             <li>
-              <a href="#programa">Programa</a>
+              <Link to="/programa">Programa</Link>
             </li>
           </ul>
         </div>

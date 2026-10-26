@@ -66,7 +66,7 @@ export default function Header() {
                 <li><NavLink to="/" end>Inicio</NavLink></li>
                 <li><a href="/#bases">Bases del congreso</a></li>
                 <li><a href="/#ejes">Ejes temáticos</a></li>
-                <li><a href="/#programa">Programa</a></li>
+                <li><NavLink to="/programa">Programa</NavLink></li>
                 <li><NavLink to="/autor/trabajos">Mis trabajos</NavLink></li>
               </>
             )}
