@@ -37,6 +37,14 @@ export function calcularConsolidado(revisiones, criterios) {
   };
 }
 
+// Sugerencia para el comité según el promedio (escala 0-20). La decisión final la toma el comité.
+export function sugerenciaPorPuntaje(promedio) {
+  if (promedio === null) return '—';
+  if (promedio >= 14) return 'aceptar';
+  if (promedio >= 10) return 'aceptar con observaciones';
+  return 'revisar en detalle';
+}
+
 // '2026-10-14' -> '14/10'
 export function diaMes(fecha) {
   if (!fecha) return '—';
