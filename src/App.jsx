@@ -11,7 +11,7 @@ import MiCuenta from "./features/cuenta/MiCuenta";
 import RecuperarContrasena from "./features/cuenta/RecuperarContrasena";
 import PaginaNoEncontrada from "./features/publico/PaginaNoEncontrada";
 // HU-3 · Envío de trabajos
-import { MisTrabajos, NuevoTrabajo } from "./hu3-trabajos/Historia3";
+import { MisTrabajos, NuevoTrabajo } from "./features/trabajos/MisTrabajos";
 // Configuración de la edición
 import ConfiguracionEdicion from "./features/edicion/ConfiguracionEdicion";
 import EjesTematicos from "./features/edicion/EjesTematicos";
