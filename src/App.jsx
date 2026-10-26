@@ -12,6 +12,7 @@ import RecuperarContrasena from "./features/cuenta/RecuperarContrasena";
 import PaginaNoEncontrada from "./features/publico/PaginaNoEncontrada";
 // HU-3 · Envío de trabajos
 import NuevoTrabajo from "./features/trabajos/NuevoTrabajo";
+import Coautores from "./features/trabajos/Coautores";
 // Configuración de la edición
 import ConfiguracionEdicion from "./features/edicion/ConfiguracionEdicion";
 import EjesTematicos from "./features/edicion/EjesTematicos";
@@ -62,6 +63,7 @@ export default function App() {
 
           {/* HU-3 */}
           <Route path="/nuevo-trabajo" element={<NuevoTrabajo />} />
+          <Route path="/nuevo-trabajo/coautores" element={<Coautores />} />
 
           {/* HU-5 */}
           <Route element={<RutaRevisor />}>
