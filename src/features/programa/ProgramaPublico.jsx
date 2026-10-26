@@ -8,6 +8,7 @@ import {
   horaDeTrabajo,
   nombreDelDia,
 } from './programaServicio';
+import ilustracionPendiente from '../../assets/ilustraciones/programa-pendiente.svg';
 import './ProgramaPublico.css';
 
 const TODOS = '';
@@ -31,7 +32,7 @@ export default function ProgramaPublico() {
       <section className="programa">
         <h1 className="programa-titulo">Programa del congreso</h1>
         <div className="programa-vacio">
-          <span className="programa-vacio-icono" aria-hidden="true">▤</span>
+          <img className="programa-vacio-icono" src={ilustracionPendiente} alt="" />
           <h2>El programa aún no se ha publicado</h2>
           <p>
             El comité organizador está armando las sesiones con los trabajos aceptados.

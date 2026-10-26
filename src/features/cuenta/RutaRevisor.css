@@ -13,17 +13,10 @@
 }
 
 .access-denied-icon {
-  display: inline-flex;
-  width: 56px;
-  height: 56px;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 14px;
-  border: 1px solid #C62828;
-  border-radius: 50%;
-  color: #C62828;
-  font-size: 26px;
-  font-weight: 600;
+  display: block;
+  width: 200px;
+  height: auto;
+  margin: 0 auto 16px;
 }
 
 .access-denied-content h1 {

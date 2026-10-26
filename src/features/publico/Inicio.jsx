@@ -3,7 +3,17 @@ import heroGrande from "../../assets/fotos/hero-congreso.webp";
 import heroNormal from "../../assets/fotos/hero-congreso-1x.webp";
 import heroMovil from "../../assets/fotos/hero-congreso-movil.webp";
 import heroJpg from "../../assets/fotos/hero-congreso.jpg";
+import { BrainCircuit, Building2, ChartLine, CodeXml, HeartPulse, Rocket } from "lucide-react";
 import "./Inicio.css";
+
+const EJES = [
+  { titulo: "Inteligencia artificial y datos", texto: "Aprendizaje automático, analítica y ciencia de datos aplicada.", Icono: BrainCircuit },
+  { titulo: "Ingeniería de software", texto: "Arquitectura, calidad, pruebas y procesos de desarrollo.", Icono: CodeXml },
+  { titulo: "Sostenibilidad y ciudad", texto: "Movilidad, gestión del agua y ciudades resilientes.", Icono: Building2 },
+  { titulo: "Innovación y emprendimiento", texto: "Modelos de negocio, transferencia tecnológica y startups.", Icono: Rocket },
+  { titulo: "Salud y sociedad", texto: "Salud pública, bienestar estudiantil y política social.", Icono: HeartPulse },
+  { titulo: "Economía y mercados", texto: "Mercados financieros, comercio y desarrollo económico.", Icono: ChartLine },
+];
 
 export default function Inicio() {
   return (
@@ -47,32 +57,15 @@ export default function Inicio() {
           </a>
         </div>
         <div className="grid-cards">
-          <div className="card">
-            <h3>Inteligencia artificial y datos</h3>
-            <p>
-              Aprendizaje automático, analítica y ciencia de datos aplicada.
-            </p>
-          </div>
-          <div className="card">
-            <h3>Ingeniería de software</h3>
-            <p>Arquitectura, calidad, pruebas y procesos de desarrollo.</p>
-          </div>
-          <div className="card">
-            <h3>Sostenibilidad y ciudad</h3>
-            <p>Movilidad, gestión del agua y ciudades resilientes.</p>
-          </div>
-          <div className="card">
-            <h3>Innovación y emprendimiento</h3>
-            <p>Modelos de negocio, transferencia tecnológica y startups.</p>
-          </div>
-          <div className="card">
-            <h3>Salud y sociedad</h3>
-            <p>Salud pública, bienestar estudiantil y política social.</p>
-          </div>
-          <div className="card">
-            <h3>Economía y mercados</h3>
-            <p>Mercados financieros, comercio y desarrollo económico.</p>
-          </div>
+          {EJES.map(({ titulo, texto, Icono }) => (
+            <div className="card" key={titulo}>
+              <span className="card-icono" aria-hidden="true">
+                <Icono size={22} strokeWidth={1.75} />
+              </span>
+              <h3>{titulo}</h3>
+              <p>{texto}</p>
+            </div>
+          ))}
         </div>
       </section>
 
