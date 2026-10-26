@@ -26,8 +26,8 @@ import FormularioEvaluacion from "./features/revisiones/FormularioEvaluacion";
 import RevisionesProvider from "./features/revisiones/RevisionesProvider";
 import RutaRevisor from "./features/cuenta/RutaRevisor";
 // HU-6 · Programa del congreso
-import ProgramaProvider from "./hu6-programa/ProgramaProvider";
-import ProgramaPublico from "./hu6-programa/ProgramaPublico";
+import ProgramaProvider from "./features/programa/ProgramaProvider";
+import ProgramaPublico from "./features/programa/ProgramaPublico";
 
 export default function App() {
   return (
