@@ -47,8 +47,6 @@ export default function Header() {
 
   return (
     <>
-      <div className="top-header-bar"></div>
-
       <header className="main-header">
         <div className="header-top">
           <div className="contenedor header-top-interno">
