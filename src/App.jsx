@@ -19,7 +19,7 @@ import TiposTrabajo from "./features/edicion/TiposTrabajo";
 import FechasLimite from "./features/edicion/FechasLimite";
 import CriteriosEvaluacion from "./features/edicion/CriteriosEvaluacion";
 // HU-4 · Asignación de revisiones
-import Historia4 from "./hu4-asignacion/Historia4";
+import AsignacionRevisores from "./features/asignaciones/AsignacionRevisores";
 // HU-5 · Revisión y dictamen
 import BandejaRevisor from "./hu5-revision/BandejaRevisor";
 import FormularioEvaluacion from "./hu5-revision/FormularioEvaluacion";
@@ -41,7 +41,7 @@ export default function App() {
         <Route path="/comite/edicion" element={<ConfiguracionEdicion />} />
         <Route path="/comite/edicion/ejes" element={<EjesTematicos />} />
         <Route path="/comite/edicion/tipos" element={<TiposTrabajo />} />
-        <Route path="/comite/asignaciones" element={<Historia4 />} />
+        <Route path="/comite/asignaciones" element={<AsignacionRevisores />} />
         <Route path="/comite/edicion/fechas" element={<FechasLimite />} />
         <Route path="/comite/edicion/criterios" element={<CriteriosEvaluacion />} />
 
