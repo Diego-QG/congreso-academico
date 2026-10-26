@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import seed from '../../data/seed.json';
 import FormularioCriterios from '../../shared/FormularioCriterios';
 import { aNumero } from '../../shared/puntajes';
 import { useRevisiones } from './revisionesContexto';
+import { obtenerAsignacion, obtenerCriterios, obtenerTrabajo } from './revisionesServicio';
 import './FormularioEvaluacion.css';
 
 const RECOMENDACIONES = [
@@ -12,7 +12,7 @@ const RECOMENDACIONES = [
   { valor: 'rechazar', texto: 'Rechazar' },
 ];
 
-const CRITERIOS = seed.edicion.criterios;
+const CRITERIOS = obtenerCriterios();
 const MENSAJE_PUNTAJE = 'Ingrese un puntaje entre 0 y 20.';
 
 // Si el revisor ya tiene un borrador o una revisión enviada, se usa esa;
@@ -36,7 +36,7 @@ function revisionInicial(asignacion, revisiones) {
 
 export default function FormularioEvaluacion() {
   const { asignacionId } = useParams();
-  const asignacion = seed.asignaciones.find((a) => a.id === asignacionId);
+  const asignacion = obtenerAsignacion(asignacionId);
 
   if (!asignacion) {
     return (
@@ -52,7 +52,7 @@ export default function FormularioEvaluacion() {
 }
 
 function Evaluacion({ asignacion }) {
-  const trabajo = seed.trabajos.find((t) => t.id === asignacion.trabajoId);
+  const trabajo = obtenerTrabajo(asignacion.trabajoId);
   const { revisiones, guardarRevision } = useRevisiones();
   const [revision, setRevision] = useState(() => revisionInicial(asignacion, revisiones));
   const [errores, setErrores] = useState({ criterios: {} });
