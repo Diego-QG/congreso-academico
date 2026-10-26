@@ -4,7 +4,6 @@ import './AsignacionRevisores.css';
 /* ======================= DATOS DE PRUEBA (semilla local) ======================= */
 const HOY = '2026-10-12'; // fecha de referencia fija para que el demo sea reproducible
 const CIERRE_REVISION = '2026-10-20';
-const ESTADO_EDICION = 'En revisión';
 const EJES = ['Inteligencia artificial y datos', 'Ingeniería de software', 'Sostenibilidad y ciudad', 'Innovación y emprendimiento', 'Salud y sociedad', 'Economía y mercados'];
 const TIPOS = ['Artículo completo', 'Resumen extendido', 'Póster', 'Caso de estudio'];
 const ESTADOS = ['Borrador', 'Enviado', 'En revisión', 'Aceptado', 'Rechazado'];
@@ -1011,16 +1010,6 @@ function AsignacionRevisores({ onNavegar, vistaInicial = 'trabajos' }) {
 
   return (
     <div className="h4-app">
-      <header className="h4-top">
-        <div className="h4-in">
-          <div className="h4-marca">
-            <div className="h4-logo" aria-hidden="true">C</div>
-            <div><b>Congreso Académico Estudiantil</b><small>Universidad de Lima · Edición 2026</small></div>
-          </div>
-          <div className="h4-estado">Estado de la edición<span className="h4-chip-estado">{ESTADO_EDICION}</span></div>
-        </div>
-      </header>
-
       <nav className="h4-nav" aria-label="Navegación del comité">
         <div className="h4-in">
           <ul className="h4-tabs">
@@ -1030,30 +1019,16 @@ function AsignacionRevisores({ onNavegar, vistaInicial = 'trabajos' }) {
               </li>
             ))}
           </ul>
-          <div className="h4-user">
-            <div>Dra. Ana Salazar Bermúdez<small>Rol: Comité organizador</small></div>
-            <div className="h4-avatar" aria-hidden="true">AS</div>
-          </div>
         </div>
       </nav>
 
-      <main className="h4-main">
+      <div className="h4-main">
         <div className="h4-in">
           {vista === 'trabajos' && <Trabajos d={d} irA={irA} />}
           {vista === 'revisores' && <Revisores d={d} />}
           {vista === 'seguimiento' && <Seguimiento d={d} setVista={setVista} />}
         </div>
-      </main>
-
-      <footer className="h4-pie">
-        <div className="h4-in">
-          <div><b>Congreso Académico Estudiantil</b>Facultad de Ingeniería · Universidad de Lima. Av. Javier Prado Este 4600, Santiago de Surco, Lima.</div>
-          <div><h3>El congreso</h3>Bases y requisitos<br />Ejes temáticos<br />Programa</div>
-          <div><h3>Participantes</h3>Guía para autores<br />Guía para revisores<br />Preguntas frecuentes</div>
-          <div><h3>Contacto</h3>congreso@ulima.edu.pe<br />(01) 437 6767 anexo 30450</div>
-          <div className="h4-legal">© 2026 Universidad de Lima. Todos los derechos reservados. · Términos de uso · Política de privacidad</div>
-        </div>
-      </footer>
+      </div>
 
       <div className="h4-avisos" aria-live="polite">
         {avisos.map((a) => <Aviso key={a.id} aviso={a} onQuitar={quitarAviso} />)}

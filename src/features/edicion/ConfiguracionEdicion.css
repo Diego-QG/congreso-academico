@@ -1,19 +1,4 @@
-/* colores del PDF */
-:root {
-    --color-primary: #7A2231;
-    --color-primary-dark: #5C1925;
-    --color-primary-soft: #F6E9EC;
-    --color-accent: #A67C2E;
-    --color-bg: #FBFAF8;
-    --color-surface: #FFFFFF;
-    --color-border: #E4DFDA;
-    --color-text: #1F1A1B;
-    --color-text-muted: #6F6663;
-    --color-success: #1E7F4D;
-    --color-warning: #B7791F;
-    --color-danger: #B4322B;
-    --estado-enviado: #3B6FA8;
-}
+/* Los colores vienen de src/shared/tema.css (antes se redefinían aquí y cambiaban toda la app). */
 
 * {
     margin: 0;
@@ -22,13 +7,8 @@
 }
 
 .pagina-configuracion {
-    position: relative;
-    left: 50%;
-    width: 100vw;
-    margin: 0 0 0 -50vw;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
     font-family: 'Inter', sans-serif;
     font-size: 15px;
     line-height: 22px;

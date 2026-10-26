@@ -5,7 +5,7 @@
 #root:has(> .h4-app){width:100%}
 
 .h4-app{--pr:#7A2231;--prd:#5C1925;--prs:#F6E9EC;--ac:#A67C2E;--bg:#FBFAF8;--bd:#E4DFDA;--tx:#1F1A1B;--mu:#6F6663;--ok:#1E7F4D;--wa:#B7791F;--er:#B4322B;--in:#3B6FA8;
-  width:100%;min-height:100vh;display:flex;flex-direction:column;background:var(--bg);color:var(--tx);font:15px/22px 'Inter',sans-serif}
+  width:100%;display:flex;flex-direction:column;background:var(--bg);color:var(--tx);font:15px/22px 'Inter',sans-serif}
 .h4-app *,.h4-app *::before,.h4-app *::after{box-sizing:border-box}
 .h4-app :where(h1,h2,h3,p,ul){margin:0;padding:0}
 .h4-app :where(ul){list-style:none}
@@ -139,3 +139,6 @@
 
 @media (width<=900px){.h4-kpis{grid-template-columns:repeat(2,1fr)}.h4-resumen{grid-template-columns:1fr}.h4-pie .h4-in{grid-template-columns:1fr 1fr}.h4-user small,.h4-user div:first-child{display:none}.h4-buscar{width:100%}}
 @media (width<=600px){.h4-kpis,.h4-pie .h4-in{grid-template-columns:1fr}.h4-titulo{font-size:24px}.h4-fondo{padding:0;align-items:end}.h4-modal{max-height:100vh;max-width:none}.h4-modal-pie{flex-direction:column;align-items:stretch}}
+
+/* Celular: las pestañas del comité se deslizan de lado en vez de cortarse. */
+@media (width<=767px){.h4-nav .h4-in{padding:0 16px}.h4-tabs{overflow-x:auto;flex-wrap:nowrap;scrollbar-width:none}.h4-tabs::-webkit-scrollbar{display:none}.h4-tab{white-space:nowrap}.h4-main .h4-in{padding:0 16px}}
