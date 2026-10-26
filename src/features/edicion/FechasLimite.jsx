@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import CabeceraComite from './CabeceraComite';
 import PestanasConfig from './PestanasConfig';
-import PieComite from './PieComite';
 import './ConfiguracionEdicion.css';
 import { CRONOGRAMA_INICIAL, ETAPAS } from './datosConfiguracion.js';
 
@@ -83,9 +81,8 @@ function FechasLimite() {
 
   return (
     <div className="pagina-configuracion">
-      <CabeceraComite estado="Recepción abierta" />
 
-      <main className="contenido">
+      <div className="contenido">
         <div className="contenedor">
           <div className="pagina-cabecera">
             <div>
@@ -211,9 +208,8 @@ function FechasLimite() {
             </aside>
           </div>
         </div>
-      </main>
+      </div>
 
-      <PieComite />
     </div>
   );
 }

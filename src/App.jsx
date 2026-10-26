@@ -42,15 +42,6 @@ export default function App() {
         {/* Portada del proyecto: índice de historias (diseño propio, sin header ni footer) */}
         <Route path="/portada" element={<Portada />} />
 
-        {/* HU-2 usa su propia cabecera y pie de comité; no envolver en Layout. */}
-        <Route element={<RutaProtegida rolesPermitidos={['comite']} />}>
-          <Route path="/comite/edicion" element={<ConfiguracionEdicion />} />
-          <Route path="/comite/edicion/ejes" element={<EjesTematicos />} />
-          <Route path="/comite/edicion/tipos" element={<TiposTrabajo />} />
-          <Route path="/comite/edicion/fechas" element={<FechasLimite />} />
-          <Route path="/comite/edicion/criterios" element={<CriteriosEvaluacion />} />
-        </Route>
-
         <Route element={<Layout />}>
           <Route path="/" element={<Inicio />} />
 
@@ -80,6 +71,15 @@ export default function App() {
               path="/revisor/revision/:asignacionId"
               element={<FormularioEvaluacion />}
             />
+          </Route>
+
+          {/* HU-2 · Configuración de la edición · Solo comité */}
+          <Route element={<RutaProtegida rolesPermitidos={['comite']} />}>
+            <Route path="/comite/edicion" element={<ConfiguracionEdicion />} />
+            <Route path="/comite/edicion/ejes" element={<EjesTematicos />} />
+            <Route path="/comite/edicion/tipos" element={<TiposTrabajo />} />
+            <Route path="/comite/edicion/fechas" element={<FechasLimite />} />
+            <Route path="/comite/edicion/criterios" element={<CriteriosEvaluacion />} />
           </Route>
 
           {/* Configuración y dictámenes · Solo comité */}

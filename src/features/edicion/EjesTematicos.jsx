@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import CabeceraComite from './CabeceraComite';
 import PestanasConfig from './PestanasConfig';
-import PieComite from './PieComite';
 import './ConfiguracionEdicion.css';
 import { EJES_INICIALES } from './datosConfiguracion.js';
 
@@ -84,9 +82,8 @@ function EjesTematicos() {
 
   return (
     <div className="pagina-configuracion">
-      <CabeceraComite estado={ejes.length > 0 ? 'Recepción abierta' : 'En preparación'} />
 
-      <main className="contenido">
+      <div className="contenido">
         <div className="contenedor">
           <div className="pagina-cabecera">
             <div>
@@ -165,7 +162,7 @@ function EjesTematicos() {
             </div>
           )}
         </div>
-      </main>
+      </div>
 
       {modal !== null ? (
         <div className="modal-fondo">
@@ -223,7 +220,6 @@ function EjesTematicos() {
         </div>
       ) : null}
 
-      <PieComite />
     </div>
   );
 }

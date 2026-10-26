@@ -1,7 +1,5 @@
 import { useState } from 'react';
-import CabeceraComite from './CabeceraComite';
 import PestanasConfig from './PestanasConfig';
-import PieComite from './PieComite';
 import './ConfiguracionEdicion.css';
 import { TIPOS_INICIALES, FORMATOS } from './datosConfiguracion.js';
 
@@ -79,9 +77,8 @@ function TiposTrabajo() {
 
   return (
     <div className="pagina-configuracion">
-      <CabeceraComite estado="Recepción abierta" />
 
-      <main className="contenido">
+      <div className="contenido">
         <div className="contenedor">
           <div className="pagina-cabecera">
             <div>
@@ -135,7 +132,7 @@ function TiposTrabajo() {
             </p>
           </div>
         </div>
-      </main>
+      </div>
 
       {modal !== null ? (
         <div className="modal-fondo">
@@ -225,7 +222,6 @@ function TiposTrabajo() {
         </div>
       ) : null}
 
-      <PieComite />
     </div>
   );
 }
