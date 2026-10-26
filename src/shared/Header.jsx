@@ -52,6 +52,9 @@ export default function Header() {
                 {hasAuthorRole && (
                   <li><NavLink to="/nuevo-trabajo">Nuevo trabajo</NavLink></li>
                 )}
+                {hasAuthorRole && (
+                  <li><NavLink to="/mis-trabajos">Mis trabajos</NavLink></li>
+                )}
                 {hasReviewerRole && (
                   <li><NavLink to="/revisor/bandeja">Mi bandeja</NavLink></li>
                 )}
