@@ -1,14 +1,29 @@
+import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import './NuevoTrabajo.css';
 
-const resumenInicial =
-  'Se evalúan tres modelos supervisados para anticipar el abandono de estudios en una universidad privada de Lima, usando registros académicos de cinco cohortes.';
-
 export default function NuevoTrabajo() {
+  const [palabrasClave, setPalabrasClave] = useState([]);
+  const [nuevaPalabra, setNuevaPalabra] = useState('');
   const registration = JSON.parse(
     window.sessionStorage.getItem('congreso.participante') || 'null'
   );
   const isAuthor = ['autor', 'ambos'].includes(registration?.rolParticipacion);
+
+  function agregarPalabraClave(event) {
+    if (event.key !== 'Enter') return;
+
+    event.preventDefault();
+    const palabra = nuevaPalabra.trim();
+    if (!palabra) return;
+
+    setPalabrasClave((actuales) => (
+      actuales.some((actual) => actual.toLocaleLowerCase() === palabra.toLocaleLowerCase())
+        ? actuales
+        : [...actuales, palabra]
+    ));
+    setNuevaPalabra('');
+  }
 
   if (!isAuthor) {
     return <Navigate to="/login" replace />;
@@ -52,7 +67,7 @@ export default function NuevoTrabajo() {
                 name="titulo"
                 type="text"
                 maxLength={180}
-                defaultValue="Predicción de deserción universitaria mediante aprendizaje supervisado"
+                defaultValue=""
               />
             </div>
 
@@ -86,7 +101,7 @@ export default function NuevoTrabajo() {
                 name="resumen"
                 rows={4}
                 maxLength={1500}
-                defaultValue={resumenInicial}
+                defaultValue={''}
               />
               <div className="nuevo-trabajo__ayuda-campo">
                 <small>Máximo 68 caracteres por línea para facilitar la lectura.</small>
@@ -97,7 +112,7 @@ export default function NuevoTrabajo() {
             <div className="nuevo-trabajo__campo">
               <label htmlFor="trabajo-palabra-clave">Palabras clave *</label>
               <div className="nuevo-trabajo__etiquetas">
-                {['deserción universitaria', 'aprendizaje supervisado', 'analítica educativa'].map((palabra) => (
+                {palabrasClave.map((palabra) => (
                   <span className="nuevo-trabajo__etiqueta" key={palabra}>
                     {palabra}<span aria-hidden="true">×</span>
                   </span>
@@ -107,6 +122,9 @@ export default function NuevoTrabajo() {
                   type="text"
                   placeholder="Escriba y presione Enter..."
                   aria-label="Agregar una palabra clave"
+                  value={nuevaPalabra}
+                  onChange={(event) => setNuevaPalabra(event.target.value)}
+                  onKeyDown={agregarPalabraClave}
                 />
               </div>
             </div>
@@ -117,7 +135,7 @@ export default function NuevoTrabajo() {
                 id="trabajo-enlace"
                 name="enlace"
                 type="url"
-                defaultValue="https://drive.ulima.edu.pe/trb-2026-058/articulo.pdf"
+                defaultValue=""
               />
               <small>El enlace debe permitir el acceso de lectura al comité y a los revisores.</small>
             </div>
