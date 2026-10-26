@@ -49,18 +49,14 @@ export default function Header() {
                     ? <a href="#inicio" className="active">Inicio</a>
                     : <NavLink to="/">Inicio</NavLink>}
                 </li>
-                {hasAuthorRole && !isWelcomePage && (
-                  <li><NavLink to="/autor/trabajos">Mis trabajos</NavLink></li>
+                {hasAuthorRole && (
+                  <li><NavLink to="/nuevo-trabajo">Nuevo trabajo</NavLink></li>
                 )}
                 {hasReviewerRole && (
                   <li><NavLink to="/revisor/bandeja">Mi bandeja</NavLink></li>
                 )}
-                {isWelcomePage && hasAuthorRole && (
-                  <>
-                    <li><a href="#nuevo-trabajo">Nuevo trabajo</a></li>
-                    <li><a href="#mis-trabajos">Mis trabajos</a></li>
-                    <li><a href="#inicio">Mi presentación</a></li>
-                  </>
+                {isWelcomePage && (
+                  <li><a href="#mi-presentacion">Mi presentación</a></li>
                 )}
                 <li><NavLink to="/mi-cuenta">Mi cuenta</NavLink></li>
               </>
@@ -70,7 +66,6 @@ export default function Header() {
                 <li><a href="/#bases">Bases del congreso</a></li>
                 <li><a href="/#ejes">Ejes temáticos</a></li>
                 <li><NavLink to="/programa">Programa</NavLink></li>
-                <li><NavLink to="/autor/trabajos">Mis trabajos</NavLink></li>
               </>
             )}
           </ul>

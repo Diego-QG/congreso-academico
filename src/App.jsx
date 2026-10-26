@@ -11,7 +11,7 @@ import MiCuenta from "./features/cuenta/MiCuenta";
 import RecuperarContrasena from "./features/cuenta/RecuperarContrasena";
 import PaginaNoEncontrada from "./features/publico/PaginaNoEncontrada";
 // HU-3 · Envío de trabajos
-import { MisTrabajos, NuevoTrabajo } from "./features/trabajos/MisTrabajos";
+import NuevoTrabajo from "./features/trabajos/NuevoTrabajo";
 // Configuración de la edición
 import ConfiguracionEdicion from "./features/edicion/ConfiguracionEdicion";
 import EjesTematicos from "./features/edicion/EjesTematicos";
@@ -61,7 +61,6 @@ export default function App() {
           <Route path="*" element={<PaginaNoEncontrada />} />
 
           {/* HU-3 */}
-          <Route path="/autor/trabajos" element={<MisTrabajos />} />
           <Route path="/nuevo-trabajo" element={<NuevoTrabajo />} />
 
           {/* HU-5 */}
