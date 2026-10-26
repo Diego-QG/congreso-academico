@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import seed from '../data/seed.json';
-import FormularioCriterios from '../shared/FormularioCriterios';
-import { aNumero } from '../shared/puntajes';
+import seed from '../../data/seed.json';
+import FormularioCriterios from '../../shared/FormularioCriterios';
+import { aNumero } from '../../shared/puntajes';
 import { useRevisiones } from './revisionesContexto';
 import './FormularioEvaluacion.css';
 

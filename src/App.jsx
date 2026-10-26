@@ -21,9 +21,9 @@ import CriteriosEvaluacion from "./features/edicion/CriteriosEvaluacion";
 // HU-4 · Asignación de revisiones
 import AsignacionRevisores from "./features/asignaciones/AsignacionRevisores";
 // HU-5 · Revisión y dictamen
-import BandejaRevisor from "./hu5-revision/BandejaRevisor";
-import FormularioEvaluacion from "./hu5-revision/FormularioEvaluacion";
-import RevisionesProvider from "./hu5-revision/RevisionesProvider";
+import BandejaRevisor from "./features/revisiones/BandejaRevisor";
+import FormularioEvaluacion from "./features/revisiones/FormularioEvaluacion";
+import RevisionesProvider from "./features/revisiones/RevisionesProvider";
 import RutaRevisor from "./features/cuenta/RutaRevisor";
 // HU-6 · Programa del congreso
 import ProgramaProvider from "./hu6-programa/ProgramaProvider";

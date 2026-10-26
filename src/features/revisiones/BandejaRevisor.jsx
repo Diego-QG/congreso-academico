@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import seed from "../data/seed.json";
+import seed from "../../data/seed.json";
 import { useRevisiones } from "./revisionesContexto";
 import "./BandejaRevisor.css";
 
