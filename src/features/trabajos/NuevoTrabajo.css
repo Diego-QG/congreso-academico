@@ -6,14 +6,8 @@
 }
 
 .nuevo-trabajo__aviso {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
   margin-top: 16px;
   padding: 12px 16px;
-  border-left: 3px solid var(--color-primary);
-  background: var(--color-primary-soft);
-  color: var(--color-primary);
   font-size: 13px;
 }
 
@@ -281,8 +275,6 @@
   align-items: start;
   gap: 24px;
   padding: 20px;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
 }
 
 .nuevo-trabajo__campos-principales {
@@ -314,10 +306,6 @@
   width: 100%;
   min-height: 40px;
   padding: 8px 10px;
-  border: 1px solid var(--color-border);
-  border-radius: 2px;
-  background: var(--color-surface);
-  color: var(--color-text);
   font: 400 14px/1.5 'Inter', sans-serif;
 }
 
@@ -384,8 +372,6 @@
 
 .nuevo-trabajo__panel {
   padding: 16px;
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
 }
 
 .nuevo-trabajo__panel h2 {

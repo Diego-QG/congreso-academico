@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { getCurrentParticipant } from '../../shared/cuentaServicio';
 import Coautores from './Coautores';
+import './Trabajos.css';
 import './NuevoTrabajo.css';
 
 function esUrlHttps(valor) {
@@ -227,7 +228,7 @@ export default function NuevoTrabajo() {
   return (
     <section className="nuevo-trabajo">
 
-      {!mostrarBorrador && <div className="nuevo-trabajo__aviso">
+      {!mostrarBorrador && <div className="trabajos__aviso nuevo-trabajo__aviso">
 
         <span><strong>Recepción abierta.</strong> Cierra el 30/09/2026 a las 23:59.</span>
         <strong>Faltan 12 días - 04:11 h</strong>
@@ -249,7 +250,7 @@ export default function NuevoTrabajo() {
               }).format(new Date(borradorGuardado.guardadoEn))} · Aún no ha sido enviado al comité.</strong>
             </div>
 
-            <div className="nuevo-trabajo__aviso">
+            <div className="trabajos__aviso nuevo-trabajo__aviso">
               <span><strong>Recepción abierta.</strong> Cierra el 30/09/2026 a las 23:59.</span>
               <strong>Faltan 12 días - 04:11 h</strong>
             </div>
@@ -277,7 +278,7 @@ export default function NuevoTrabajo() {
             {errorGuardado && <p className="nuevo-trabajo__error-general" role="alert">{errorGuardado}</p>}
 
             <div className="nuevo-trabajo__resumen-borrador">
-              <section className="nuevo-trabajo__panel nuevo-trabajo__panel-resumen">
+              <section className="trabajos__panel nuevo-trabajo__panel nuevo-trabajo__panel-resumen">
 
                 <h2>Resumen del borrador</h2>
                 <dl className="nuevo-trabajo__datos-borrador">
@@ -307,7 +308,7 @@ export default function NuevoTrabajo() {
               </section>
 
               <aside className="nuevo-trabajo__paneles">
-                <section className="nuevo-trabajo__panel">
+                <section className="trabajos__panel nuevo-trabajo__panel">
                   <h2>Lista de verificación</h2>
                   <ul className="nuevo-trabajo__verificacion">
 
@@ -324,7 +325,7 @@ export default function NuevoTrabajo() {
                     <li className="pendiente">• Falta confirmar al autor de correspondencia</li>
                   </ul>
                 </section>
-                <section className="nuevo-trabajo__panel nuevo-trabajo__panel--borrador">
+                <section className="trabajos__panel nuevo-trabajo__panel nuevo-trabajo__panel--borrador">
                   <p>Los borradores no participan del proceso de revisión. Debe enviarlo antes del cierre de la recepción.</p>
                 </section>
               </aside>
@@ -383,7 +384,7 @@ export default function NuevoTrabajo() {
 
         <form
           id="nuevo-trabajo-formulario"
-          className="nuevo-trabajo__formulario"
+          className="trabajos__panel nuevo-trabajo__formulario"
           noValidate
           onSubmit={validarFormulario}
         >
@@ -392,6 +393,7 @@ export default function NuevoTrabajo() {
             <div className="nuevo-trabajo__campo">
               <label htmlFor="trabajo-titulo">Título del trabajo *</label>
               <input
+                className="trabajos__campo-control"
                 id="trabajo-titulo"
                 name="titulo"
                 type="text"
@@ -408,7 +410,7 @@ export default function NuevoTrabajo() {
             <div className="nuevo-trabajo__fila">
               <div className="nuevo-trabajo__campo">
                 <label htmlFor="trabajo-tipo">Tipo de trabajo *</label>
-                <select id="trabajo-tipo" name="tipo" value={tipoTrabajo} onChange={(event) => setTipoTrabajo(event.target.value)}>
+                <select className="trabajos__campo-control" id="trabajo-tipo" name="tipo" value={tipoTrabajo} onChange={(event) => setTipoTrabajo(event.target.value)}>
                   <option value="Artículo completo">Artículo completo</option>
                   <option value="Resumen extendido">Resumen extendido</option>
                   <option value="Póster">Póster</option>
@@ -418,6 +420,7 @@ export default function NuevoTrabajo() {
               <div className="nuevo-trabajo__campo">
                 <label htmlFor="trabajo-eje">Eje temático *</label>
                 <select
+                  className="trabajos__campo-control"
                   id="trabajo-eje"
                   name="eje"
                   value={formulario.eje}
@@ -440,6 +443,7 @@ export default function NuevoTrabajo() {
             <div className="nuevo-trabajo__campo">
               <label htmlFor="trabajo-resumen">Resumen *</label>
               <textarea
+                className="trabajos__campo-control"
                 id="trabajo-resumen"
                 name="resumen"
                 rows={4}
@@ -488,6 +492,7 @@ export default function NuevoTrabajo() {
             <div className="nuevo-trabajo__campo">
               <label htmlFor="trabajo-enlace">Enlace al documento *</label>
               <input
+                className="trabajos__campo-control"
                 id="trabajo-enlace"
                 name="enlace"
                 type="url"
@@ -503,17 +508,17 @@ export default function NuevoTrabajo() {
           </div>
 
           <aside className="nuevo-trabajo__paneles">
-            <section className="nuevo-trabajo__panel nuevo-trabajo__panel--borrador" role="status">
+            <section className="trabajos__panel nuevo-trabajo__panel nuevo-trabajo__panel--borrador" role="status">
               <h2>Sus cambios no se han guardado</h2>
               <p>Aún no se ha guardado este trabajo. Puede guardar el borrador y continuar editándolo antes del cierre de la recepción.</p>
             </section>
-            <section className="nuevo-trabajo__panel">
+            <section className="trabajos__panel nuevo-trabajo__panel">
               <h2>Requisitos del tipo elegido</h2>
               <p>Artículo completo · hasta 8 000 palabras · PDF con plantilla IEEE · admite hasta 4 coautores.</p>
               <small>Puede cambiar el tipo mientras el trabajo esté en borrador.</small>
             </section>
 
-            <section className="nuevo-trabajo__panel">
+            <section className="trabajos__panel nuevo-trabajo__panel">
               <h2>Antes de enviar</h2>
               <p>Verifique que el documento no contenga los nombres de los autores: la revisión es ciega.</p>
               <p>Podrá editar el trabajo hasta el cierre de la recepción.</p>

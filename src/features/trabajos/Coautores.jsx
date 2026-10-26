@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
-import { getCurrentParticipant } from '../../shared/cuentaServicio';
+import './Trabajos.css';
 import './Coautores.css';
 
 function correoValido(correo) {
@@ -152,7 +152,7 @@ export default function Coautores({
 
   return (
     <section className={`coautores${integrado ? ' coautores--integrado' : ''}`}>
-      {!integrado && <div className="coautores__aviso">
+      {!integrado && <div className="trabajos__aviso coautores__aviso">
         <span><strong>Recepción abierta.</strong> Cierra el 30/09/2026 a las 23:59.</span>
         <strong>Faltan 12 días - 04:11 h</strong>
       </div>}
@@ -180,7 +180,7 @@ export default function Coautores({
       {errores.correspondencia && <p className="coautores__error-general" role="alert">{errores.correspondencia}</p>}
 
       <div className="coautores__contenido">
-        <section className="coautores__lista" aria-label="Autores del trabajo">
+        <section className="trabajos__panel coautores__lista" aria-label="Autores del trabajo">
           <div className="coautores__tabla-cabecera" aria-hidden="true">
             <span>Nombre completo</span>
             <span>Correo</span>
@@ -224,6 +224,7 @@ export default function Coautores({
               <label>
                 <span>Nombre completo</span>
                 <input
+                  className="trabajos__campo-control"
                   name="nombre"
                   value={nuevoCoautor.nombre}
                   onChange={actualizarNuevoCoautor}
@@ -234,6 +235,7 @@ export default function Coautores({
               <label>
                 <span>Correo</span>
                 <input
+                  className="trabajos__campo-control"
                   name="correo"
                   type="email"
                   value={nuevoCoautor.correo}
@@ -245,6 +247,7 @@ export default function Coautores({
               <label>
                 <span>Institución</span>
                 <input
+                  className="trabajos__campo-control"
                   name="institucion"
                   value={nuevoCoautor.institucion}
                   onChange={actualizarNuevoCoautor}
@@ -283,11 +286,11 @@ export default function Coautores({
         </section>
 
         <aside className="coautores__paneles">
-          <section className="coautores__panel">
+          <section className="trabajos__panel coautores__panel">
             <h2>Autor de correspondencia</h2>
             <p>Recibe las notificaciones del comité y es responsable de la comunicación oficial. Debe haber exactamente uno.</p>
           </section>
-          <section className="coautores__panel coautores__panel--conflicto">
+          <section className="trabajos__panel coautores__panel coautores__panel--conflicto">
             <h2>Conflicto de revisión</h2>
             <p>Los coautores declarados no podrán ser asignados como revisores de este trabajo.</p>
           </section>

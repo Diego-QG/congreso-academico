@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
-import { getCurrentParticipant } from '../../shared/cuentaServicio';
+import './Trabajos.css';
 import './MisTrabajos.css';
 
 const filtros = ['Todos', 'Borrador', 'En revisión', 'Aceptado'];
@@ -78,7 +78,7 @@ export default function MisTrabajos() {
 
   return (
     <section className="mis-trabajos">
-      <div className={`mis-trabajos__aviso${recepcionAbierta ? ' mis-trabajos__aviso--abierta' : ''}`}>
+      <div className={`trabajos__aviso mis-trabajos__aviso${recepcionAbierta ? ' mis-trabajos__aviso--abierta' : ''}`}>
         {recepcionAbierta ? (
           <>
             <span><strong>Recepción abierta.</strong> Cierra el 30/09/2026 a las 23:59.</span>
@@ -97,7 +97,7 @@ export default function MisTrabajos() {
           <header className="mis-trabajos__encabezado">
             <h1>Mis trabajos</h1>
           </header>
-          <p className="mis-trabajos__vacio" role="alert">{errorCarga}</p>
+          <p className="trabajos__panel mis-trabajos__vacio" role="alert">{errorCarga}</p>
         </>
       ) : sinTrabajos ? (
         <>
@@ -109,7 +109,7 @@ export default function MisTrabajos() {
             <Link className="mis-trabajos__nuevo" to="/nuevo-trabajo">Nuevo trabajo</Link>
           </header>
 
-          <section className="mis-trabajos__estado-vacio" aria-labelledby="mis-trabajos-vacio-titulo">
+          <section className="trabajos__panel mis-trabajos__estado-vacio" aria-labelledby="mis-trabajos-vacio-titulo">
             <span className="mis-trabajos__icono-vacio" aria-hidden="true">✎</span>
             <h2 id="mis-trabajos-vacio-titulo">Todavía no tiene trabajos registrados</h2>
             <p>
@@ -156,6 +156,7 @@ export default function MisTrabajos() {
             <label className="mis-trabajos__busqueda">
               <span className="visually-hidden">Buscar por título o código</span>
               <input
+                className="trabajos__campo-control"
                 type="search"
                 placeholder="Buscar por título o código..."
                 value={busqueda}
@@ -167,32 +168,42 @@ export default function MisTrabajos() {
           {trabajosVisibles.length > 0 ? (
             <div className="mis-trabajos__lista">
               {trabajosVisibles.map((trabajo) => (
-                <article className="mis-trabajos__tarjeta" key={trabajo.id}>
+                <article className="trabajos__superficie mis-trabajos__tarjeta" key={trabajo.id}>
                   <div className="mis-trabajos__meta">
                     <span>{trabajo.id}</span>
                     <span className={`mis-trabajos__estado mis-trabajos__estado--${trabajo.estado.toLocaleLowerCase().replace(' ', '-')}`}>
                       {trabajo.estado}
                     </span>
                   </div>
-                  <h2>{trabajo.titulo}</h2>
+                  <h2>
+                    <Link to={`/mis-trabajos/${encodeURIComponent(trabajo.id)}`}>
+                      {trabajo.titulo}
+                    </Link>
+                  </h2>
                   <p className="mis-trabajos__autores">{trabajo.autores}</p>
                   <div className="mis-trabajos__etiquetas">
                     <span>{trabajo.eje}</span>
                     <span>{trabajo.tipo}</span>
                   </div>
-                  <footer>
+                  <footer className="mis-trabajos__pie-tarjeta">
                     <span className={trabajo.estado === 'Borrador' ? 'pendiente' : ''}>
                       {trabajo.detalle}
                     </span>
+                    <Link
+                      className="mis-trabajos__ver-detalle"
+                      to={`/mis-trabajos/${encodeURIComponent(trabajo.id)}`}
+                    >
+                      Ver detalle
+                    </Link>
                   </footer>
                 </article>
               ))}
             </div>
           ) : (
-            <p className="mis-trabajos__vacio">No se encontraron trabajos con esos criterios.</p>
+            <p className="trabajos__panel mis-trabajos__vacio">No se encontraron trabajos con esos criterios.</p>
           )}
 
-          <footer className="mis-trabajos__paginacion">
+          <footer className="trabajos__panel mis-trabajos__paginacion">
             <span>Mostrando {trabajosVisibles.length} de {trabajos.length} trabajos</span>
             <div>
               <button type="button" disabled>Anterior</button>

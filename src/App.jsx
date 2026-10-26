@@ -15,6 +15,7 @@ import RutaProtegida from "./features/cuenta/RutaProtegida";
 import NuevoTrabajo from "./features/trabajos/NuevoTrabajo";
 import Coautores from "./features/trabajos/Coautores";
 import MisTrabajos from "./features/trabajos/MisTrabajos";
+import DetalleTrabajo from "./features/trabajos/DetalleTrabajo";
 // Configuración de la edición
 import ConfiguracionEdicion from "./features/edicion/ConfiguracionEdicion";
 import EjesTematicos from "./features/edicion/EjesTematicos";
@@ -64,12 +65,13 @@ export default function App() {
             path="/recuperar-contrasena"
             element={<RecuperarContrasena />}
           />
-          {/* HU-3 · Solo autores */}
-          <Route element={<RutaProtegida rolesPermitidos={['autor', 'ambos']} />}>
-            <Route path="/nuevo-trabajo" element={<NuevoTrabajo />} />
-            <Route path="/nuevo-trabajo/coautores" element={<Coautores />} />
-            <Route path="/mis-trabajos" element={<MisTrabajos />} />
-          </Route>
+          <Route path="*" element={<PaginaNoEncontrada />} />
+
+          {/* HU-3 */}
+          <Route path="/nuevo-trabajo" element={<NuevoTrabajo />} />
+          <Route path="/nuevo-trabajo/coautores" element={<Coautores />} />
+          <Route path="/mis-trabajos" element={<MisTrabajos />} />
+          <Route path="/mis-trabajos/:trabajoId" element={<DetalleTrabajo />} />
 
           {/* HU-5 · Solo revisores */}
           <Route element={<RutaRevisor />}>
