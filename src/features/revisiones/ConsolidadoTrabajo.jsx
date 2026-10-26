@@ -121,54 +121,56 @@ function Consolidado({ trabajo }) {
             <Indicador titulo="Última entrega" valor={diaMes(c.ultimaEntrega)} detalle={c.ultimaEntrega?.slice(0, 4)} />
           </div>
 
-          <table className="consolidado-tabla">
-            <thead>
-              <tr>
-                <th>Revisor</th>
-                {CRITERIOS.map((cr) => (
-                  <th key={cr.id} className="numero">
-                    {cr.nombre} {cr.peso} %
-                  </th>
-                ))}
-                <th className="numero">Ponderado</th>
-                <th className="numero">Recomendación</th>
-              </tr>
-            </thead>
-            <tbody>
-              {c.filas.map((f, i) => (
-                <tr key={f.id}>
-                  <td>
-                    Revisor {i + 1} · {obtenerRevisor(f.revisorId)?.nombre}
-                  </td>
+          <div className="consolidado-tabla-scroll">
+            <table className="consolidado-tabla">
+              <thead>
+                <tr>
+                  <th>Revisor</th>
                   {CRITERIOS.map((cr) => (
-                    <td key={cr.id} className="numero">
-                      {f.puntajes.find((p) => p.criterioId === cr.id)?.puntaje}
+                    <th key={cr.id} className="numero">
+                      {cr.nombre} {cr.peso} %
+                    </th>
+                  ))}
+                  <th className="numero">Ponderado</th>
+                  <th className="numero">Recomendación</th>
+                </tr>
+              </thead>
+              <tbody>
+                {c.filas.map((f, i) => (
+                  <tr key={f.id}>
+                    <td>
+                      Revisor {i + 1} · {obtenerRevisor(f.revisorId)?.nombre}
+                    </td>
+                    {CRITERIOS.map((cr) => (
+                      <td key={cr.id} className="numero">
+                        {f.puntajes.find((p) => p.criterioId === cr.id)?.puntaje}
+                      </td>
+                    ))}
+                    <td className="numero">
+                      <strong>{unDecimal(f.ponderado)}</strong>
+                    </td>
+                    <td className="numero">
+                      <span className={'recomendacion recomendacion-' + f.recomendacion}>
+                        {TEXTO_RECOMENDACION[f.recomendacion]}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td>Promedio por criterio</td>
+                  {c.promedioPorCriterio.map((p, i) => (
+                    <td key={CRITERIOS[i].id} className="numero">
+                      {unDecimal(p)}
                     </td>
                   ))}
-                  <td className="numero">
-                    <strong>{unDecimal(f.ponderado)}</strong>
-                  </td>
-                  <td className="numero">
-                    <span className={'recomendacion recomendacion-' + f.recomendacion}>
-                      {TEXTO_RECOMENDACION[f.recomendacion]}
-                    </span>
-                  </td>
+                  <td className="numero consolidado-total">{unDecimal(c.promedio)}</td>
+                  <td></td>
                 </tr>
-              ))}
-            </tbody>
-            <tfoot>
-              <tr>
-                <td>Promedio por criterio</td>
-                {c.promedioPorCriterio.map((p, i) => (
-                  <td key={CRITERIOS[i].id} className="numero">
-                    {unDecimal(p)}
-                  </td>
-                ))}
-                <td className="numero consolidado-total">{unDecimal(c.promedio)}</td>
-                <td></td>
-              </tr>
-            </tfoot>
-          </table>
+              </tfoot>
+            </table>
+          </div>
 
           <div className="consolidado-comentarios">
             <div className="consolidado-pestanas">

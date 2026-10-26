@@ -127,10 +127,14 @@
   color: var(--color-text-muted);
 }
 
+.consolidado-tabla-scroll {
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
 .consolidado-tabla {
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 20px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   font-size: 14px;
@@ -236,4 +240,53 @@
 .consolidado-comentario p {
   margin: 4px 0 0;
   font-size: 14px;
+}
+
+@media (max-width: 900px) {
+  .consolidado-indicadores {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .consolidado {
+    padding: 24px 16px;
+  }
+
+  .consolidado-cabecera {
+    flex-direction: column;
+  }
+
+  .consolidado-acciones {
+    align-items: stretch;
+    width: 100%;
+  }
+
+  .consolidado-aviso {
+    max-width: none;
+    text-align: left;
+  }
+
+  .consolidado-codigo {
+    flex-wrap: wrap;
+  }
+
+  .indicador-valor {
+    font-size: 20px;
+  }
+
+  /* La tabla se desliza de lado; la primera columna permite cortar el nombre. */
+  .consolidado-tabla {
+    min-width: 640px;
+  }
+
+  .consolidado-tabla td:first-child {
+    min-width: 150px;
+    white-space: normal;
+  }
+
+  .consolidado-pestanas button {
+    flex: 1;
+    padding: 12px 8px;
+  }
 }

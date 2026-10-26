@@ -1,88 +1,166 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useRevisiones } from "./revisionesContexto";
 import { obtenerAsignacionesDeRevisor, obtenerTrabajo } from "./revisionesServicio";
+import { TEXTO_RECOMENDACION } from "./consolidado";
 import "./BandejaRevisor.css";
 
 // Temporallllll
 const REVISOR_ACTUAL = "R5";
 
-function estadoDeRevision(revisiones, asignacionId) {
-  const revision = revisiones.find((r) => r.asignacionId === asignacionId);
-  if (!revision) return "Pendiente";
-  return revision.estado === "enviada" ? "Enviada" : "En progreso";
-}
+const FILTROS = [
+  { valor: "todas", texto: "Todas" },
+  { valor: "pendientes", texto: "Pendientes" },
+  { valor: "entregadas", texto: "Entregadas" },
+  { valor: "vencidas", texto: "Vencidas" },
+];
 
-const TEXTO_BOTON = {
-  Pendiente: "Evaluar",
-  "En progreso": "Continuar",
-  Enviada: "Ver",
+const ESTADOS = {
+  pendiente: { texto: "Revisión pendiente", boton: "Evaluar" },
+  progreso: { texto: "En progreso", boton: "Continuar" },
+  vencida: { texto: "Vencida", boton: "Evaluar ahora" },
+  entregada: { texto: "Entregada", boton: "Ver evaluación" },
 };
 
-function claseEstado(estado) {
-  return "estado-" + estado.toLowerCase().replace(" ", "-");
+// Días entre hoy y la fecha límite: positivo si falta, negativo si ya pasó.
+function diasHasta(fecha) {
+  const hoy = new Date();
+  hoy.setHours(0, 0, 0, 0);
+  const limite = new Date(fecha + "T00:00:00");
+  return Math.round((limite - hoy) / 86400000);
+}
+
+// '2026-10-15' -> '15/10/2026'
+function formatoFecha(fecha) {
+  const [anio, mes, dia] = fecha.split("-");
+  return `${dia}/${mes}/${anio}`;
+}
+
+function estadoDe(revision, dias) {
+  if (revision?.estado === "enviada") return "entregada";
+  if (dias < 0) return "vencida";
+  return revision ? "progreso" : "pendiente";
+}
+
+function textoPlazo(a) {
+  if (a.estado === "entregada") {
+    const recomendacion = TEXTO_RECOMENDACION[a.revision.recomendacion]?.toLowerCase();
+    return `Enviada el ${formatoFecha(a.revision.fechaEnvio)} · ${recomendacion}`;
+  }
+  if (a.dias < 0) {
+    const hace = -a.dias;
+    return `Venció el ${formatoFecha(a.fecha)} · hace ${hace} ${hace === 1 ? "día" : "días"}`;
+  }
+  if (a.dias === 0) return `Vence hoy, ${formatoFecha(a.fecha)}`;
+  return `Vence el ${formatoFecha(a.fecha)} · ${a.dias === 1 ? "falta 1 día" : `faltan ${a.dias} días`}`;
+}
+
+function pasaFiltro(a, filtro) {
+  if (filtro === "pendientes") return a.estado !== "entregada";
+  if (filtro === "entregadas") return a.estado === "entregada";
+  if (filtro === "vencidas") return a.estado === "vencida";
+  return true;
 }
 
 export default function BandejaRevisor() {
   const { revisiones } = useRevisiones();
+  const [filtro, setFiltro] = useState("todas");
+
   const asignaciones = obtenerAsignacionesDeRevisor(REVISOR_ACTUAL)
     .map((a) => {
-      const trabajo = obtenerTrabajo(a.trabajoId);
-      return {
-        id: a.id,
-        codigo: trabajo.codigo,
-        titulo: trabajo.titulo,
-        eje: trabajo.eje,
-        fechaLimite: a.fecha,
-        estado: estadoDeRevision(revisiones, a.id),
-      };
-    });
+      const revision = revisiones.find((r) => r.asignacionId === a.id);
+      const dias = diasHasta(a.fecha);
+      return { ...a, trabajo: obtenerTrabajo(a.trabajoId), revision, dias, estado: estadoDe(revision, dias) };
+    })
+    // Primero lo que vence antes; las entregadas al final.
+    .sort((x, y) => (x.estado === "entregada") - (y.estado === "entregada") || x.dias - y.dias);
+
+  const total = (f) => asignaciones.filter((a) => pasaFiltro(a, f)).length;
+  const visibles = asignaciones.filter((a) => pasaFiltro(a, filtro));
+
+  if (asignaciones.length === 0) {
+    return (
+      <section className="bandeja">
+        <h1>Mi bandeja de revisión</h1>
+        <p className="bandeja-sub">Sin trabajos asignados por ahora</p>
+        <div className="bandeja-vacia">
+          <span className="bandeja-vacia-icono">✓</span>
+          <h2>No tiene revisiones asignadas</h2>
+          <p>
+            El comité asigna los trabajos cuando cierra la recepción. Mantenga sus líneas de interés actualizadas para
+            recibir trabajos afines.
+          </p>
+          <Link className="boton-secundario" to="/mi-cuenta">
+            Actualizar mis líneas de interés
+          </Link>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="bandeja">
-      <h1>Mis revisiones asignadas</h1>
-      <p className="bandeja-sub">
-        Trabajos que el comité le asignó para evaluar.
-      </p>
+      <header className="bandeja-cabecera">
+        <div>
+          <h1>Mi bandeja de revisión</h1>
+          <p className="bandeja-sub">
+            {asignaciones.length} {asignaciones.length === 1 ? "trabajo asignado" : "trabajos asignados"}
+          </p>
+        </div>
+        <div className="bandeja-contadores">
+          <div className="contador contador-pendientes">
+            <span>Pendientes</span>
+            <strong>{total("pendientes")}</strong>
+          </div>
+          <div className="contador contador-entregadas">
+            <span>Entregadas</span>
+            <strong>{total("entregadas")}</strong>
+          </div>
+        </div>
+      </header>
 
-      {asignaciones.length === 0 ? (
-        <p className="bandeja-vacia">Aún no tiene trabajos asignados.</p>
+      <div className="bandeja-filtros" role="group" aria-label="Filtrar revisiones">
+        {FILTROS.map((f) => (
+          <button
+            key={f.valor}
+            type="button"
+            className={
+              "filtro" + (filtro === f.valor ? " activo" : "") + (f.valor === "vencidas" ? " filtro-vencidas" : "")
+            }
+            onClick={() => setFiltro(f.valor)}
+          >
+            {f.texto} · {total(f.valor)}
+          </button>
+        ))}
+      </div>
+
+      {visibles.length === 0 ? (
+        <p className="bandeja-sin-resultados">No hay revisiones en este filtro.</p>
       ) : (
-        <table className="bandeja-tabla">
-          <thead>
-            <tr>
-              <th>Código</th>
-              <th>Trabajo</th>
-              <th>Fecha límite</th>
-              <th>Estado</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {asignaciones.map((a) => (
-              <tr key={a.id}>
-                <td>{a.codigo}</td>
-                <td>
-                  <strong>{a.titulo}</strong>
-                  <span className="bandeja-eje">{a.eje}</span>
-                </td>
-                <td>{a.fechaLimite}</td>
-                <td>
-                  <span className={"etiqueta " + claseEstado(a.estado)}>
-                    {a.estado}
-                  </span>
-                </td>
-                <td>
-                  <Link
-                    className="bandeja-boton"
-                    to={"/revisor/revision/" + a.id}
-                  >
-                    {TEXTO_BOTON[a.estado]}
-                  </Link>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="bandeja-tarjetas">
+          {visibles.map((a) => (
+            <article key={a.id} className={"tarjeta tarjeta-" + a.estado}>
+              <div className="tarjeta-superior">
+                <span className="tarjeta-codigo">{a.trabajo.codigo}</span>
+                <span className={"etiqueta etiqueta-" + a.estado}>{ESTADOS[a.estado].texto}</span>
+              </div>
+              <h2>{a.trabajo.titulo}</h2>
+              <div className="tarjeta-etiquetas">
+                <span className="tarjeta-eje">{a.trabajo.eje}</span>
+                <span className="tarjeta-tipo">{a.trabajo.tipo}</span>
+              </div>
+              <footer className="tarjeta-pie">
+                <span className={"tarjeta-plazo plazo-" + a.estado}>{textoPlazo(a)}</span>
+                <Link
+                  className={a.estado === "entregada" ? "tarjeta-enlace" : "boton-primario tarjeta-boton"}
+                  to={"/revisor/revision/" + a.id}
+                >
+                  {ESTADOS[a.estado].boton}
+                </Link>
+              </footer>
+            </article>
+          ))}
+        </div>
       )}
     </section>
   );
