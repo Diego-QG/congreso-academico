@@ -2,27 +2,123 @@ import { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import './NuevoTrabajo.css';
 
+function esUrlHttps(valor) {
+  try {
+    return new URL(valor).protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
 export default function NuevoTrabajo() {
-  const [palabrasClave, setPalabrasClave] = useState([]);
-  const [nuevaPalabra, setNuevaPalabra] = useState('');
+  const [formulario, setFormulario] = useState({
+    titulo: '',
+    eje: '',
+    resumen: '',
+    enlace: '',
+  });
+
+  const [errores, setErrores] = useState();
+
+  const [palabrasClave, setPalabrasClave] = useState();
+
+  const [nuevaPalabra, setNuevaPalabra] = useState();
+
   const registration = JSON.parse(
     window.sessionStorage.getItem('congreso.participante') || 'null'
   );
+
   const isAuthor = ['autor', 'ambos'].includes(registration?.rolParticipacion);
 
   function agregarPalabraClave(event) {
-    if (event.key !== 'Enter') return;
+
+    if (event.key !== 'Enter') 
+      return;
 
     event.preventDefault();
     const palabra = nuevaPalabra.trim();
-    if (!palabra) return;
+    if (!palabra) 
+      return;
 
-    setPalabrasClave((actuales) => (
-      actuales.some((actual) => actual.toLocaleLowerCase() === palabra.toLocaleLowerCase())
-        ? actuales
-        : [...actuales, palabra]
-    ));
+    const yaExiste = palabrasClave.some(
+      (actual) => actual.toLocaleLowerCase() === palabra.toLocaleLowerCase()
+    );
+
+    if (!yaExiste) {
+      setPalabrasClave([...palabrasClave, palabra]);
+    }
+
+    if (!yaExiste && palabrasClave.length >= 2) {
+      setErrores((actuales) => {
+        if (!actuales.palabrasClave) return actuales;
+        const nuevosErrores = { ...actuales };
+        delete nuevosErrores.palabrasClave;
+        return nuevosErrores;
+      });
+    }
+
     setNuevaPalabra('');
+  }
+
+  function validarFormulario(event) {
+
+
+    event.preventDefault();
+    const nuevosErrores = {};
+
+    if (!formulario.titulo.trim()) {
+      nuevosErrores.titulo = 'Ingrese el título del trabajo.';
+    }
+
+    if (!formulario.eje) {
+      nuevosErrores.eje = 'Debe elegir un eje temático.';
+    }
+
+    if (!formulario.resumen.trim()) {
+      nuevosErrores.resumen = 'Ingrese el resumen del trabajo.';
+    } else if (formulario.resumen.length > 1500) {
+      nuevosErrores.resumen = `El resumen supera el máximo permitido. Reduzca ${formulario.resumen.length - 1500} caracteres.`;
+    }
+
+    if (palabrasClave.length < 3) {
+      nuevosErrores.palabrasClave = 'Agregue al menos una palabra clave mas (mínimo 3)';
+    }
+
+    if (!formulario.enlace.trim()) {
+      nuevosErrores.enlace = 'Ingrese el enlace al documento.';
+    } else if (!esUrlHttps(formulario.enlace)) {
+      nuevosErrores.enlace = 'Ingrese una URL completa que empiece con https://.';
+    }
+
+    setErrores(nuevosErrores);
+  }
+
+  function actualizarCampo(event) {
+  
+    const { name, value } = event.target;
+    setFormulario((actual) => ({ ...actual, [name]: value }));
+    
+    setErrores((actuales) => {
+      if (!actuales[name]) 
+        return actuales;
+
+      const nuevosErrores = { ...actuales };
+      delete nuevosErrores[name];
+      return nuevosErrores;
+    });
+  }
+
+  function quitarPalabraClave(palabra) {
+    const palabrasRestantes = palabrasClave.filter((actual) => actual !== palabra);
+    setPalabrasClave(palabrasRestantes);
+    setErrores((actuales) => {
+      if (!actuales.palabrasClave || palabrasRestantes.length < 3) 
+        return actuales;
+
+      const nuevosErrores = { ...actuales };
+      delete nuevosErrores.palabrasClave;
+      return nuevosErrores;
+    });
   }
 
   if (!isAuthor) {
@@ -31,12 +127,16 @@ export default function NuevoTrabajo() {
 
   return (
     <section className="nuevo-trabajo">
+
       <div className="nuevo-trabajo__aviso">
+
         <span><strong>Recepción abierta.</strong> Cierra el 30/09/2026 a las 23:59.</span>
         <strong>Faltan 12 días - 04:11 h</strong>
+
       </div>
 
       <div className="nuevo-trabajo__contenido">
+
         <header className="nuevo-trabajo__encabezado">
           <div>
             <h1>Nuevo trabajo</h1>
@@ -46,7 +146,7 @@ export default function NuevoTrabajo() {
             <button className="nuevo-trabajo__boton-borrador" type="button">
               Guardar como borrador
             </button>
-            <button className="nuevo-trabajo__boton-continuar" type="button">
+            <button className="nuevo-trabajo__boton-continuar" type="submit" form="nuevo-trabajo-formulario">
               Continuar a coautores
             </button>
           </div>
@@ -58,7 +158,19 @@ export default function NuevoTrabajo() {
           <li>3. Documento y coautores</li>
         </ol>
 
-        <div className="nuevo-trabajo__formulario">
+        {Object.keys(errores).length > 0 && (
+          <section className="nuevo-trabajo__error-general" role="alert" aria-live="assertive">
+            <strong>No se pudo continuar: revise {Object.keys(errores).length} {Object.keys(errores).length === 1 ? 'campo' : 'campos'}.</strong>
+            <p>{Object.values(errores).join(' · ')}</p>
+          </section>
+        )}
+
+        <form
+          id="nuevo-trabajo-formulario"
+          className="nuevo-trabajo__formulario"
+          noValidate
+          onSubmit={validarFormulario}
+        >
           <div className="nuevo-trabajo__campos-principales">
             <div className="nuevo-trabajo__campo">
               <label htmlFor="trabajo-titulo">Título del trabajo *</label>
@@ -67,8 +179,12 @@ export default function NuevoTrabajo() {
                 name="titulo"
                 type="text"
                 maxLength={180}
-                defaultValue=""
+                value={formulario.titulo}
+                onChange={actualizarCampo}
+                aria-invalid={Boolean(errores.titulo)}
+                aria-describedby={errores.titulo ? 'error-trabajo-titulo' : undefined}
               />
+              {errores.titulo && <small id="error-trabajo-titulo" className="nuevo-trabajo__error-campo">{errores.titulo}</small>}
             </div>
 
             <div className="nuevo-trabajo__fila">
@@ -83,7 +199,15 @@ export default function NuevoTrabajo() {
 
               <div className="nuevo-trabajo__campo">
                 <label htmlFor="trabajo-eje">Eje temático *</label>
-                <select id="trabajo-eje" name="eje" defaultValue="Inteligencia artificial y datos">
+                <select
+                  id="trabajo-eje"
+                  name="eje"
+                  value={formulario.eje}
+                  onChange={actualizarCampo}
+                  aria-invalid={Boolean(errores.eje)}
+                  aria-describedby={errores.eje ? 'error-trabajo-eje' : undefined}
+                >
+                  <option value="">Seleccione un eje</option>
                   <option value="Inteligencia artificial y datos">Inteligencia artificial y datos</option>
                   <option value="Ingeniería de software">Ingeniería de software</option>
                   <option value="Sostenibilidad y ciudad">Sostenibilidad y ciudad</option>
@@ -91,6 +215,7 @@ export default function NuevoTrabajo() {
                   <option value="Salud y sociedad">Salud y sociedad</option>
                   <option value="Economía y mercados">Economía y mercados</option>
                 </select>
+                {errores.eje && <small id="error-trabajo-eje" className="nuevo-trabajo__error-campo">{errores.eje}</small>}
               </div>
             </div>
 
@@ -100,21 +225,32 @@ export default function NuevoTrabajo() {
                 id="trabajo-resumen"
                 name="resumen"
                 rows={4}
-                maxLength={1500}
-                defaultValue={''}
+                value={formulario.resumen}
+                onChange={actualizarCampo}
+                aria-invalid={Boolean(errores.resumen)}
+                aria-describedby={errores.resumen ? 'error-trabajo-resumen' : 'ayuda-trabajo-resumen'}
               />
               <div className="nuevo-trabajo__ayuda-campo">
-                <small>Máximo 68 caracteres por línea para facilitar la lectura.</small>
-                <small>158 / 1 500 caracteres</small>
+                <small id="ayuda-trabajo-resumen">Máximo 1 500 caracteres.</small>
+                <small>{formulario.resumen.length} / 1 500 caracteres</small>
               </div>
+              {errores.resumen && <small id="error-trabajo-resumen" className="nuevo-trabajo__error-campo">{errores.resumen}</small>}
             </div>
 
             <div className="nuevo-trabajo__campo">
               <label htmlFor="trabajo-palabra-clave">Palabras clave *</label>
-              <div className="nuevo-trabajo__etiquetas">
+              <div className="nuevo-trabajo__campo-palabras">
+                <div
+                  className="nuevo-trabajo__etiquetas"
+                  aria-invalid={Boolean(errores.palabrasClave)}
+                  aria-describedby={errores.palabrasClave ? 'error-trabajo-palabras' : undefined}
+                >
                 {palabrasClave.map((palabra) => (
                   <span className="nuevo-trabajo__etiqueta" key={palabra}>
-                    {palabra}<span aria-hidden="true">×</span>
+                    {palabra}
+                    <button type="button" aria-label={`Quitar palabra ${palabra}`} onClick={() => quitarPalabraClave(palabra)}>
+                      ×
+                    </button>
                   </span>
                 ))}
                 <input
@@ -126,6 +262,8 @@ export default function NuevoTrabajo() {
                   onChange={(event) => setNuevaPalabra(event.target.value)}
                   onKeyDown={agregarPalabraClave}
                 />
+                </div>
+                {errores.palabrasClave && <small id="error-trabajo-palabras" className="nuevo-trabajo__error-campo">{errores.palabrasClave}</small>}
               </div>
             </div>
 
@@ -135,13 +273,22 @@ export default function NuevoTrabajo() {
                 id="trabajo-enlace"
                 name="enlace"
                 type="url"
-                defaultValue=""
+                value={formulario.enlace}
+                onChange={actualizarCampo}
+                aria-invalid={Boolean(errores.enlace)}
+                aria-describedby={errores.enlace ? 'error-trabajo-enlace' : 'ayuda-trabajo-enlace'}
               />
-              <small>El enlace debe permitir el acceso de lectura al comité y a los revisores.</small>
+              {errores.enlace
+                ? <small id="error-trabajo-enlace" className="nuevo-trabajo__error-campo">{errores.enlace}</small>
+                : <small id="ayuda-trabajo-enlace">El enlace debe permitir el acceso de lectura al comité y a los revisores.</small>}
             </div>
           </div>
 
           <aside className="nuevo-trabajo__paneles">
+            <section className="nuevo-trabajo__panel nuevo-trabajo__panel--borrador" role="status">
+              <h2>Sus cambios no se han guardado</h2>
+              <p>Aún no se ha guardado este trabajo. La opción para guardar como borrador todavía no está disponible.</p>
+            </section>
             <section className="nuevo-trabajo__panel">
               <h2>Requisitos del tipo elegido</h2>
               <p>Artículo completo · hasta 8 000 palabras · PDF con plantilla IEEE · admite hasta 4 coautores.</p>
@@ -154,7 +301,7 @@ export default function NuevoTrabajo() {
               <p>Podrá editar el trabajo hasta el cierre de la recepción.</p>
             </section>
           </aside>
-        </div>
+        </form>
       </div>
     </section>
   );

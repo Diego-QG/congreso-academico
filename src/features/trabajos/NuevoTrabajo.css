@@ -180,6 +180,14 @@
   border-color: var(--color-danger);
 }
 
+.nuevo-trabajo__campo [aria-invalid='true']:focus {
+  outline-color: var(--color-danger);
+}
+
+.nuevo-trabajo__etiquetas[aria-invalid='true'] {
+  border-color: var(--color-danger);
+}
+
 .nuevo-trabajo__campo small,
 .nuevo-trabajo__panel small {
   color: var(--color-text-muted);
@@ -206,6 +214,8 @@
 .nuevo-trabajo__error-campo,
 .nuevo-trabajo__error-palabras {
   color: var(--color-danger) !important;
+  font-size: 12px;
+  line-height: 1.45;
 }
 
 .nuevo-trabajo__paneles {
