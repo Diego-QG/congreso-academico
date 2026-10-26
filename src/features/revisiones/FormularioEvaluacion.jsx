@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import FormularioCriterios from '../../shared/FormularioCriterios';
 import DialogoConfirmacion from '../../shared/DialogoConfirmacion';
-import { aNumero } from '../../shared/puntajes';
+import { aNumero, promedioPonderado } from '../../shared/puntajes';
 import { useRevisiones } from './revisionesContexto';
 import { diasHasta, formatoFecha, textoDias } from '../../shared/fechas';
 import { obtenerAsignacion, obtenerCriterios, obtenerTrabajo } from './revisionesServicio';
@@ -134,6 +134,8 @@ function Evaluacion({ asignacion }) {
   }
 
   const recomendacionTexto = RECOMENDACIONES.find((r) => r.valor === revision.recomendacion)?.texto;
+  // Promedio para la barra fija del celular (en escritorio se ve debajo de la tabla).
+  const promedio = promedioPonderado(revision.puntajes, CRITERIOS);
 
   return (
     <section className="evaluacion">
@@ -240,7 +242,11 @@ function Evaluacion({ asignacion }) {
 
       {!soloLectura && (
         <footer className="evaluacion-acciones">
-          <span className="evaluacion-aviso">{aviso}</span>
+          <span className="evaluacion-promedio-movil">
+            Promedio {promedio.calificados < CRITERIOS.length ? 'provisional' : ''}
+            <strong>{promedio.valor === null ? '—' : promedio.valor.toFixed(1)}</strong>
+          </span>
+          <span className="evaluacion-aviso" role="status">{aviso}</span>
           <button type="button" className="boton-secundario" onClick={guardarBorrador}>
             Guardar borrador
           </button>

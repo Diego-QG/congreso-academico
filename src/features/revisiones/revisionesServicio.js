@@ -34,7 +34,7 @@ function leer(clave, valorInicial) {
     const guardado = localStorage.getItem(clave);
     if (guardado) return JSON.parse(guardado);
   } catch {
-
+    // Sin acceso al almacenamiento (modo privado) o dato dañado: se usan los datos iniciales.
   }
   return valorInicial;
 }
@@ -43,7 +43,7 @@ function guardar(clave, valor) {
   try {
     localStorage.setItem(clave, JSON.stringify(valor));
   } catch {
-    
+    // Si no se puede guardar, los cambios siguen en memoria hasta recargar la página.
   }
 }
 

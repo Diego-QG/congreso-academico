@@ -25,8 +25,8 @@ export default function FormularioCriterios({ criterios, puntajes, errores = {},
             return (
               <tr key={c.id}>
                 <td className="fc-nombre">{c.nombre}</td>
-                <td>{c.peso} %</td>
-                <td>
+                <td className="fc-peso" data-etiqueta="Peso">{c.peso} %</td>
+                <td className="fc-celda-puntaje" data-etiqueta="Puntaje (0-20)">
                   {soloLectura ? (
                     <strong>{p.puntaje}</strong>
                   ) : (
@@ -45,7 +45,7 @@ export default function FormularioCriterios({ criterios, puntajes, errores = {},
                     </>
                   )}
                 </td>
-                <td>
+                <td className="fc-celda-comentario" data-etiqueta="Comentario del criterio">
                   {soloLectura ? (
                     <span className="fc-texto">{p.comentario}</span>
                   ) : (
