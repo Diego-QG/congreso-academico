@@ -11,23 +11,26 @@ function esUrlHttps(valor) {
 }
 
 export default function NuevoTrabajo() {
+  const registration = JSON.parse(
+    window.sessionStorage.getItem('congreso.participante') || 'null'
+  );
+  const claveBorrador = `congreso.trabajo.borrador.${registration?.email || registration?.correo || 'autor'}`;
   const [formulario, setFormulario] = useState({
     titulo: '',
     eje: '',
     resumen: '',
     enlace: '',
   });
-
-  const [errores, setErrores] = useState();
-
-  const [palabrasClave, setPalabrasClave] = useState();
-
-  const [nuevaPalabra, setNuevaPalabra] = useState();
-
-  const registration = JSON.parse(
-    window.sessionStorage.getItem('congreso.participante') || 'null'
-  );
-
+  const [tipoTrabajo, setTipoTrabajo] = useState('Artículo completo');
+  const [errores, setErrores] = useState({});
+  const [palabrasClave, setPalabrasClave] = useState([]);
+  const [nuevaPalabra, setNuevaPalabra] = useState('');
+  const [borradorGuardado, setBorradorGuardado] = useState(() => {
+    const borradorExistente = window.localStorage.getItem(claveBorrador);
+    return borradorExistente ? JSON.parse(borradorExistente) : null;
+  });
+  const [mostrarBorrador, setMostrarBorrador] = useState(Boolean(borradorGuardado));
+  const [errorGuardado, setErrorGuardado] = useState('');
   const isAuthor = ['autor', 'ambos'].includes(registration?.rolParticipacion);
 
   function agregarPalabraClave(event) {
@@ -60,37 +63,91 @@ export default function NuevoTrabajo() {
     setNuevaPalabra('');
   }
 
-  function validarFormulario(event) {
-
-
-    event.preventDefault();
+  function obtenerErroresFormulario(datos = formulario, claves = palabrasClave) {
     const nuevosErrores = {};
 
-    if (!formulario.titulo.trim()) {
+    if (!datos.titulo.trim()) {
       nuevosErrores.titulo = 'Ingrese el título del trabajo.';
     }
 
-    if (!formulario.eje) {
+    if (!datos.eje) {
       nuevosErrores.eje = 'Debe elegir un eje temático.';
     }
 
-    if (!formulario.resumen.trim()) {
+    if (!datos.resumen.trim()) {
       nuevosErrores.resumen = 'Ingrese el resumen del trabajo.';
-    } else if (formulario.resumen.length > 1500) {
-      nuevosErrores.resumen = `El resumen supera el máximo permitido. Reduzca ${formulario.resumen.length - 1500} caracteres.`;
+    } else if (datos.resumen.length > 1500) {
+      nuevosErrores.resumen = `El resumen supera el máximo permitido. Reduzca ${datos.resumen.length - 1500} caracteres.`;
     }
 
-    if (palabrasClave.length < 3) {
+    if (claves.length < 3) {
       nuevosErrores.palabrasClave = 'Agregue al menos una palabra clave mas (mínimo 3)';
     }
 
-    if (!formulario.enlace.trim()) {
+    if (!datos.enlace.trim()) {
       nuevosErrores.enlace = 'Ingrese el enlace al documento.';
-    } else if (!esUrlHttps(formulario.enlace)) {
+    } else if (!esUrlHttps(datos.enlace)) {
       nuevosErrores.enlace = 'Ingrese una URL completa que empiece con https://.';
     }
 
+    return nuevosErrores;
+  }
+
+  function validarFormulario(event) {
+    event.preventDefault();
+    const nuevosErrores = obtenerErroresFormulario();
     setErrores(nuevosErrores);
+  }
+
+  function guardarComoBorrador() {
+    const borrador = {
+      id: borradorGuardado?.id || `TRB-${new Date().getFullYear()}-${String(Date.now()).slice(-3).padStart(3, '0')}`,
+      guardadoEn: new Date().toISOString(),
+      formulario: { ...formulario, tipo: tipoTrabajo },
+      palabrasClave: [...palabrasClave],
+    };
+
+    try {
+      window.localStorage.setItem(claveBorrador, JSON.stringify(borrador));
+    } catch {
+      setErrorGuardado('No se pudo guardar el borrador en este navegador. Inténtelo de nuevo.');
+      return;
+    }
+
+    setBorradorGuardado(borrador);
+    setMostrarBorrador(true);
+    setErrores({});
+    setErrorGuardado('');
+  }
+
+  function continuarEditando() {
+    setFormulario({
+      titulo: borradorGuardado.formulario.titulo,
+      eje: borradorGuardado.formulario.eje,
+      resumen: borradorGuardado.formulario.resumen,
+      enlace: borradorGuardado.formulario.enlace,
+    });
+    
+    setTipoTrabajo(borradorGuardado.formulario.tipo);
+    
+    setPalabrasClave(borradorGuardado.palabrasClave);
+
+    setMostrarBorrador(false);
+  }
+
+  function enviarBorrador() {
+    const nuevosErrores = obtenerErroresFormulario(borradorGuardado.formulario, borradorGuardado.palabrasClave);
+    setErrores(nuevosErrores);
+    if (Object.keys(nuevosErrores).length > 0) {
+
+      continuarEditando();
+      setMostrarBorrador(false);
+
+    } else {
+      
+      setErrorGuardado('El envío al comité todavía no está disponible.');
+
+    }
   }
 
   function actualizarCampo(event) {
@@ -125,25 +182,126 @@ export default function NuevoTrabajo() {
     return <Navigate to="/login" replace />;
   }
 
+  const datosBorrador = borradorGuardado?.formulario;
+  const tieneDatosGenerales = Boolean(datosBorrador?.titulo.trim() && datosBorrador?.eje);
+  const tieneResumenYPalabras = Boolean(datosBorrador?.resumen.trim() && borradorGuardado?.palabrasClave.length >= 3);
+  const tieneEnlaceValido = Boolean(datosBorrador?.enlace && esUrlHttps(datosBorrador.enlace));
+
   return (
     <section className="nuevo-trabajo">
 
-      <div className="nuevo-trabajo__aviso">
+      {!mostrarBorrador && <div className="nuevo-trabajo__aviso">
 
         <span><strong>Recepción abierta.</strong> Cierra el 30/09/2026 a las 23:59.</span>
         <strong>Faltan 12 días - 04:11 h</strong>
 
-      </div>
+      </div>}
 
       <div className="nuevo-trabajo__contenido">
+        {mostrarBorrador && borradorGuardado ? (
+          <div className="nuevo-trabajo__vista-borrador">
 
+
+            <div className="nuevo-trabajo__aviso-guardado" role="status">
+              <strong>Borrador guardado el {new Intl.DateTimeFormat('es-PE', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+              }).format(new Date(borradorGuardado.guardadoEn))} · Aún no ha sido enviado al comité.</strong>
+            </div>
+
+            <div className="nuevo-trabajo__aviso">
+              <span><strong>Recepción abierta.</strong> Cierra el 30/09/2026 a las 23:59.</span>
+              <strong>Faltan 12 días - 04:11 h</strong>
+            </div>
+
+            <header className="nuevo-trabajo__encabezado nuevo-trabajo__encabezado-borrador">
+              <div>
+                <div className="nuevo-trabajo__identificador">
+                  <span>{borradorGuardado.id}</span>
+                  <span>Borrador</span>
+                </div>
+                <h1>{datosBorrador.titulo || 'Trabajo sin título'}</h1>
+              </div>
+              <div className="nuevo-trabajo__acciones">
+                <button className="nuevo-trabajo__boton-borrador-secundario" type="button" onClick={continuarEditando}>
+                  Seguir editando
+                </button>
+                <button className="nuevo-trabajo__boton-continuar" type="button" onClick={enviarBorrador}>
+                  Enviar al comité
+                </button>
+
+
+              </div>
+            </header>
+
+            {errorGuardado && <p className="nuevo-trabajo__error-general" role="alert">{errorGuardado}</p>}
+
+            <div className="nuevo-trabajo__resumen-borrador">
+              <section className="nuevo-trabajo__panel nuevo-trabajo__panel-resumen">
+
+                <h2>Resumen del borrador</h2>
+                <dl className="nuevo-trabajo__datos-borrador">
+                  <div><dt>Tipo</dt><dd>{datosBorrador.tipo}</dd></div>
+                  <div><dt>Eje temático</dt><dd>{datosBorrador.eje || 'Pendiente de seleccionar'}</dd></div>
+                  <div><dt>Coautores</dt><dd>0 declarados</dd></div>
+                  <div>
+                    <dt>Enlace al documento</dt>
+
+                    <dd>{datosBorrador.enlace
+                      ? esUrlHttps(datosBorrador.enlace)
+                        ? <a href={datosBorrador.enlace} target="_blank" rel="noreferrer">{datosBorrador.enlace}</a>
+                        : datosBorrador.enlace
+                      : 'Pendiente de agregar'}</dd>
+                  </div>
+                  <div className="nuevo-trabajo__dato-resumen">
+                    <dt>Resumen</dt>
+                    <dd>{datosBorrador.resumen || 'Aún no se ha agregado un resumen.'}</dd>
+                  </div>
+                </dl>
+                {borradorGuardado.palabrasClave.length > 0 && (
+                  <div className="nuevo-trabajo__palabras-borrador">
+                    <h3>Palabras clave</h3>
+                    <ul>{borradorGuardado.palabrasClave.map((palabra) => <li key={palabra}>{palabra}</li>)}</ul>
+                  </div>
+                )}
+              </section>
+
+              <aside className="nuevo-trabajo__paneles">
+                <section className="nuevo-trabajo__panel">
+                  <h2>Lista de verificación</h2>
+                  <ul className="nuevo-trabajo__verificacion">
+
+
+                    <li className={tieneDatosGenerales ? 'completo' : 'pendiente'}>
+                      {tieneDatosGenerales ? '✓' : '•'} Datos generales {tieneDatosGenerales ? 'completos' : 'pendientes'}
+                    </li>
+                    <li className={tieneResumenYPalabras ? 'completo' : 'pendiente'}>
+                      {tieneResumenYPalabras ? '✓' : '•'} Resumen y palabras clave
+                    </li>
+                    <li className={tieneEnlaceValido ? 'completo' : 'pendiente'}>
+                      {tieneEnlaceValido ? '✓' : '•'} Enlace al documento
+                    </li>
+                    <li className="pendiente">• Falta confirmar al autor de correspondencia</li>
+                  </ul>
+                </section>
+                <section className="nuevo-trabajo__panel nuevo-trabajo__panel--borrador">
+                  <p>Los borradores no participan del proceso de revisión. Debe enviarlo antes del cierre de la recepción.</p>
+                </section>
+              </aside>
+            </div>
+          </div>
+        ) : (
+          <>
         <header className="nuevo-trabajo__encabezado">
           <div>
             <h1>Nuevo trabajo</h1>
             <p>Paso 1 de 3 · Datos generales</p>
           </div>
           <div className="nuevo-trabajo__acciones">
-            <button className="nuevo-trabajo__boton-borrador" type="button">
+            <button className="nuevo-trabajo__boton-borrador" type="button" onClick={guardarComoBorrador}>
               Guardar como borrador
             </button>
             <button className="nuevo-trabajo__boton-continuar" type="submit" form="nuevo-trabajo-formulario">
@@ -154,8 +312,11 @@ export default function NuevoTrabajo() {
 
         <ol className="nuevo-trabajo__pasos" aria-label="Pasos para registrar un trabajo">
           <li className="nuevo-trabajo__paso-activo" aria-current="step">1. Datos generales</li>
+          
           <li>2. Resumen y palabras clave</li>
+
           <li>3. Documento y coautores</li>
+
         </ol>
 
         {Object.keys(errores).length > 0 && (
@@ -164,6 +325,7 @@ export default function NuevoTrabajo() {
             <p>{Object.values(errores).join(' · ')}</p>
           </section>
         )}
+        {errorGuardado && <p className="nuevo-trabajo__error-general" role="alert">{errorGuardado}</p>}
 
         <form
           id="nuevo-trabajo-formulario"
@@ -172,6 +334,7 @@ export default function NuevoTrabajo() {
           onSubmit={validarFormulario}
         >
           <div className="nuevo-trabajo__campos-principales">
+
             <div className="nuevo-trabajo__campo">
               <label htmlFor="trabajo-titulo">Título del trabajo *</label>
               <input
@@ -184,13 +347,14 @@ export default function NuevoTrabajo() {
                 aria-invalid={Boolean(errores.titulo)}
                 aria-describedby={errores.titulo ? 'error-trabajo-titulo' : undefined}
               />
+
               {errores.titulo && <small id="error-trabajo-titulo" className="nuevo-trabajo__error-campo">{errores.titulo}</small>}
             </div>
 
             <div className="nuevo-trabajo__fila">
               <div className="nuevo-trabajo__campo">
                 <label htmlFor="trabajo-tipo">Tipo de trabajo *</label>
-                <select id="trabajo-tipo" name="tipo" defaultValue="Artículo completo">
+                <select id="trabajo-tipo" name="tipo" value={tipoTrabajo} onChange={(event) => setTipoTrabajo(event.target.value)}>
                   <option value="Artículo completo">Artículo completo</option>
                   <option value="Resumen extendido">Resumen extendido</option>
                   <option value="Póster">Póster</option>
@@ -287,7 +451,7 @@ export default function NuevoTrabajo() {
           <aside className="nuevo-trabajo__paneles">
             <section className="nuevo-trabajo__panel nuevo-trabajo__panel--borrador" role="status">
               <h2>Sus cambios no se han guardado</h2>
-              <p>Aún no se ha guardado este trabajo. La opción para guardar como borrador todavía no está disponible.</p>
+              <p>Aún no se ha guardado este trabajo. Puede guardar el borrador y continuar editándolo antes del cierre de la recepción.</p>
             </section>
             <section className="nuevo-trabajo__panel">
               <h2>Requisitos del tipo elegido</h2>
@@ -302,6 +466,8 @@ export default function NuevoTrabajo() {
             </section>
           </aside>
         </form>
+          </>
+        )}
       </div>
     </section>
   );
