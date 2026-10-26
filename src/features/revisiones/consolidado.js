@@ -45,13 +45,6 @@ export function sugerenciaPorPuntaje(promedio) {
   return 'revisar en detalle';
 }
 
-// '2026-10-14' -> '14/10'
-export function diaMes(fecha) {
-  if (!fecha) return '—';
-  const [, mes, dia] = fecha.split('-');
-  return dia + '/' + mes;
-}
-
 export function unDecimal(numero) {
   return numero === null ? '—' : numero.toFixed(1);
 }

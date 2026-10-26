@@ -60,25 +60,25 @@ export default function ModalDecision({ trabajo, consolidado, dictamen, onGuarda
   }
 
   return (
-    <div className="modal-fondo">
-      <div className="modal-decision" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
-        <header className="modal-cabecera">
+    <div className="decision-fondo">
+      <div className="decision-ventana" role="dialog" aria-modal="true" aria-labelledby="decision-titulo">
+        <header className="decision-cabecera">
           <div>
-            <h2 id="modal-titulo">Decisión final del comité</h2>
+            <h2 id="decision-titulo">Decisión final del comité</h2>
             <p>
               {trabajo.codigo} · promedio {unDecimal(consolidado.promedio)} · {consolidado.filas.length} revisiones
               entregadas · sugerencia: {sugerenciaPorPuntaje(consolidado.promedio)}
             </p>
           </div>
-          <button type="button" className="modal-cerrar" aria-label="Cerrar" onClick={onCerrar}>
+          <button type="button" className="decision-cerrar" aria-label="Cerrar" onClick={onCerrar}>
             ×
           </button>
         </header>
 
-        <div className="modal-cuerpo">
-          <div className="modal-opciones">
+        <div className="decision-cuerpo">
+          <div className="decision-opciones">
             {OPCIONES.map((o) => (
-              <label key={o.valor} className={'modal-opcion' + (decision === o.valor ? ' elegida-' + o.valor : '')}>
+              <label key={o.valor} className={'decision-opcion' + (decision === o.valor ? ' elegida-' + o.valor : '')}>
                 <input
                   type="radio"
                   name="decision"
@@ -93,13 +93,13 @@ export default function ModalDecision({ trabajo, consolidado, dictamen, onGuarda
               </label>
             ))}
           </div>
-          {errores.decision && <p className="modal-error">{errores.decision}</p>}
+          {errores.decision && <p className="decision-error">{errores.decision}</p>}
 
-          <div className="modal-retro-titulo">
+          <div className="decision-retro-titulo">
             <span>Retroalimentación al autor *</span>
             <button
               type="button"
-              className="modal-enlace"
+              className="decision-enlace"
               onClick={() => setRetroalimentacion(textoDeRevisores(consolidado.filas))}
             >
               Restaurar texto de los revisores
@@ -110,20 +110,20 @@ export default function ModalDecision({ trabajo, consolidado, dictamen, onGuarda
             value={retroalimentacion}
             onChange={(e) => setRetroalimentacion(e.target.value)}
           />
-          {errores.retroalimentacion && <p className="modal-error">{errores.retroalimentacion}</p>}
-          <p className="modal-ayuda">Precargado con los comentarios al autor de los revisores. Puede editarlo antes de publicar.</p>
+          {errores.retroalimentacion && <p className="decision-error">{errores.retroalimentacion}</p>}
+          <p className="decision-ayuda">Precargado con los comentarios al autor de los revisores. Puede editarlo antes de publicar.</p>
 
-          <p className="modal-advertencia">
+          <p className="decision-advertencia">
             Al publicar, el resultado será visible para el autor en el detalle de su trabajo. La decisión no se puede
             modificar después.
           </p>
         </div>
 
-        <footer className="modal-acciones">
+        <footer className="decision-acciones">
           <button type="button" className="boton-secundario" onClick={onCerrar}>
             Cancelar
           </button>
-          <button type="button" className="modal-enlace" onClick={guardarSinPublicar}>
+          <button type="button" className="decision-enlace" onClick={guardarSinPublicar}>
             Guardar sin publicar
           </button>
           <button type="button" className="boton-primario" onClick={pedirConfirmacion}>

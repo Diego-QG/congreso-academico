@@ -17,7 +17,9 @@
 }
 
 .fc-tabla th {
-  font-size: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--color-text-muted);
 }
@@ -27,20 +29,21 @@
 }
 
 .fc-puntaje {
-  width: 70px;
-  padding: 6px;
+  width: 72px;
+  height: 38px;
+  padding: 0 var(--espacio-2);
   text-align: center;
-  border: 1px solid var(--color-border);
-  border-radius: 2px;
-  font: inherit;
+  font-variant-numeric: tabular-nums;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radio);
 }
 
 .fc-comentario {
   width: 100%;
-  padding: 6px 8px;
-  border: 1px solid var(--color-border);
-  border-radius: 2px;
-  font: inherit;
+  min-height: 38px;
+  padding: var(--espacio-2) var(--espacio-3);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radio);
   resize: vertical;
 }
 
@@ -68,6 +71,8 @@
 }
 
 .fc-total strong {
-  font-size: 20px;
+  font-family: var(--fuente-titulos);
+  font-size: var(--texto-xl);
+  font-variant-numeric: tabular-nums;
   color: var(--color-primary);
 }

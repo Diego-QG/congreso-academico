@@ -8,7 +8,8 @@ import {
   obtenerTrabajo,
 } from './revisionesServicio';
 import ModalDecision from './ModalDecision';
-import { calcularConsolidado, diaMes, MINIMO_REVISIONES, TEXTO_RECOMENDACION, unDecimal } from './consolidado';
+import { calcularConsolidado, MINIMO_REVISIONES, TEXTO_RECOMENDACION, unDecimal } from './consolidado';
+import { diaMes, formatoFecha } from '../../shared/fechas';
 import './ConsolidadoTrabajo.css';
 
 const CRITERIOS = obtenerCriterios();
@@ -86,7 +87,7 @@ function Consolidado({ trabajo }) {
 
       {publicado && (
         <p className="consolidado-dictamen">
-          Dictamen publicado el {dictamen.fecha}: <strong>{dictamen.decision === 'aceptado' ? 'Aceptado' : 'Rechazado'}</strong>
+          Dictamen publicado el {formatoFecha(dictamen.fecha)}: <strong>{dictamen.decision === 'aceptado' ? 'Aceptado' : 'Rechazado'}</strong>
         </p>
       )}
       {dictamen && !publicado && (
@@ -128,7 +129,7 @@ function Consolidado({ trabajo }) {
                   <th>Revisor</th>
                   {CRITERIOS.map((cr) => (
                     <th key={cr.id} className="numero">
-                      {cr.nombre} {cr.peso} %
+                      {cr.nombre} {cr.peso} %
                     </th>
                   ))}
                   <th className="numero">Ponderado</th>

@@ -1,5 +1,4 @@
 /* HU-4 · Asignación de revisiones. Todas las clases llevan el prefijo h4- para no chocar con el CSS de otras pantallas. */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;600&display=swap');
 
 /* El CSS global del equipo deja el body como flex centrado, y #root se encoge al ancho de su contenido.
    Esta regla solo actúa cuando HU-4 está en pantalla: hace que ocupe todo el ancho (barras de borde a borde). */
