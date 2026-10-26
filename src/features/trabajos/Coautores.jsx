@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { getCurrentParticipant } from '../../shared/cuentaServicio';
 import './Trabajos.css';
 import './Coautores.css';
 
