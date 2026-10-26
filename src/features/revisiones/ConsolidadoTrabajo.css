@@ -68,27 +68,20 @@
   color: var(--color-text-muted);
 }
 
-.boton-primario {
-  padding: 10px 16px;
-  border: none;
-  background: var(--color-primary);
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.boton-primario:disabled {
-  background: var(--color-border);
-  color: var(--color-text-muted);
-  cursor: not-allowed;
-}
-
 .consolidado-dictamen {
   padding: 10px 14px;
   margin-bottom: 20px;
   border: 1px solid var(--color-success);
   background: #e9f5ee;
   color: var(--color-success);
+}
+
+.consolidado-borrador {
+  padding: 10px 14px;
+  margin-bottom: 20px;
+  border: 1px solid var(--color-warning);
+  background: #fdf5e6;
+  color: var(--color-warning);
 }
 
 .consolidado-vacio {

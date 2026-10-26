@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import FormularioCriterios from '../../shared/FormularioCriterios';
+import DialogoConfirmacion from '../../shared/DialogoConfirmacion';
 import { aNumero } from '../../shared/puntajes';
 import { useRevisiones } from './revisionesContexto';
 import { obtenerAsignacion, obtenerCriterios, obtenerTrabajo } from './revisionesServicio';
@@ -57,6 +58,7 @@ function Evaluacion({ asignacion }) {
   const [revision, setRevision] = useState(() => revisionInicial(asignacion, revisiones));
   const [errores, setErrores] = useState({ criterios: {} });
   const [aviso, setAviso] = useState('');
+  const [confirmando, setConfirmando] = useState(false);
   const soloLectura = revision.estado === 'enviada';
 
   function cambiarCriterio(criterioId, campo, valor) {
@@ -114,13 +116,16 @@ function Evaluacion({ asignacion }) {
     setAviso('Borrador guardado a las ' + hora + '.');
   }
 
-  function enviar() {
+  function pedirConfirmacion() {
     if (!validar(true)) {
       setAviso('');
       return;
     }
-    const confirmado = window.confirm('Una vez enviada, la evaluación ya no admite cambios. ¿Desea enviarla?');
-    if (!confirmado) return;
+    setConfirmando(true);
+  }
+
+  function enviar() {
+    setConfirmando(false);
     const nueva = revisionParaGuardar('enviada');
     guardarRevision(nueva);
     setRevision(nueva); // pasa a modo lectura y aparece el banner de "enviada"
@@ -235,11 +240,20 @@ function Evaluacion({ asignacion }) {
           <button type="button" className="boton-secundario" onClick={guardarBorrador}>
             Guardar borrador
           </button>
-          <button type="button" className="boton-primario" onClick={enviar}>
+          <button type="button" className="boton-primario" onClick={pedirConfirmacion}>
             Enviar recomendación
           </button>
         </footer>
       )}
+
+      <DialogoConfirmacion
+        abierto={confirmando}
+        titulo="¿Enviar la evaluación?"
+        mensaje="Una vez enviada, la evaluación ya no admite cambios."
+        textoConfirmar="Sí, enviar"
+        onConfirmar={enviar}
+        onCancelar={() => setConfirmando(false)}
+      />
     </section>
   );
 }

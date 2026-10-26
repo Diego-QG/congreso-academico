@@ -7,6 +7,7 @@ import {
   obtenerRevisor,
   obtenerTrabajo,
 } from './revisionesServicio';
+import ModalDecision from './ModalDecision';
 import { calcularConsolidado, diaMes, MINIMO_REVISIONES, TEXTO_RECOMENDACION, unDecimal } from './consolidado';
 import './ConsolidadoTrabajo.css';
 
@@ -28,14 +29,22 @@ export default function ConsolidadoTrabajo() {
 }
 
 function Consolidado({ trabajo }) {
-  const { revisiones, dictamenes } = useRevisiones();
+  const { revisiones, dictamenes, guardarDictamen } = useRevisiones();
   const [pestana, setPestana] = useState('autor');
+  const [modalAbierto, setModalAbierto] = useState(false);
 
   const asignadas = obtenerAsignacionesDeTrabajo(trabajo.id).length;
   const enviadas = revisiones.filter((r) => r.trabajoId === trabajo.id && r.estado === 'enviada');
   const c = calcularConsolidado(enviadas, CRITERIOS);
   const dictamen = dictamenes.find((d) => d.trabajoId === trabajo.id);
-  const puedeDecidir = enviadas.length >= MINIMO_REVISIONES && !dictamen;
+  // Los dictámenes del seed no tienen estado: se consideran publicados.
+  const publicado = dictamen && dictamen.estado !== 'borrador';
+  const puedeDecidir = enviadas.length >= MINIMO_REVISIONES && !publicado;
+
+  function guardarDecision(nuevo) {
+    guardarDictamen(nuevo);
+    setModalAbierto(false);
+  }
 
   return (
     <section className="consolidado">
@@ -47,8 +56,9 @@ function Consolidado({ trabajo }) {
         <div>
           <div className="consolidado-codigo">
             {trabajo.codigo}
-            <span className={'consolidado-estado' + (dictamen ? ' consolidado-estado-decidido' : '')}>
-              {trabajo.estado} · {enviadas.length} de {asignadas} entregadas
+            <span className={'consolidado-estado' + (publicado ? ' consolidado-estado-decidido' : '')}>
+              {publicado ? (dictamen.decision === 'aceptado' ? 'Aceptado' : 'Rechazado') : trabajo.estado} ·{' '}
+              {enviadas.length} de {asignadas} entregadas
             </span>
           </div>
           <h1>{trabajo.titulo}</h1>
@@ -58,10 +68,15 @@ function Consolidado({ trabajo }) {
           </p>
         </div>
         <div className="consolidado-acciones">
-          <button type="button" className="boton-primario" disabled={!puedeDecidir}>
-            Registrar decisión final
+          <button
+            type="button"
+            className="boton-primario"
+            disabled={!puedeDecidir}
+            onClick={() => setModalAbierto(true)}
+          >
+            {dictamen && !publicado ? 'Continuar decisión' : 'Registrar decisión final'}
           </button>
-          {!dictamen && enviadas.length < MINIMO_REVISIONES && (
+          {!publicado && enviadas.length < MINIMO_REVISIONES && (
             <span className="consolidado-aviso">
               Se necesitan al menos {MINIMO_REVISIONES} revisiones entregadas para decidir.
             </span>
@@ -69,10 +84,26 @@ function Consolidado({ trabajo }) {
         </div>
       </header>
 
-      {dictamen && (
+      {publicado && (
         <p className="consolidado-dictamen">
           Dictamen publicado el {dictamen.fecha}: <strong>{dictamen.decision === 'aceptado' ? 'Aceptado' : 'Rechazado'}</strong>
         </p>
+      )}
+      {dictamen && !publicado && (
+        <p className="consolidado-borrador">
+          Hay una decisión guardada sin publicar ({dictamen.decision === 'aceptado' ? 'aceptar' : 'rechazar'}). El autor
+          todavía no la ve.
+        </p>
+      )}
+
+      {modalAbierto && (
+        <ModalDecision
+          trabajo={trabajo}
+          consolidado={c}
+          dictamen={dictamen}
+          onGuardar={guardarDecision}
+          onCerrar={() => setModalAbierto(false)}
+        />
       )}
 
       {enviadas.length === 0 ? (
