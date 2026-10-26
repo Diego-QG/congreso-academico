@@ -20,6 +20,14 @@ export function obtenerAsignacionesDeRevisor(revisorId) {
   return seed.asignaciones.filter((a) => a.revisorId === revisorId);
 }
 
+export function obtenerAsignacionesDeTrabajo(trabajoId) {
+  return seed.asignaciones.filter((a) => a.trabajoId === trabajoId);
+}
+
+export function obtenerRevisor(revisorId) {
+  return seed.revisores.find((r) => r.id === revisorId);
+}
+
 
 function leer(clave, valorInicial) {
   try {

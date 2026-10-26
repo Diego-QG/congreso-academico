@@ -24,6 +24,7 @@ import AsignacionRevisores from "./features/asignaciones/AsignacionRevisores";
 import BandejaRevisor from "./features/revisiones/BandejaRevisor";
 import FormularioEvaluacion from "./features/revisiones/FormularioEvaluacion";
 import RevisionesProvider from "./features/revisiones/RevisionesProvider";
+import ConsolidadoTrabajo from "./features/revisiones/ConsolidadoTrabajo";
 import RutaRevisor from "./features/cuenta/RutaRevisor";
 // HU-6 · Programa del congreso
 import ProgramaProvider from "./features/programa/ProgramaProvider";
@@ -70,7 +71,12 @@ export default function App() {
               path="/revisor/revision/:asignacionId"
               element={<FormularioEvaluacion />}
             />
+            
           </Route>
+            <Route
+              path="/comite/trabajos/:trabajoId/consolidado"
+              element={<ConsolidadoTrabajo />}
+            />
 
           {/* HU-6 */}
           <Route path="/programa" element={<ProgramaPublico />} />
