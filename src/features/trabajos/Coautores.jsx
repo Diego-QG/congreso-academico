@@ -15,10 +15,17 @@ export default function Coautores({
   const registration = JSON.parse(
     window.sessionStorage.getItem('congreso.participante') || 'null'
   );
+
   const email = registration?.email || registration?.correo || '';
+
   const claveBorrador = `congreso.trabajo.borrador.${email || 'autor'}`;
+
   const borrador = JSON.parse(window.localStorage.getItem(claveBorrador) || 'null');
-  const [coautores, setCoautores] = useState(borrador?.coautores || []);
+
+  const [coautores, setCoautores] = useState(() => (
+    (Array.isArray(borrador?.coautores) ? borrador.coautores : [])
+      .filter((coautor) => coautor.correo?.toLowerCase() !== email.toLowerCase())
+  ));
   const [autorCorrespondencia, setAutorCorrespondencia] = useState(
     borrador?.autorCorrespondencia || email
   );
@@ -183,8 +190,8 @@ export default function Coautores({
             <span />
           </div>
 
-          {autores.map((autor, indice) => (
-            <div className={`coautores__fila${indice === 0 ? ' coautores__fila--principal' : ''}`} key={autor.correo}>
+          {coautores.map((autor) => (
+            <div className="coautores__fila" key={autor.correo}>
               <strong>{autor.nombre || 'Autor principal'}</strong>
               <span className="coautores__correo">{autor.correo}</span>
               <span>{autor.institucion}</span>
@@ -201,18 +208,14 @@ export default function Coautores({
                 />
                 <span>{autorCorrespondencia === autor.correo ? 'Autor de correspondencia' : 'Marcar'}</span>
               </label>
-              {indice > 0 ? (
-                <button
-                  className="coautores__accion-texto"
-                  type="button"
+              <button
+                className="coautores__accion-texto"
+                type="button"
                 onClick={() => editarCoautor(autor)}
                 aria-label={`Editar a ${autor.nombre}`}
-                >
+              >
                 Editar
-                </button>
-              ) : (
-                <span className="coautores__autor-principal">Autor principal</span>
-              )}
+              </button>
             </div>
           ))}
 
@@ -275,7 +278,7 @@ export default function Coautores({
           </form>
 
           <footer className="coautores__pie-lista">
-            <span>{autores.length} de {maxCoautores + 1} autores declarados (autor principal + {maxCoautores} coautores como máximo)</span>
+            <span>{coautores.length} de {maxCoautores} coautores declarados; el autor principal se conserva en el trabajo.</span>
             <span>El orden de la lista es el orden de firma.</span>
           </footer>
         </section>
