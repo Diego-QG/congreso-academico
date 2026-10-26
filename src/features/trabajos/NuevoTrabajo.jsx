@@ -1,5 +1,6 @@
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
+import Coautores from './Coautores';
 import './NuevoTrabajo.css';
 
 function esUrlHttps(valor) {
@@ -11,26 +12,34 @@ function esUrlHttps(valor) {
 }
 
 export default function NuevoTrabajo() {
+  const location = useLocation();
   const registration = JSON.parse(
     window.sessionStorage.getItem('congreso.participante') || 'null'
   );
   const claveBorrador = `congreso.trabajo.borrador.${registration?.email || registration?.correo || 'autor'}`;
-  const [formulario, setFormulario] = useState({
-    titulo: '',
-    eje: '',
-    resumen: '',
-    enlace: '',
-  });
-  const [tipoTrabajo, setTipoTrabajo] = useState('Artículo completo');
-  const [errores, setErrores] = useState({});
-  const [palabrasClave, setPalabrasClave] = useState([]);
-  const [nuevaPalabra, setNuevaPalabra] = useState('');
   const [borradorGuardado, setBorradorGuardado] = useState(() => {
     const borradorExistente = window.localStorage.getItem(claveBorrador);
     return borradorExistente ? JSON.parse(borradorExistente) : null;
   });
-  const [mostrarBorrador, setMostrarBorrador] = useState(Boolean(borradorGuardado));
+  const quiereEditarBorrador = Boolean(location.state?.editarBorrador);
+  const datosIniciales = quiereEditarBorrador ? borradorGuardado?.formulario : null;
+  const [formulario, setFormulario] = useState({
+    titulo: datosIniciales?.titulo || '',
+    eje: datosIniciales?.eje || '',
+    resumen: datosIniciales?.resumen || '',
+    enlace: datosIniciales?.enlace || '',
+  });
+  const [tipoTrabajo, setTipoTrabajo] = useState(datosIniciales?.tipo || 'Artículo completo');
+  const [errores, setErrores] = useState({});
+  const [palabrasClave, setPalabrasClave] = useState(
+    quiereEditarBorrador ? borradorGuardado?.palabrasClave || [] : []
+  );
+  const [nuevaPalabra, setNuevaPalabra] = useState('');
+  const [mostrarBorrador, setMostrarBorrador] = useState(
+    Boolean(borradorGuardado) && !quiereEditarBorrador
+  );
   const [errorGuardado, setErrorGuardado] = useState('');
+  const [pasoActual, setPasoActual] = useState(1);
   const isAuthor = ['autor', 'ambos'].includes(registration?.rolParticipacion);
 
   function agregarPalabraClave(event) {
@@ -97,6 +106,34 @@ export default function NuevoTrabajo() {
     event.preventDefault();
     const nuevosErrores = obtenerErroresFormulario();
     setErrores(nuevosErrores);
+    if (Object.keys(nuevosErrores).length === 0) {
+      continuarAcoautores();
+    }
+  }
+
+  function continuarAcoautores() {
+    const nuevosErrores = obtenerErroresFormulario();
+    setErrores(nuevosErrores);
+    if (Object.keys(nuevosErrores).length > 0) return;
+
+    const borrador = {
+      id: borradorGuardado?.id || `TRB-${new Date().getFullYear()}-${String(Date.now()).slice(-3).padStart(3, '0')}`,
+      guardadoEn: borradorGuardado?.guardadoEn || new Date().toISOString(),
+      formulario: { ...formulario, tipo: tipoTrabajo },
+      palabrasClave: [...palabrasClave],
+      coautores: borradorGuardado?.coautores || [],
+      autorCorrespondencia: borradorGuardado?.autorCorrespondencia || registration.email,
+    };
+
+    try {
+      window.localStorage.setItem(claveBorrador, JSON.stringify(borrador));
+    } catch {
+      setErrorGuardado('No se pudo guardar el trabajo para continuar. Inténtelo de nuevo.');
+      return;
+    }
+
+    setBorradorGuardado(borrador);
+    setPasoActual(3);
   }
 
   function guardarComoBorrador() {
@@ -105,6 +142,8 @@ export default function NuevoTrabajo() {
       guardadoEn: new Date().toISOString(),
       formulario: { ...formulario, tipo: tipoTrabajo },
       palabrasClave: [...palabrasClave],
+      coautores: borradorGuardado?.coautores || [],
+      autorCorrespondencia: borradorGuardado?.autorCorrespondencia || registration.email,
     };
 
     try {
@@ -127,11 +166,8 @@ export default function NuevoTrabajo() {
       resumen: borradorGuardado.formulario.resumen,
       enlace: borradorGuardado.formulario.enlace,
     });
-    
     setTipoTrabajo(borradorGuardado.formulario.tipo);
-    
-    setPalabrasClave(borradorGuardado.palabrasClave);
-
+    setPalabrasClave(borradorGuardado.palabrasClave || []);
     setMostrarBorrador(false);
   }
 
@@ -295,6 +331,7 @@ export default function NuevoTrabajo() {
           </div>
         ) : (
           <>
+        {pasoActual === 1 && (
         <header className="nuevo-trabajo__encabezado">
           <div>
             <h1>Nuevo trabajo</h1>
@@ -309,16 +346,32 @@ export default function NuevoTrabajo() {
             </button>
           </div>
         </header>
+        )}
 
         <ol className="nuevo-trabajo__pasos" aria-label="Pasos para registrar un trabajo">
-          <li className="nuevo-trabajo__paso-activo" aria-current="step">1. Datos generales</li>
-          
+          <li className={pasoActual === 1 ? 'nuevo-trabajo__paso-activo' : ''}>
+            <button
+              type="button"
+              aria-current={pasoActual === 1 ? 'step' : undefined}
+              onClick={() => setPasoActual(1)}
+            >
+              1. Datos generales
+            </button>
+          </li>
           <li>2. Resumen y palabras clave</li>
-
-          <li>3. Documento y coautores</li>
-
+          <li className={pasoActual === 3 ? 'nuevo-trabajo__paso-activo' : ''}>
+            <button
+              type="button"
+              aria-current={pasoActual === 3 ? 'step' : undefined}
+              onClick={continuarAcoautores}
+            >
+              3. Documento y coautores
+            </button>
+          </li>
         </ol>
 
+        {pasoActual === 1 ? (
+          <>
         {Object.keys(errores).length > 0 && (
           <section className="nuevo-trabajo__error-general" role="alert" aria-live="assertive">
             <strong>No se pudo continuar: revise {Object.keys(errores).length} {Object.keys(errores).length === 1 ? 'campo' : 'campos'}.</strong>
@@ -466,6 +519,14 @@ export default function NuevoTrabajo() {
             </section>
           </aside>
         </form>
+          </>
+        ) : (
+          <Coautores
+            integrado
+            onVolver={() => setPasoActual(1)}
+            onBorradorActualizado={setBorradorGuardado}
+          />
+        )}
           </>
         )}
       </div>

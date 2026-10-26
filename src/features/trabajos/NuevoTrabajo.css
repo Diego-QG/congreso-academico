@@ -202,6 +202,24 @@
   line-height: 1.5;
 }
 
+.nuevo-trabajo__pasos button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.nuevo-trabajo__pasos button:hover {
+  color: var(--color-primary);
+}
+
+.nuevo-trabajo__pasos button:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 3px;
+}
+
 .nuevo-trabajo__pasos .nuevo-trabajo__paso-activo {
   color: var(--color-primary);
   font-weight: 600;
