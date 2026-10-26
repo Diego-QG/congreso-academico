@@ -364,3 +364,58 @@
   font-weight: 600;
   text-align: center;
 }
+/* --- FOTO DE LA COLUMNA LATERAL --- */
+.register-foto {
+  height: 340px;
+  margin-bottom: 20px;
+  border-radius: 2px;
+}
+
+/* El recuadro es más bajo que en Login: el degradado empieza antes para que el texto se lea. */
+.register-foto::after {
+  background: linear-gradient(180deg, rgba(92, 25, 37, 0) 25%, rgba(92, 25, 37, 0.92) 100%);
+}
+
+/* --- TABLET Y CELULAR --- */
+@media (max-width: 900px) {
+  /* minmax(0, 1fr) evita que el formulario empuje la columna más allá de la pantalla. */
+  .register-layout-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .register-foto {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .register-main-section {
+    padding: 24px 16px;
+  }
+
+  .register-card {
+    padding: 24px 20px;
+  }
+
+  .form-row-two-cols,
+  .radio-options-group {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  /* El aviso de las bases arriba y los botones debajo, a todo el ancho. */
+  .register-footer-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .register-actions {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+  }
+
+  .btn-cancel-register,
+  .btn-submit-register {
+    width: 100%;
+  }
+}

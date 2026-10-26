@@ -180,9 +180,16 @@ body {
   color: white;
 }
 
+.footer-logo {
+  display: block;
+  height: 48px;
+  width: auto;
+  margin-bottom: 16px;
+}
+
 .gold-title {
   font-size: 12px;
-  color: #B7791F;
+  color: #E3CC9A;
   letter-spacing: 1px;
   margin-bottom: 16px;
   font-weight: 600;
@@ -208,10 +215,17 @@ body {
   margin-bottom: 8px;
 }
 
-.footer-col ul a {
+.footer-col ul a,
+.footer-col p a {
   text-decoration: none;
   color: #E4DFDA;
   font-size: 13px;
+}
+
+.footer-col ul a:hover,
+.footer-col p a:hover {
+  color: #FFFFFF;
+  text-decoration: underline;
 }
 
 .footer-bottom {
@@ -223,11 +237,6 @@ body {
   color: #FBFAF8;
 }
 
-.footer-legal a {
-  color: #E4DFDA;
-  margin-left: 16px;
-  text-decoration: none;
-}
 
 .brand-logo { text-decoration: none; color: inherit; }
 .auth-buttons a { text-decoration: none; display: inline-block; }
@@ -241,7 +250,12 @@ body {
   }
 }
 
-@media (max-width: 600px) {
+/* Botón ☰: solo aparece en celular. */
+.boton-menu {
+  display: none;
+}
+
+@media (max-width: 767px) {
   .contenedor {
     padding: 0 16px;
   }
@@ -250,61 +264,111 @@ body {
     padding: 12px 0;
   }
 
+  .brand-logo {
+    gap: 10px;
+    min-width: 0;
+  }
+
   .logo-box {
     width: 36px;
     height: 36px;
-    font-size: 20px;
+  }
+
+  .brand-titles {
+    min-width: 0;
   }
 
   .brand-titles h2 {
     font-size: 16px;
+    line-height: 1.2;
   }
 
   .brand-titles p {
     font-size: 10px;
   }
 
-  /* En el celular solo se muestra la etiqueta del estado. */
-  .status-label {
+  /* En celular no entra junto al logo y el botón del menú. */
+  .edition-status {
     display: none;
   }
 
-  .status-badge {
-    font-size: 12px;
-    white-space: nowrap;
+  .boton-menu {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 2px;
+    background: transparent;
+    color: #FFFFFF;
+    cursor: pointer;
   }
 
+  /* Menú cerrado: no se ve. Abierto: lista hacia abajo. */
   .main-nav {
-    flex-direction: column-reverse;
+    display: none;
+  }
+
+  .main-nav.abierto {
+    display: flex;
+    flex-direction: column;
     align-items: stretch;
-    padding-top: 12px;
+    gap: 16px;
+    padding-top: 8px;
+    padding-bottom: 16px;
   }
 
-  /* Los enlaces se desplazan de lado si no entran. */
   .nav-links {
-    gap: 20px;
-    overflow-x: auto;
-    white-space: nowrap;
-    padding-bottom: 4px;
+    flex-direction: column;
+    gap: 0;
   }
 
-  .auth-buttons,
+  .nav-links li {
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .nav-links a {
+    display: flex;
+    align-items: center;
+    min-height: 48px;
+    padding: 0;
+    font-size: 16px;
+  }
+
+  .nav-links a.active,
+  .nav-links a:hover {
+    border-bottom: 0;
+    box-shadow: inset 3px 0 0 var(--color-primary);
+    padding-left: 12px;
+  }
+
+  .auth-buttons {
+    flex-direction: column;
+  }
+
+  .auth-buttons a {
+    padding: 12px 16px;
+    text-align: center;
+  }
+
   .registered-user {
-    justify-content: flex-end;
+    justify-content: flex-start;
   }
 
   .footer-content {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    margin-bottom: 24px;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px 20px;
+    margin-bottom: 28px;
+  }
+
+  .footer-column {
+    grid-column: 1 / -1;
   }
 
   .footer-bottom {
     flex-direction: column;
     gap: 8px;
-  }
-
-  .footer-legal a {
-    margin: 0 16px 0 0;
   }
 }
