@@ -118,6 +118,7 @@ export default function NuevoTrabajo() {
 
     const borrador = {
       id: borradorGuardado?.id || `TRB-${new Date().getFullYear()}-${String(Date.now()).slice(-3).padStart(3, '0')}`,
+      estado: 'Borrador',
       guardadoEn: borradorGuardado?.guardadoEn || new Date().toISOString(),
       formulario: { ...formulario, tipo: tipoTrabajo },
       palabrasClave: [...palabrasClave],
@@ -139,6 +140,7 @@ export default function NuevoTrabajo() {
   function guardarComoBorrador() {
     const borrador = {
       id: borradorGuardado?.id || `TRB-${new Date().getFullYear()}-${String(Date.now()).slice(-3).padStart(3, '0')}`,
+      estado: 'Borrador',
       guardadoEn: new Date().toISOString(),
       formulario: { ...formulario, tipo: tipoTrabajo },
       palabrasClave: [...palabrasClave],
