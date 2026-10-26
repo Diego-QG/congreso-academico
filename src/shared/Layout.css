@@ -160,6 +160,55 @@ body {
   font-weight: 500;
 }
 
+.registered-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.registered-user-name {
+  display: flex;
+  flex-direction: column;
+  color: #1F1A1B;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: right;
+}
+
+.registered-user-name small {
+  color: #6F6663;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.registered-user-initials {
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: #F6E9EC;
+  color: #7A2231;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.logout-button {
+  border: 1px solid #7A2231;
+  border-radius: 2px;
+  padding: 7px 10px;
+  background-color: #FFFFFF;
+  color: #7A2231;
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+}
+
+.logout-button:hover {
+  background-color: #F6E9EC;
+}
+
 /* --- FOOTER --- */
 .main-footer {
   background-color: #1F1A1B;

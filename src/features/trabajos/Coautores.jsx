@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { getCurrentParticipant } from '../../shared/cuentaServicio';
 import './Coautores.css';
 
 function correoValido(correo) {
@@ -12,9 +13,7 @@ export default function Coautores({
   onBorradorActualizado,
 }) {
   const navigate = useNavigate();
-  const registration = JSON.parse(
-    window.sessionStorage.getItem('congreso.participante') || 'null'
-  );
+  const registration = getCurrentParticipant();
 
   const email = registration?.email || registration?.correo || '';
 

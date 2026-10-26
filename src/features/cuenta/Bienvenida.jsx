@@ -1,10 +1,11 @@
 import { Link, Navigate, useLocation } from 'react-router-dom';
+import { getCurrentParticipant } from '../../shared/cuentaServicio';
 import './Bienvenida.css';
 
 export default function Bienvenida() {
   const location = useLocation();
   const registration = location.state?.registration
-    || JSON.parse(window.sessionStorage.getItem('congreso.participante') || 'null');
+    || getCurrentParticipant();
 
   if (!registration) {
     return <Navigate to="/registro" replace />;

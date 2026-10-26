@@ -1,21 +1,29 @@
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import isotipo from '../assets/marca/isotipo.svg';
+import { getCurrentParticipant, signOut } from './cuentaServicio';
 
 // Encabezado común. Se modifica SOLO aquí.
 export default function Header() {
   const location = useLocation();
+  const navigate = useNavigate();
   const registration = location.state?.registration
-    || JSON.parse(window.sessionStorage.getItem('congreso.participante') || 'null');
+    || getCurrentParticipant();
   const isWelcomePage = location.pathname === '/bienvenida' && registration;
   const hasReviewerRole = ['revisor', 'ambos'].includes(registration?.rolParticipacion);
   const hasAuthorRole = ['autor', 'ambos'].includes(registration?.rolParticipacion);
+  const hasCommitteeRole = registration?.rolParticipacion === 'comite';
   const firstName = registration?.nombres?.trim().split(/\s+/)[0] || '';
   const firstSurname = registration?.apellidos?.trim().split(/\s+/)[0] || '';
   const initials = `${firstName[0] || ''}${firstSurname[0] || ''}`.toUpperCase();
   const roleLabels = {
     autor: 'Autor',
     revisor: 'Revisor',
-    ambos: 'Autor y revisor'
+    ambos: 'Autor y revisor',
+    comite: 'Comité'
+  };
+  const handleSignOut = () => {
+    signOut();
+    navigate('/', { replace: true });
   };
 
   return (
@@ -58,6 +66,12 @@ export default function Header() {
                 {hasReviewerRole && (
                   <li><NavLink to="/revisor/bandeja">Mi bandeja</NavLink></li>
                 )}
+                {hasCommitteeRole && (
+                  <>
+                    <li><NavLink to="/comite/edicion">Edición</NavLink></li>
+                    <li><NavLink to="/comite/asignaciones">Asignaciones</NavLink></li>
+                  </>
+                )}
                 {isWelcomePage && (
                   <li><a href="#mi-presentacion">Mi presentación</a></li>
                 )}
@@ -82,6 +96,9 @@ export default function Header() {
               <span className="registered-user-initials" aria-label={`Iniciales ${initials}`}>
                 {initials}
               </span>
+              <button className="logout-button" onClick={handleSignOut} type="button">
+                Cerrar sesión
+              </button>
             </div>
           ) : (
             <div className="auth-buttons">

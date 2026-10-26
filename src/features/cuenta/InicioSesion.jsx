@@ -1,24 +1,65 @@
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import {
+  getParticipantHome,
+  signIn,
+  startCommitteeDemoSession
+} from "../../shared/cuentaServicio";
 import "./InicioSesion.css";
 
 function InicioSesion() {
   const location = useLocation();
+  const navigate = useNavigate();
   const [email, setEmail] = useState(
     location.state?.email || "rosa.quispe@aloe.ulima.edu.pe"
   );
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
-  const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [credentialsInvalid, setCredentialsInvalid] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isStartingDemo, setIsStartingDemo] = useState(false);
   const [passwordUpdated, setPasswordUpdated] = useState(
     Boolean(location.state?.passwordUpdated)
   );
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Evita que la página se recargue
-    // Aquí simulamos que las credenciales ingresadas son incorrectas
-    // y mostramos la alerta de error (Página 7 del mockup)
-    setHasError(true);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setErrorMessage("");
+    setCredentialsInvalid(false);
+    setIsSubmitting(true);
+    try {
+      const participant = await signIn(email, password, rememberMe);
+      if (!participant) {
+        setCredentialsInvalid(true);
+        setErrorMessage("El correo o la contraseña no son correctos.");
+        return;
+      }
+      navigate(getParticipantHome(participant), {
+        replace: true,
+        state: { registration: participant }
+      });
+    } catch {
+      setErrorMessage("No se pudo validar el acceso. Inténtelo nuevamente.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+  const handleCommitteeDemo = () => {
+    setErrorMessage("");
+    setCredentialsInvalid(false);
+    setIsStartingDemo(true);
+    try {
+      const participant = startCommitteeDemoSession(rememberMe);
+      navigate(getParticipantHome(participant), {
+        replace: true,
+        state: { registration: participant }
+      });
+    } catch {
+      setErrorMessage("No se pudo iniciar el acceso de demostración. Inténtelo nuevamente.");
+    } finally {
+      setIsStartingDemo(false);
+    }
   };
 
   return (
@@ -35,28 +76,21 @@ function InicioSesion() {
             </div>
           )}
 
-          {/* Subtítulo normal: solo se muestra si NO hay error */}
-          {!hasError && (
+          {!errorMessage && (
             <p className="login-subtitle">
               Ingrese con su correo institucional para enviar o revisar
               trabajos.
             </p>
           )}
 
-          {/* ALERTA DE ERROR GENERAL: Se muestra RECIÉN cuando hasError cambia a true */}
-          {hasError && (
-            <div className="alert-error-banner">
+          {errorMessage && (
+            <div className="alert-error-banner" role="alert">
               <span className="alert-icon">!</span>
-              <p>
-                El correo o la contraseña no son correctos. Le quedan 3 intentos
-                antes del bloqueo temporal.
-              </p>
+              <p>{errorMessage}</p>
             </div>
           )}
 
-          {/* Al enviar el formulario se llama a handleSubmit */}
           <form className="login-form" onSubmit={handleSubmit}>
-            {/* Campo: Correo Institucional */}
             <div className="form-group">
               <label htmlFor="email">CORREO INSTITUCIONAL</label>
               <input
@@ -65,15 +99,18 @@ function InicioSesion() {
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
-                  if (hasError) setHasError(false); // Limpia el error al escribir
+                  if (errorMessage) {
+                    setErrorMessage("");
+                    setCredentialsInvalid(false);
+                  }
                   if (passwordUpdated) setPasswordUpdated(false);
                 }}
+                autoComplete="username"
                 placeholder="usuario@aloe.ulima.edu.pe"
                 required
               />
             </div>
 
-            {/* Campo: Contraseña */}
             <div className="form-group">
               <label htmlFor="password">CONTRASEÑA</label>
               <div className="password-input-wrapper">
@@ -83,10 +120,14 @@ function InicioSesion() {
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
-                    if (hasError) setHasError(false); // Limpia el error al escribir
+                    if (errorMessage) {
+                      setErrorMessage("");
+                      setCredentialsInvalid(false);
+                    }
                     if (passwordUpdated) setPasswordUpdated(false);
                   }}
-                  className={hasError ? "input-field-error" : ""}
+                  className={credentialsInvalid ? "input-field-error" : ""}
+                  autoComplete="current-password"
                   required
                 />
                 <button
@@ -98,15 +139,13 @@ function InicioSesion() {
                 </button>
               </div>
 
-              {/* MENSAJE EN LÍNEA DEBAJO DEL INPUT (Solo cuando hay error) */}
-              {hasError && (
+              {credentialsInvalid && (
                 <span className="field-error-message">
                   Verifique su contraseña.
                 </span>
               )}
             </div>
 
-            {/* Checkbox y Opciones */}
             <div className="login-options">
               <label className="checkbox-label">
                 <input
@@ -125,13 +164,24 @@ function InicioSesion() {
               </Link>
             </div>
 
-            {/* Botón Submit: Al presionar activa el handleSubmit */}
-            <button type="submit" className="btn-submit-login">
-              Ingresar
+            <button type="submit" className="btn-submit-login" disabled={isSubmitting}>
+              {isSubmitting ? "Validando..." : "Ingresar"}
             </button>
           </form>
 
-          {/* Registro link */}
+          <div className="login-demo-access">
+            <p>¿Necesita revisar la configuración de la edición?</p>
+            <button
+              className="login-demo-button"
+              disabled={isSubmitting || isStartingDemo}
+              onClick={handleCommitteeDemo}
+              type="button"
+            >
+              {isStartingDemo ? "Abriendo demostración..." : "Entrar como comité"}
+            </button>
+            <small>Acceso local de demostración; no usar en producción.</small>
+          </div>
+
           <div className="login-register-prompt">
             <span>¿No tiene cuenta? </span>
             <Link to="/registro" className="register-link">

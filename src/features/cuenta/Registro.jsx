@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createAccount } from '../../shared/cuentaServicio';
 import './Registro.css';
 
 function getPasswordRequirements(password, confirmPassword) {
@@ -82,6 +83,8 @@ function Registro() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
+  const [serviceError, setServiceError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const passwordRequirements = getPasswordRequirements(
     formData.password,
     formData.confirmPassword
@@ -89,6 +92,7 @@ function Registro() {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+    setServiceError('');
     const updatedFormData = {
       ...formData,
       [name]: type === 'checkbox' ? checked : value
@@ -100,7 +104,7 @@ function Registro() {
   };
 
   const navigate = useNavigate();
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const validationErrors = validateRegistration(formData);
     setErrors(validationErrors);
@@ -117,11 +121,23 @@ function Registro() {
       codigoAlumno: formData.codigoAlumno,
       rolParticipacion: formData.rolParticipacion
     };
-    window.sessionStorage.setItem(
-      'congreso.participante',
-      JSON.stringify(registration)
-    );
-    navigate('/bienvenida', { state: { registration } });
+    setServiceError('');
+    setIsSubmitting(true);
+    try {
+      const createdParticipant = await createAccount(registration, formData.password);
+      navigate('/bienvenida', { state: { registration: createdParticipant } });
+    } catch (error) {
+      if (error.code === 'EMAIL_TAKEN') {
+        setErrors((currentErrors) => ({
+          ...currentErrors,
+          email: 'Ya existe una cuenta con este correo institucional.'
+        }));
+      } else {
+        setServiceError('No se pudo crear la cuenta. Inténtelo nuevamente.');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -145,6 +161,7 @@ function Registro() {
                   {Object.keys(errors).length === 1 ? '' : 's'} con errores antes de continuar.
                 </div>
               )}
+              {serviceError && <div className="register-error-banner" role="alert">{serviceError}</div>}
               
               {/* Nombres y Apellidos */}
               <div className="form-row-two-cols">
@@ -381,8 +398,8 @@ function Registro() {
                   >
                     Cancelar
                   </button>
-                  <button type="submit" className="btn-submit-register">
-                    Crear mi cuenta
+                  <button type="submit" className="btn-submit-register" disabled={isSubmitting}>
+                    {isSubmitting ? 'Creando cuenta...' : 'Crear mi cuenta'}
                   </button>
                 </div>
               </div>

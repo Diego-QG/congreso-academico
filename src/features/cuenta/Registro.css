@@ -288,6 +288,11 @@
   background-color: #5C1925;
 }
 
+.btn-submit-register:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
 /* Sidebar informativo derecho */
 .register-info-sidebar {
   display: flex;
