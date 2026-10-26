@@ -3,7 +3,7 @@ import CabeceraComite from './CabeceraComite';
 import PestanasConfig from './PestanasConfig';
 import PieComite from './PieComite';
 import './ConfiguracionEdicion.css';
-import { CRONOGRAMA_INICIAL, ETAPAS } from './data/datosConfiguracion.js';
+import { CRONOGRAMA_INICIAL, ETAPAS } from './datosConfiguracion.js';
 
 function formatear(fecha) {
   if (fecha === '') {

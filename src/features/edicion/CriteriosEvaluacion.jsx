@@ -3,7 +3,7 @@ import CabeceraComite from './CabeceraComite';
 import PestanasConfig from './PestanasConfig';
 import PieComite from './PieComite';
 import './ConfiguracionEdicion.css';
-import { CRITERIOS_INICIALES } from './data/datosConfiguracion.js';
+import { CRITERIOS_INICIALES } from './datosConfiguracion.js';
 
 const FORMULARIO_VACIO = { id: null, nombre: '', descripcion: '', peso: '' };
 

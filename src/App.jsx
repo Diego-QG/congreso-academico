@@ -1,33 +1,33 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from "./shared/Layout";
-import Inicio from "./pages/Inicio";
-import Portada from "./pages/Portada";
+import Inicio from "./features/publico/Inicio";
+import Portada from "./features/publico/Portada";
 
 // HU-1 · Cuenta y acceso
-import Login from "./hu1-cuenta/Login";
-import Register from "./hu1-cuenta/Register";
-import Bienvenida from "./hu1-cuenta/Bienvenida";
-import MiCuenta from "./hu1-cuenta/MiCuenta";
-import RecuperarContrasena from "./hu1-cuenta/RecuperarContrasena";
-import PaginaNoEncontrada from "./hu1-cuenta/PaginaNoEncontrada";
+import InicioSesion from "./features/cuenta/InicioSesion";
+import Registro from "./features/cuenta/Registro";
+import Bienvenida from "./features/cuenta/Bienvenida";
+import MiCuenta from "./features/cuenta/MiCuenta";
+import RecuperarContrasena from "./features/cuenta/RecuperarContrasena";
+import PaginaNoEncontrada from "./features/publico/PaginaNoEncontrada";
 // HU-3 · Envío de trabajos
-import { MisTrabajos, NuevoTrabajo } from "./hu3-trabajos/Historia3";
+import { MisTrabajos, NuevoTrabajo } from "./features/trabajos/MisTrabajos";
 // Configuración de la edición
-import ConfiguracionEdicion from "./ConfiguracionEdicion";
-import EjesTematicos from "./EjesTematicos";
-import TiposTrabajo from "./TiposTrabajo";
-import FechasLimite from "./FechasLimite";
-import CriteriosEvaluacion from "./CriteriosEvaluacion";
+import ConfiguracionEdicion from "./features/edicion/ConfiguracionEdicion";
+import EjesTematicos from "./features/edicion/EjesTematicos";
+import TiposTrabajo from "./features/edicion/TiposTrabajo";
+import FechasLimite from "./features/edicion/FechasLimite";
+import CriteriosEvaluacion from "./features/edicion/CriteriosEvaluacion";
 // HU-4 · Asignación de revisiones
-import Historia4 from "./hu4-asignacion/Historia4";
+import AsignacionRevisores from "./features/asignaciones/AsignacionRevisores";
 // HU-5 · Revisión y dictamen
-import BandejaRevisor from "./hu5-revision/BandejaRevisor";
-import FormularioEvaluacion from "./hu5-revision/FormularioEvaluacion";
-import RevisionesProvider from "./hu5-revision/RevisionesProvider";
-import RutaRevisor from "./hu1-cuenta/RutaRevisor";
+import BandejaRevisor from "./features/revisiones/BandejaRevisor";
+import FormularioEvaluacion from "./features/revisiones/FormularioEvaluacion";
+import RevisionesProvider from "./features/revisiones/RevisionesProvider";
+import RutaRevisor from "./features/cuenta/RutaRevisor";
 // HU-6 · Programa del congreso
-import ProgramaProvider from "./hu6-programa/ProgramaProvider";
-import ProgramaPublico from "./hu6-programa/ProgramaPublico";
+import ProgramaProvider from "./features/programa/ProgramaProvider";
+import ProgramaPublico from "./features/programa/ProgramaPublico";
 
 export default function App() {
   return (
@@ -41,7 +41,7 @@ export default function App() {
         <Route path="/comite/edicion" element={<ConfiguracionEdicion />} />
         <Route path="/comite/edicion/ejes" element={<EjesTematicos />} />
         <Route path="/comite/edicion/tipos" element={<TiposTrabajo />} />
-        <Route path="/comite/asignaciones" element={<Historia4 />} />
+        <Route path="/comite/asignaciones" element={<AsignacionRevisores />} />
         <Route path="/comite/edicion/fechas" element={<FechasLimite />} />
         <Route path="/comite/edicion/criterios" element={<CriteriosEvaluacion />} />
 
@@ -49,8 +49,8 @@ export default function App() {
           <Route path="/" element={<Inicio />} />
 
           {/* HU-1 */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/registro" element={<Register />} />
+          <Route path="/login" element={<InicioSesion />} />
+          <Route path="/registro" element={<Registro />} />
           <Route path="/bienvenida" element={<Bienvenida />} />
           <Route path="/mi-cuenta" element={<MiCuenta />} />
           <Route

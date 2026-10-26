@@ -1,4 +1,4 @@
-import seed from '../data/seed.json';
+import seed from '../../data/seed.json';
 
 const CLAVE = 'congreso.revisiones';
 

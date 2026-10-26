@@ -1,4 +1,4 @@
-import seed from '../data/seed.json';
+import seed from '../../data/seed.json';
 
 const CLAVE_SESIONES = 'congreso.sesiones';
 const CLAVE_PROGRAMA = 'congreso.programa';

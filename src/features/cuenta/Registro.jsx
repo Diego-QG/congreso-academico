@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Register.css';
+import './Registro.css';
 
 function getPasswordRequirements(password, confirmPassword) {
   return [
@@ -65,7 +65,7 @@ function validateRegistration(formData) {
   return errors;
 }
 
-function Register() {
+function Registro() {
   const [formData, setFormData] = useState({
     nombres: 'Rosa María',
     apellidos: 'Quispe Ttito',
@@ -426,4 +426,4 @@ function Register() {
   );
 }
 
-export default Register;
+export default Registro;

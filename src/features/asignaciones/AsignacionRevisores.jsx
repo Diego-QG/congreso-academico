@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
-import './Historia4.css';
+import './AsignacionRevisores.css';
 
 /* ======================= DATOS DE PRUEBA (semilla local) ======================= */
 const HOY = '2026-10-12'; // fecha de referencia fija para que el demo sea reproducible
@@ -934,7 +934,7 @@ const PESTANAS = [
   ['programa', 'Programa', false], ['tablero', 'Tablero', false], ['usuarios', 'Usuarios', false],
 ];
 
-function Historia4({ onNavegar, vistaInicial = 'trabajos' }) {
+function AsignacionRevisores({ onNavegar, vistaInicial = 'trabajos' }) {
   const [vista, setVista] = useState(vistaInicial);
   const [asig, setAsig] = useState(ASIGNACIONES_INICIALES);
   const [historial, setHistorial] = useState([]);
@@ -1062,4 +1062,4 @@ function Historia4({ onNavegar, vistaInicial = 'trabajos' }) {
   );
 }
 
-export default Historia4;
+export default AsignacionRevisores;
