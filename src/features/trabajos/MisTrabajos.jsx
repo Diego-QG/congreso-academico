@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, Navigate } from 'react-router-dom';
+import { getCurrentParticipant } from '../../shared/cuentaServicio';
 import './MisTrabajos.css';
 
 const filtros = ['Todos', 'Borrador', 'En revisión', 'Aceptado'];
@@ -53,9 +54,7 @@ function leerTrabajos(claveBorrador, registration) {
 }
 
 export default function MisTrabajos() {
-  const registration = JSON.parse(
-    window.sessionStorage.getItem('congreso.participante') || 'null'
-  );
+  const registration = getCurrentParticipant();
   const claveBorrador = `congreso.trabajo.borrador.${registration?.email || registration?.correo || 'autor'}`;
   const [datosGuardados] = useState(() => leerTrabajos(claveBorrador, registration || {}));
   const trabajos = datosGuardados.trabajos;

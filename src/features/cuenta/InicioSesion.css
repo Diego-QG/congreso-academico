@@ -155,6 +155,52 @@
   background-color: #5C1925;
 }
 
+.btn-submit-login:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
+.login-demo-access {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  margin-top: 18px;
+  text-align: center;
+}
+
+.login-demo-access p {
+  color: #6F6663;
+  font-size: 12px;
+}
+
+.login-demo-button {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #7A2231;
+  border-radius: 2px;
+  background-color: #FFFFFF;
+  color: #7A2231;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.login-demo-button:hover {
+  background-color: #F6E9EC;
+}
+
+.login-demo-button:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
+.login-demo-access small {
+  color: #6F6663;
+  font-size: 11px;
+}
+
 .login-register-prompt {
   margin-top: 24px;
   padding-top: 20px;

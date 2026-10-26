@@ -9,6 +9,16 @@ npm install
 npm run dev
 ```
 
+Para probar el acceso, cree una cuenta desde «Crear cuenta» y luego inicie
+sesión con ese correo y contraseña en el mismo navegador. Las cuentas del
+prototipo se guardan localmente; no existe una cuenta de prueba predeterminada.
+Después de ingresar, cada rol llega a su espacio (autor a «Mis trabajos»,
+revisor a «Mi bandeja» y comité a «Edición»). El rol de comité debe ser asignado
+por la organización y no aparece en el registro público. Para recorrer HU-2
+localmente, use «Entrar como comité (demo)» en el inicio de sesión. Ese botón
+crea una sesión de demostración en este navegador; no es un acceso real ni debe
+estar habilitado en producción. Esta autenticación local no debe usarse en producción.
+
 ## Historias
 
 | Historia | Responsable | Carpeta |

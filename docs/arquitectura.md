@@ -49,6 +49,15 @@ recién ahí se le agregan subcarpetas (`components/`, `pages/`).
 
 ## Segunda entrega: backend
 
+Mientras no exista el backend, el registro y el acceso funcionan como una
+simulación local del prototipo: las cuentas se guardan en el navegador y las
+contraseñas se derivan con PBKDF2 mediante Web Crypto. Esto no sustituye la
+autenticación del servidor ni protege frente a la modificación del almacenamiento
+del navegador; no usar para cuentas o datos reales. La versión de producción
+debe validar credenciales y sesiones en el backend.
+El botón «Entrar como comité (demo)» crea una sesión local para probar HU-2;
+debe retirarse o reemplazarse por autenticación real antes de publicar.
+
 El repositorio se divide en `frontend/` (todo lo anterior) y `backend/`, con los mismos nombres de entidad:
 
 ```

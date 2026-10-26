@@ -5,7 +5,21 @@ responsable; cambiar un campo requiere acuerdo del grupo.
 Los datos de prueba están en `src/data/seed.json`.
 
 ## Usuario (HU-1 · Hugo)
-_Por definir._
+
+| Campo | Tipo | Valores / notas |
+| --- | --- | --- |
+| nombres | texto | Nombres de la persona |
+| apellidos | texto | Apellidos de la persona |
+| email | texto | Correo institucional; único por cuenta |
+| institucion | texto | Institución del participante |
+| rolParticipacion | texto | `autor` · `revisor` · `ambos` · `comite` |
+| carrera | texto | Carrera del participante, si corresponde |
+| codigoAlumno | texto | Código de alumno, si corresponde |
+
+El rol `comite` lo asigna la organización; no se ofrece en el registro público.
+En el prototipo local, la contraseña se guarda como derivación PBKDF2 en el
+navegador y no forma parte de los datos de sesión del participante. La
+autenticación de producción corresponde al backend.
 
 ## Edición (HU-2 · Josué)
 _Por definir._ Los criterios de evaluación deben tener `id`, `nombre`,

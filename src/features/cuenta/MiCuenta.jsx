@@ -1,8 +1,14 @@
 import { useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import {
+  changeAccountPassword,
+  getCurrentParticipant,
+  hasRememberedSession,
+  signIn,
+  updateCurrentParticipant
+} from '../../shared/cuentaServicio';
 import './MiCuenta.css';
 
-const STORAGE_KEY = 'congreso.participante';
 const INTEREST_LINES = [
   'Inteligencia artificial y datos',
   'Ingeniería de software',
@@ -13,8 +19,7 @@ const INTEREST_LINES = [
 ];
 
 function readRegistration(locationState) {
-  return locationState?.registration
-    || JSON.parse(window.sessionStorage.getItem(STORAGE_KEY) || 'null');
+  return locationState?.registration || getCurrentParticipant();
 }
 
 export default function MiCuenta() {
@@ -63,8 +68,12 @@ function AccountForm({ registration }) {
       ...profile,
       lineasInteres: selectedInterests
     };
-    window.sessionStorage.setItem(STORAGE_KEY, JSON.stringify(updatedRegistration));
-    setMessage('Los cambios de su perfil se guardaron correctamente.');
+    try {
+      updateCurrentParticipant(updatedRegistration);
+      setMessage('Los cambios de su perfil se guardaron correctamente.');
+    } catch {
+      setMessage('No se pudieron guardar los cambios. Inténtelo nuevamente.');
+    }
   };
 
   const toggleInterest = (interest) => {
@@ -75,7 +84,7 @@ function AccountForm({ registration }) {
     ));
   };
 
-  const updatePassword = (event) => {
+  const updatePassword = async (event) => {
     event.preventDefault();
     if (!passwords.current || passwords.next.length < 8
       || !/[A-Z]/.test(passwords.next) || !/\d/.test(passwords.next)) {
@@ -86,7 +95,26 @@ function AccountForm({ registration }) {
       setPasswordMessage('La confirmación no coincide con la nueva contraseña.');
       return;
     }
-    setPasswordMessage('Datos validados. La actualización real requiere conexión con el servicio de cuentas.');
+    try {
+      const participant = await signIn(
+        profile.email,
+        passwords.current,
+        hasRememberedSession()
+      );
+      if (!participant) {
+        setPasswordMessage('La contraseña actual no es correcta.');
+        return;
+      }
+      const updated = await changeAccountPassword(profile.email, passwords.next);
+      if (!updated) {
+        setPasswordMessage('No se pudo encontrar la cuenta. Inicie sesión nuevamente.');
+        return;
+      }
+      setPasswords({ current: '', next: '', confirm: '' });
+      setPasswordMessage('La contraseña se actualizó correctamente.');
+    } catch {
+      setPasswordMessage('No se pudo actualizar la contraseña. Inténtelo nuevamente.');
+    }
   };
 
   return (
