@@ -10,17 +10,27 @@ body {
   font-family: 'Inter', sans-serif;
   background-color: #FBFAF8;
   color: #1F1A1B;
-  display: flex;
-  justify-content: center;
 }
 
+/* El encabezado y el pie ocupan todo el ancho; el contenido se centra con .contenedor. */
 .app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.contenedor {
   width: 100%;
   max-width: 1200px;
-  background-color: #FFFFFF;
   margin: 0 auto;
-  min-height: 100vh;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+  padding: 0 40px;
+}
+
+.contenedor-principal {
+  flex: 1;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 /* Franja superior granate del header */
@@ -33,17 +43,19 @@ body {
 /* --- HEADER --- */
 .main-header {
   border-bottom: 1px solid #E4DFDA;
-  padding: 10px;
   background-color: #FFFFFF;
 }
 
 .header-top {
   background-color: #7A2231;
+  padding: 16px 0;
+}
+
+.header-top-interno {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px  40px; 
-  width: 100%;
+  gap: 16px;
 }
 
 .brand-logo {
@@ -105,6 +117,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   padding-top: 20px;
   padding-bottom: 10px;
 }
@@ -156,7 +169,7 @@ body {
 /* --- FOOTER --- */
 .main-footer {
   background-color: #1F1A1B;
-  padding: 40px 40px 24px 40px;
+  padding: 40px 0 24px;
 }
 
 .footer-content {
@@ -187,8 +200,10 @@ body {
   line-height: 1.5;
 }
 
-.footer-col p{
-    color:#E4DFDA;
+.footer-col p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #E4DFDA;
 }
 
 .footer-col ul {
@@ -223,3 +238,79 @@ body {
 .brand-logo { text-decoration: none; color: inherit; }
 .auth-buttons a { text-decoration: none; display: inline-block; }
 .btn-hero-primary { text-decoration: none; display: inline-block; text-align: center; }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 900px) {
+  .footer-content {
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 600px) {
+  .contenedor {
+    padding: 0 16px;
+  }
+
+  .header-top {
+    padding: 12px 0;
+  }
+
+  .logo-box {
+    width: 36px;
+    height: 36px;
+    font-size: 20px;
+  }
+
+  .brand-titles h2 {
+    font-size: 16px;
+  }
+
+  .brand-titles p {
+    font-size: 10px;
+  }
+
+  /* En el celular solo se muestra la etiqueta del estado. */
+  .status-label {
+    display: none;
+  }
+
+  .status-badge {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .main-nav {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    padding-top: 12px;
+  }
+
+  /* Los enlaces se desplazan de lado si no entran. */
+  .nav-links {
+    gap: 20px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding-bottom: 4px;
+  }
+
+  .auth-buttons,
+  .registered-user {
+    justify-content: flex-end;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .footer-legal a {
+    margin: 0 16px 0 0;
+  }
+}

@@ -23,21 +23,23 @@ export default function Header() {
 
       <header className="main-header">
         <div className="header-top">
-          <Link to="/" className="brand-logo">
-            <div className="logo-box">C</div>
-            <div className="brand-titles">
-              <h2>Congreso Académico Estudiantil</h2>
-              <p>UNIVERSIDAD DE LIMA · EDICIÓN 2026</p>
-            </div>
-          </Link>
+          <div className="contenedor header-top-interno">
+            <Link to="/" className="brand-logo">
+              <div className="logo-box">C</div>
+              <div className="brand-titles">
+                <h2>Congreso Académico Estudiantil</h2>
+                <p>UNIVERSIDAD DE LIMA · EDICIÓN 2026</p>
+              </div>
+            </Link>
 
-          <div className="edition-status">
-            <span className="status-label">ESTADO DE LA EDICIÓN</span>
-            <span className="status-badge">Recepción abierta</span>
+            <div className="edition-status">
+              <span className="status-label">ESTADO DE LA EDICIÓN</span>
+              <span className="status-badge">Recepción abierta</span>
+            </div>
           </div>
         </div>
 
-        <nav className="main-nav">
+        <nav className="main-nav contenedor">
           <ul className="nav-links">
             {registration ? (
               <>
