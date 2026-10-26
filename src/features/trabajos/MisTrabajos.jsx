@@ -175,7 +175,11 @@ export default function MisTrabajos() {
                       {trabajo.estado}
                     </span>
                   </div>
-                  <h2>{trabajo.titulo}</h2>
+                  <h2>
+                    <Link to={`/mis-trabajos/${encodeURIComponent(trabajo.id)}`}>
+                      {trabajo.titulo}
+                    </Link>
+                  </h2>
                   <p className="mis-trabajos__autores">{trabajo.autores}</p>
                   <div className="mis-trabajos__etiquetas">
                     <span>{trabajo.eje}</span>

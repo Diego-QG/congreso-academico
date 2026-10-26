@@ -14,6 +14,7 @@ import PaginaNoEncontrada from "./features/publico/PaginaNoEncontrada";
 import NuevoTrabajo from "./features/trabajos/NuevoTrabajo";
 import Coautores from "./features/trabajos/Coautores";
 import MisTrabajos from "./features/trabajos/MisTrabajos";
+import DetalleTrabajo from "./features/trabajos/DetalleTrabajo";
 // Configuración de la edición
 import ConfiguracionEdicion from "./features/edicion/ConfiguracionEdicion";
 import EjesTematicos from "./features/edicion/EjesTematicos";
@@ -66,6 +67,7 @@ export default function App() {
           <Route path="/nuevo-trabajo" element={<NuevoTrabajo />} />
           <Route path="/nuevo-trabajo/coautores" element={<Coautores />} />
           <Route path="/mis-trabajos" element={<MisTrabajos />} />
+          <Route path="/mis-trabajos/:trabajoId" element={<DetalleTrabajo />} />
 
           {/* HU-5 */}
           <Route element={<RutaRevisor />}>
