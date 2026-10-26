@@ -1,5 +1,15 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
+import seed from '../../data/seed.json';
+import { useRevisiones } from '../revisiones/revisionesContexto';
+import { obtenerCriterios } from '../revisiones/revisionesServicio';
+import { calcularConsolidado, unDecimal } from '../revisiones/consolidado';
+import { usePrograma } from '../programa/programaContexto';
+import { horaDeTrabajo } from '../programa/programaServicio';
+import { formatoFecha } from '../../shared/fechas';
+import './Trabajos.css';
 import './DetalleTrabajo.css';
+
+const CRITERIOS = obtenerCriterios();
 
 function leerParticipante() {
   try {
@@ -75,6 +85,8 @@ function enlaceDocumentoSeguro(enlace) {
 export default function DetalleTrabajo() {
   const { trabajoId } = useParams();
   const registration = leerParticipante();
+  const revisionesContexto = useRevisiones();
+  const programaContexto = usePrograma();
 
   if (!['autor', 'ambos'].includes(registration?.rolParticipacion)) {
     return <Navigate to="/login" replace />;
@@ -102,6 +114,25 @@ export default function DetalleTrabajo() {
   }
 
   const enRevision = trabajo.estado === 'En revisión';
+  const trabajoSistema = seed.trabajos.find((item) => item.codigo === trabajo.id);
+  const dictamen = revisionesContexto?.dictamenes.find(
+    (item) => item.trabajoId === trabajoSistema?.id
+  ) || trabajo.dictamen;
+  const dictamenPublicado = Boolean(dictamen && dictamen.estado !== 'borrador');
+  const decisionAceptada = dictamenPublicado
+    && ['aceptado', 'aceptado_con_observaciones'].includes(dictamen.decision);
+  const aceptado = trabajo.estado === 'Aceptado' || decisionAceptada;
+  const revisionesEnviadas = trabajoSistema
+    ? (revisionesContexto?.revisiones || []).filter(
+      (revision) => revision.trabajoId === trabajoSistema.id && revision.estado === 'enviada'
+    )
+    : [];
+  const consolidado = calcularConsolidado(revisionesEnviadas, CRITERIOS);
+  const sesiones = programaContexto?.sesiones || [];
+  const sesionAsignada = trabajoSistema && programaContexto?.programa.publicado
+    ? sesiones.find((sesion) => sesion.trabajos.includes(trabajoSistema.id))
+    : null;
+  const posicionEnSesion = sesionAsignada?.trabajos.indexOf(trabajoSistema.id) ?? -1;
   const fechaEnvio = fechaLegible(trabajo.enviadoEn, true);
   const fechaGuardado = fechaLegible(trabajo.guardadoEn, true);
   const enlaceDocumento = enlaceDocumentoSeguro(trabajo.formulario.enlace);
@@ -121,12 +152,13 @@ export default function DetalleTrabajo() {
         <div className="detalle-trabajo__titulo">
           <div className="detalle-trabajo__identificador">
             <span>{trabajo.id}</span>
-            <span className={`detalle-trabajo__estado${enRevision ? ' detalle-trabajo__estado--revision' : ''}`}>
+            <span className={`detalle-trabajo__estado${enRevision ? ' detalle-trabajo__estado--revision' : aceptado ? ' detalle-trabajo__estado--aceptado' : ''}`}>
               {trabajo.estado}
             </span>
           </div>
           <h1>{trabajo.formulario.titulo?.trim() || 'Trabajo sin título'}</h1>
         </div>
+        <div className="detalle-trabajo__acciones">
         {enlaceDocumento ? (
           <a
             className="detalle-trabajo__documento"
@@ -146,11 +178,97 @@ export default function DetalleTrabajo() {
             Documento no disponible
           </button>
         )}
+        {aceptado && (
+          sesionAsignada ? (
+            <Link className="detalle-trabajo__presentacion" to="/programa">
+              Ver mi presentación
+            </Link>
+          ) : (
+            <button className="detalle-trabajo__presentacion" type="button" disabled>
+              Presentación por asignar
+            </button>
+          )
+        )}
+        </div>
       </header>
 
+      {aceptado ? (
+        <div className="detalle-trabajo__columnas detalle-trabajo__columnas--aceptado">
+          <div className="detalle-trabajo__principal">
+            <section className="detalle-trabajo__resultado">
+              <span className="detalle-trabajo__sobrelinea">
+                Resultado publicado{dictamen?.fecha ? ` el ${formatoFecha(dictamen.fecha)}` : ''}
+              </span>
+              <h2>Trabajo aceptado para el programa del congreso</h2>
+              <p>
+                {dictamen?.retroalimentacion
+                  || 'El comité ha aceptado este trabajo. Consulte los comentarios de los revisores y atiéndalos para preparar su presentación.'}
+              </p>
+              {sesionAsignada && (
+                <p className="detalle-trabajo__sesion">
+                  Sesión asignada: {sesionAsignada.nombre}, {formatoFecha(sesionAsignada.fecha)},
+                  {' '}{horaDeTrabajo(sesionAsignada, posicionEnSesion)}, Sala {sesionAsignada.sala}.
+                </p>
+              )}
+            </section>
+
+            <section className="trabajos__panel detalle-trabajo__panel detalle-trabajo__retroalimentacion">
+              <h2>Retroalimentación consolidada de los revisores</h2>
+              {consolidado.filas.length > 0 ? (
+                <ul>
+                  {consolidado.filas.map((revision, index) => (
+                    <li key={revision.id}>
+                      <span>Revisor {index + 1} · {revision.recomendacion.replaceAll('_', ' ')}</span>
+                      <p>{revision.comentarioAutor?.trim() || 'Sin comentarios para el autor.'}</p>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p>No hay comentarios de revisión disponibles para este trabajo.</p>
+              )}
+            </section>
+          </div>
+
+          <aside className="detalle-trabajo__lateral">
+            <section className="trabajos__panel detalle-trabajo__panel detalle-trabajo__puntajes">
+              <span className="detalle-trabajo__sobrelinea">Puntaje por criterio</span>
+              {consolidado.filas.length > 0 ? (
+                <>
+                  <dl>
+                    {CRITERIOS.map((criterio, index) => (
+                      <div key={criterio.id}>
+                        <dt>{criterio.nombre} ({criterio.peso} %)</dt>
+                        <dd>{unDecimal(consolidado.promedioPorCriterio[index])}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                  <div className="detalle-trabajo__promedio">
+                    <span>Promedio ponderado</span>
+                    <strong>{unDecimal(consolidado.promedio)}</strong>
+                  </div>
+                </>
+              ) : (
+                <p>Los puntajes de evaluación no están disponibles.</p>
+              )}
+            </section>
+
+            <section className="trabajos__panel detalle-trabajo__panel detalle-trabajo__siguiente-paso">
+              <span className="detalle-trabajo__sobrelinea">Siguiente paso</span>
+              <p>
+                {sesionAsignada
+                  ? 'Prepare su presentación para la sesión asignada. La entrega de la versión final todavía no está habilitada.'
+                  : 'La información de presentación y entrega de versión final todavía no está disponible.'}
+              </p>
+              <button type="button" disabled title="La carga de versiones finales aún no está habilitada.">
+                Subir versión final
+              </button>
+            </section>
+          </aside>
+        </div>
+      ) : (
       <div className="detalle-trabajo__columnas">
         <div className="detalle-trabajo__principal">
-          <section className="detalle-trabajo__panel detalle-trabajo__datos">
+          <section className="trabajos__panel detalle-trabajo__panel detalle-trabajo__datos">
             <h2>Datos del trabajo</h2>
             <dl className="detalle-trabajo__metadatos">
               <div>
@@ -177,7 +295,7 @@ export default function DetalleTrabajo() {
             )}
           </section>
 
-          <section className="detalle-trabajo__panel detalle-trabajo__autores">
+          <section className="trabajos__panel detalle-trabajo__panel detalle-trabajo__autores">
             <h2>Autores</h2>
             <ul>
               {trabajo.autores.map((autor) => (
@@ -198,7 +316,7 @@ export default function DetalleTrabajo() {
         </div>
 
         <aside className="detalle-trabajo__lateral">
-          <section className={`detalle-trabajo__dictamen${enRevision ? ' detalle-trabajo__dictamen--revision' : ''}`}>
+          <section className={`trabajos__panel detalle-trabajo__dictamen${enRevision ? ' detalle-trabajo__dictamen--revision' : ''}`}>
             <span className="detalle-trabajo__sobrelinea">Dictamen</span>
             <h2>{enRevision ? 'En revisión' : 'Borrador'}</h2>
             <p>
@@ -208,7 +326,7 @@ export default function DetalleTrabajo() {
             </p>
           </section>
 
-          <section className="detalle-trabajo__panel detalle-trabajo__seguimiento">
+          <section className="trabajos__panel detalle-trabajo__panel detalle-trabajo__seguimiento">
             <span className="detalle-trabajo__sobrelinea">Seguimiento</span>
             <ol>
               {enRevision ? (
@@ -236,6 +354,7 @@ export default function DetalleTrabajo() {
           </section>
         </aside>
       </div>
+      )}
     </section>
   );
 }
