@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from "./shared/Layout";
-import Inicio from "./pages/Inicio";
-import Portada from "./pages/Portada";
+import Inicio from "./features/publico/Inicio";
+import Portada from "./features/publico/Portada";
 
 // HU-1 · Cuenta y acceso
 import Login from "./hu1-cuenta/Login";
@@ -9,7 +9,7 @@ import Register from "./hu1-cuenta/Register";
 import Bienvenida from "./hu1-cuenta/Bienvenida";
 import MiCuenta from "./hu1-cuenta/MiCuenta";
 import RecuperarContrasena from "./hu1-cuenta/RecuperarContrasena";
-import PaginaNoEncontrada from "./hu1-cuenta/PaginaNoEncontrada";
+import PaginaNoEncontrada from "./features/publico/PaginaNoEncontrada";
 // HU-3 · Envío de trabajos
 import { MisTrabajos, NuevoTrabajo } from "./hu3-trabajos/Historia3";
 // Configuración de la edición
