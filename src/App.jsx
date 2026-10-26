@@ -71,11 +71,12 @@ export default function App() {
               path="/revisor/revision/:asignacionId"
               element={<FormularioEvaluacion />}
             />
-            <Route
-            path="/comite/trabajos/:trabajoId/consolidado"
-            element={<ConsolidadoTrabajo />}
-            />
+            
           </Route>
+            <Route
+              path="/comite/trabajos/:trabajoId/consolidado"
+              element={<ConsolidadoTrabajo />}
+            />
 
           {/* HU-6 */}
           <Route path="/programa" element={<ProgramaPublico />} />
