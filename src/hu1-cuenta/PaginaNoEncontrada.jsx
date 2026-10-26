@@ -15,7 +15,7 @@ export default function PaginaNoEncontrada() {
           <Link className="not-found-primary" to="/">
             Ir al inicio
           </Link>
-          <Link className="not-found-secondary" to="/#programa">
+          <Link className="not-found-secondary" to="/programa">
             Ver el programa
           </Link>
         </div>

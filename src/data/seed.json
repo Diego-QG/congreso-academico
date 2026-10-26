@@ -1158,5 +1158,57 @@
       "retroalimentacion": "El trabajo no fue aceptado en esta edición. Le recomendamos fortalecer la metodología y citar todas sus fuentes.",
       "fecha": "2026-10-10"
     }
+  ],
+  "programa": {
+    "publicado": true,
+    "fechaPublicacion": "2026-10-30"
+  },
+  "sesiones": [
+    {
+      "id": "S1",
+      "nombre": "Inteligencia artificial aplicada",
+      "eje": "Inteligencia artificial y datos",
+      "fecha": "2026-11-12",
+      "horaInicio": "09:00",
+      "horaFin": "10:30",
+      "sala": "A-101",
+      "moderador": "Dra. Ana Salazar Bermúdez",
+      "trabajos": []
+    },
+    {
+      "id": "S2",
+      "nombre": "Sostenibilidad y ciudad",
+      "eje": "Sostenibilidad y ciudad",
+      "fecha": "2026-11-12",
+      "horaInicio": "11:00",
+      "horaFin": "12:30",
+      "sala": "B-201",
+      "moderador": "Mg. Carmen Effio Vargas",
+      "trabajos": [
+        "T051"
+      ]
+    },
+    {
+      "id": "S3",
+      "nombre": "Innovación y emprendimiento",
+      "eje": "Innovación y emprendimiento",
+      "fecha": "2026-11-13",
+      "horaInicio": "11:00",
+      "horaFin": "12:30",
+      "sala": "B-201",
+      "moderador": "Ing. Jorge Palomino Ávila",
+      "trabajos": []
+    },
+    {
+      "id": "S4",
+      "nombre": "Salud y sociedad",
+      "eje": "Salud y sociedad",
+      "fecha": "2026-11-13",
+      "horaInicio": "14:00",
+      "horaFin": "15:30",
+      "sala": "B-201",
+      "moderador": "Dra. Milagros Yupanqui Ríos",
+      "trabajos": []
+    }
   ]
 }

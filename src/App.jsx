@@ -25,10 +25,14 @@ import BandejaRevisor from "./hu5-revision/BandejaRevisor";
 import FormularioEvaluacion from "./hu5-revision/FormularioEvaluacion";
 import RevisionesProvider from "./hu5-revision/RevisionesProvider";
 import RutaRevisor from "./hu1-cuenta/RutaRevisor";
+// HU-6 · Programa del congreso
+import ProgramaProvider from "./hu6-programa/ProgramaProvider";
+import ProgramaPublico from "./hu6-programa/ProgramaPublico";
 
 export default function App() {
   return (
     <RevisionesProvider>
+    <ProgramaProvider>
       <Routes>
         {/* Portada del proyecto: índice de historias (diseño propio, sin header ni footer) */}
         <Route path="/portada" element={<Portada />} />
@@ -67,8 +71,12 @@ export default function App() {
               element={<FormularioEvaluacion />}
             />
           </Route>
+
+          {/* HU-6 */}
+          <Route path="/programa" element={<ProgramaPublico />} />
         </Route>
       </Routes>
+    </ProgramaProvider>
     </RevisionesProvider>
   );
 }
