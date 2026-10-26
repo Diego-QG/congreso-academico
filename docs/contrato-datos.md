@@ -50,3 +50,25 @@ pesos de los criterios: `suma(puntaje × peso) / suma(pesos)`. Resultado de 0 a 
 - Sugerencia según el promedio de las revisiones: 70 o más → aceptar;
   50 a 69 → aceptar con observaciones; menos de 50 → revisar a detalle.
   La decisión final siempre es del comité.
+
+## Sesión (HU-6 · Sacha)
+
+| Campo | Tipo | Valores / notas |
+| --- | --- | --- |
+| id | texto | `S1`, `S2`… |
+| nombre | texto | nombre de la sesión |
+| eje | texto | nombre del eje temático (igual que `trabajos[].eje`) |
+| fecha | fecha | `AAAA-MM-DD`; un día del congreso |
+| horaInicio | texto | `HH:MM` |
+| horaFin | texto | `HH:MM`; posterior a `horaInicio` |
+| sala | texto | `A-101` · `B-201` · `C-305` |
+| moderador | texto | nombre del moderador |
+| trabajos | lista | ids de trabajos (HU-3) en orden de exposición |
+
+**Programa:** `{ publicado, fechaPublicacion }`. El programa público solo se
+muestra cuando `publicado` es `true`.
+
+**Reglas:**
+- Solo se asignan trabajos con dictamen `aceptado` o `aceptado_con_observaciones` (HU-5).
+- Cada trabajo dura 20 minutos; su hora es `horaInicio + 20 min × posición`.
+- Dos sesiones no pueden usar la misma sala el mismo día con horarios que se crucen.
