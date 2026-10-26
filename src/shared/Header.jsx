@@ -1,4 +1,5 @@
 import { Link, NavLink, useLocation } from 'react-router-dom';
+import isotipo from '../assets/marca/isotipo.svg';
 
 // Encabezado común. Se modifica SOLO aquí.
 export default function Header() {
@@ -25,7 +26,7 @@ export default function Header() {
         <div className="header-top">
           <div className="contenedor header-top-interno">
             <Link to="/" className="brand-logo">
-              <div className="logo-box">C</div>
+              <img src={isotipo} alt="" className="logo-box" />
               <div className="brand-titles">
                 <h2>Congreso Académico Estudiantil</h2>
                 <p>UNIVERSIDAD DE LIMA · EDICIÓN 2026</p>
