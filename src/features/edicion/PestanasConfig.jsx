@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { PESTANAS } from './data/datosConfiguracion.js';
+import { PESTANAS } from './datosConfiguracion.js';
 
 function PestanasConfig({ activa }) {
   const navigate = useNavigate();

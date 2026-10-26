@@ -3,7 +3,7 @@ import CabeceraComite from './CabeceraComite';
 import PestanasConfig from './PestanasConfig';
 import PieComite from './PieComite';
 import './ConfiguracionEdicion.css';
-import { TIPOS_INICIALES, FORMATOS } from './data/datosConfiguracion.js';
+import { TIPOS_INICIALES, FORMATOS } from './datosConfiguracion.js';
 
 const FORMULARIO_VACIO = { id: null, nombre: '', extension: '', formato: 'PDF', admite: false, maximo: '1' };
 

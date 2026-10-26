@@ -3,7 +3,7 @@ import CabeceraComite from './CabeceraComite';
 import PestanasConfig from './PestanasConfig';
 import PieComite from './PieComite';
 import './ConfiguracionEdicion.css';
-import { EDICION_INICIAL, TRANSICIONES_ESTADO, AVISOS_ESTADO } from './data/datosConfiguracion.js';
+import { EDICION_INICIAL, TRANSICIONES_ESTADO, AVISOS_ESTADO } from './datosConfiguracion.js';
 
 function ConfiguracionEdicion() {
   const [edicion, setEdicion] = useState(EDICION_INICIAL);

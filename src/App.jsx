@@ -13,11 +13,11 @@ import PaginaNoEncontrada from "./features/publico/PaginaNoEncontrada";
 // HU-3 · Envío de trabajos
 import { MisTrabajos, NuevoTrabajo } from "./hu3-trabajos/Historia3";
 // Configuración de la edición
-import ConfiguracionEdicion from "./ConfiguracionEdicion";
-import EjesTematicos from "./EjesTematicos";
-import TiposTrabajo from "./TiposTrabajo";
-import FechasLimite from "./FechasLimite";
-import CriteriosEvaluacion from "./CriteriosEvaluacion";
+import ConfiguracionEdicion from "./features/edicion/ConfiguracionEdicion";
+import EjesTematicos from "./features/edicion/EjesTematicos";
+import TiposTrabajo from "./features/edicion/TiposTrabajo";
+import FechasLimite from "./features/edicion/FechasLimite";
+import CriteriosEvaluacion from "./features/edicion/CriteriosEvaluacion";
 // HU-4 · Asignación de revisiones
 import Historia4 from "./hu4-asignacion/Historia4";
 // HU-5 · Revisión y dictamen
