@@ -197,15 +197,69 @@
   color: var(--color-text-muted);
 }
 
+/* Solo se ve en celular, dentro de la barra fija. */
+.evaluacion-promedio-movil {
+  display: none;
+}
+
 @media (max-width: 800px) {
   .evaluacion {
     padding: 24px 16px;
   }
 
-  .evaluacion-trabajo,
-  .evaluacion-acciones {
+  .evaluacion-trabajo {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  /* Barra fija abajo: promedio y botones siempre a mano. */
+  .evaluacion-acciones {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin: 0 -16px;
+    padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--color-border);
+    background: var(--color-surface);
+  }
+
+  .evaluacion-promedio-movil {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    grid-column: 1 / -1;
+    font-size: 13px;
+    color: var(--color-text-muted);
+  }
+
+  .evaluacion-promedio-movil strong {
+    font-family: var(--fuente-titulos);
+    font-size: 22px;
+    font-variant-numeric: tabular-nums;
+    color: var(--color-primary);
+  }
+
+  .evaluacion-aviso {
+    grid-column: 1 / -1;
+    margin: 0;
+  }
+
+  .evaluacion-aviso:empty {
+    display: none;
+  }
+
+  .evaluacion-acciones button {
+    width: 100%;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  /* La columna de la recomendación no empuja la página más allá de la pantalla. */
+  .evaluacion-cuerpo > * {
+    min-width: 0;
   }
 
   .evaluacion-plazo {
@@ -215,6 +269,6 @@
 
   .evaluacion-cuerpo,
   .evaluacion-comentarios {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
