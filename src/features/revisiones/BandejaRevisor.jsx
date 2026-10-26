@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import seed from "../../data/seed.json";
 import { useRevisiones } from "./revisionesContexto";
+import { obtenerAsignacionesDeRevisor, obtenerTrabajo } from "./revisionesServicio";
 import "./BandejaRevisor.css";
 
 // Temporallllll
@@ -24,10 +24,9 @@ function claseEstado(estado) {
 
 export default function BandejaRevisor() {
   const { revisiones } = useRevisiones();
-  const asignaciones = seed.asignaciones
-    .filter((a) => a.revisorId === REVISOR_ACTUAL)
+  const asignaciones = obtenerAsignacionesDeRevisor(REVISOR_ACTUAL)
     .map((a) => {
-      const trabajo = seed.trabajos.find((t) => t.id === a.trabajoId);
+      const trabajo = obtenerTrabajo(a.trabajoId);
       return {
         id: a.id,
         codigo: trabajo.codigo,
