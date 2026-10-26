@@ -8,15 +8,22 @@ import './DisenoAcceso.css';
 export default function DisenoAcceso({ children }) {
   return (
     <div className="acceso">
-      <aside className="acceso-foto" aria-hidden="true">
-        <img src={foto} alt="" />
-        <div className="acceso-foto-texto">
-          <img src={isotipo} alt="" className="acceso-isotipo" />
-          <p>VIII Congreso Académico Estudiantil</p>
-          <span>Universidad de Lima · 12 y 13 de noviembre de 2026</span>
-        </div>
-      </aside>
+      <FotoAcceso />
       <div className="acceso-contenido">{children}</div>
+    </div>
+  );
+}
+
+// La foto con el logo, sola. Registro la usa en su columna lateral.
+export function FotoAcceso({ className = '' }) {
+  return (
+    <div className={'acceso-foto ' + className} aria-hidden="true">
+      <img src={foto} alt="" />
+      <div className="acceso-foto-texto">
+        <img src={isotipo} alt="" className="acceso-isotipo" />
+        <p>VIII Congreso Académico Estudiantil</p>
+        <span>Universidad de Lima · 12 y 13 de noviembre de 2026</span>
+      </div>
     </div>
   );
 }

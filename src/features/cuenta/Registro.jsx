@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FotoAcceso } from '../../shared/DisenoAcceso';
 import './Registro.css';
 
 function getPasswordRequirements(password, confirmPassword) {
@@ -392,6 +393,7 @@ function Registro() {
 
           {/* Columna Derecha: Panel informativo lateral */}
           <aside className="register-info-sidebar">
+            <FotoAcceso className="register-foto" />
             <div className="info-sidebar-box">
               <h3>Antes de registrarse</h3>
               <p>
